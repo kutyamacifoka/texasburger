@@ -740,9 +740,12 @@ body {
     font-size: 1.35rem;
   }
 
-  .opening-hours-title,
-  .contact-title {
+  .opening-hours-title {
     font-size: 2rem;
+  }
+
+  .contact-title {
+    font-size: 1.75rem;
   }
 
   .opening-hours p {
@@ -757,13 +760,7 @@ body {
   .contact-phone,
   .contact-email,
   .contact-address {
-    font-size: 1.5rem;
-  }
-
-  .fa-phone-square-alt,
-  .fa-envelope,
-  .fa-address-card {
-    display: inline;
+    font-size: 1.35rem;
   }
 
   .form-info {
@@ -834,6 +831,12 @@ body {
   #environment-container {
     padding: 5rem;
   }
+
+  .fa-phone-square-alt,
+  .fa-envelope,
+  .fa-address-card {
+    display: inline;
+  }
 }
 
 @media screen and (min-width: 800px) {
@@ -861,5 +864,9 @@ body {
   }
   .environment-article {
     padding: 2.5rem;
+  }
+  .test {
+    grid-column: span 2 / auto;
+    grid-row: span 2 / auto;
   }
 }
