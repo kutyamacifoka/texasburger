@@ -325,6 +325,7 @@ body {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
       url("./wood-texture.png") center/cover no-repeat;
     user-select: auto;
+    padding: 1rem;
   }
 
   .environment-title {
@@ -339,7 +340,6 @@ body {
   .environment-content-container {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
   }
 
   .environment-item {
@@ -399,7 +399,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
-    margin-top: 3rem;
+    margin: 3rem 0;
   }
 
   .opening-hours,
@@ -722,7 +722,144 @@ body {
     font-size: 3rem;
     padding: 3rem;
   }
+
   .banner small {
     font-size: 1.5rem;
+  }
+
+  .slogan-title {
+    font-size: 2.5rem;
+  }
+
+  .environment-article-title {
+    font-size: 2rem;
+  }
+
+  .environment-article p {
+    font-family: var(--ff-primary-3);
+    font-size: 1.35rem;
+  }
+
+  .opening-hours-title,
+  .contact-title {
+    font-size: 2rem;
+  }
+
+  .opening-hours p {
+    font-size: 1.75rem;
+  }
+
+  .menu-btn,
+  .reserve-btn {
+    font-size: 1.5rem;
+  }
+
+  .contact-phone,
+  .contact-email,
+  .contact-address {
+    font-size: 1.5rem;
+  }
+
+  .fa-phone-square-alt,
+  .fa-envelope,
+  .fa-address-card {
+    display: inline;
+  }
+
+  .form-info {
+    font-size: 1.25rem;
+    padding: 2rem 6rem 1rem;
+    clip-path: circle(20% at 100% 0%);
+  }
+
+  .fa-info-circle {
+    font-size: 1.75rem;
+  }
+
+  .form-control {
+    font-size: 1.25rem;
+  }
+
+  .submit-btn {
+    font-size: 1.5rem;
+  }
+
+  .footer-aszf-link {
+    font-size: 1.25rem;
+  }
+
+  #creator-container {
+    font-size: 1.25rem;
+  }
+
+  .creator,
+  #date {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .banner-title {
+    font-size: 3.5rem;
+    padding: 3.5rem;
+  }
+
+  #about-us-container {
+    padding: 5rem;
+    font-size: 2.75rem;
+  }
+
+  .menu-title,
+  .environment-title,
+  .contacts-title,
+  .write-us-title {
+    font-size: 3rem;
+  }
+
+  .home-btn {
+    font-size: 1.75rem;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .banner-title {
+    font-size: 4rem;
+    padding: 4rem;
+  }
+
+  .slogan-title {
+    font-size: 4rem;
+  }
+
+  #environment-container {
+    padding: 5rem;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .banner-title {
+    font-size: 4.5rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .navbar-nav {
+    display: flex;
+    justify-content: center;
+  }
+
+  .banner,
+  #menu-container,
+  #environment-container,
+  #contacts-container,
+  #slogan-container {
+    background-attachment: fixed;
+  }
+
+  #environment-container {
+    padding: 7rem;
+  }
+  .environment-article {
+    padding: 2.5rem;
   }
 }
