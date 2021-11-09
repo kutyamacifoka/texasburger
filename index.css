@@ -1,0 +1,729 @@
+/*
+=====================
+GOOGLE FONTS
+=====================
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Nanum+Gothic&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lobster&family=Oswald&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Josefin+Sans&family=Lobster&family=Oswald&display=swap");
+
+/*
+=====================
+VARIABLES
+=====================
+*/
+
+:root {
+  /* fonts */
+  --ff-primary-1: "Lobster", cursive;
+  --ff-primary-2: "Bebas Neue", cursive;
+  --ff-primary-3: "Josefin Sans", sans-serif;
+  /* shades of brown */
+  --clr-brown-1: #f2d6b3;
+  --clr-brown-2: #d9a76a;
+  --clr-brown-3: #40322b;
+  --clr-brown-4: #2b2724;
+  /* shades of red */
+  --clr-red-1: #d9483b;
+  --clr-red-2: #a62929;
+  /* main transition */
+  --transition: all 0.3s ease-in-out;
+  /* max width */
+  --max-width: 1170px;
+}
+
+/*
+=====================
+GLOBAL STYLES
+=====================
+*/
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 58px;
+}
+
+body {
+  user-select: none;
+  box-sizing: border-box;
+}
+
+@media screen and (min-width: 280px) {
+  /*
+  ==========
+  NAVBAR
+  ========== 
+  */
+  .navbar {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    width: 100%;
+    background: var(--clr-brown-4);
+    z-index: 9999;
+  }
+
+  .navbar-brand {
+    color: var(--clr-brown-1);
+    font-size: 2rem;
+    letter-spacing: 1px;
+    text-decoration: underline goldenrod;
+    font-family: var(--ff-primary-1);
+    transition: var(--transition);
+  }
+
+  .brand-span {
+    color: var(--clr-red-1);
+  }
+
+  .navbar-brand:hover {
+    color: var(--clr-brown-1);
+  }
+
+  .navbar-nav {
+    width: 100%;
+  }
+
+  .nav-link:link {
+    font-family: var(--ff-primary-2);
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    color: var(--clr-brown-1);
+    padding: 1rem 0;
+    transition: var(--transition);
+  }
+
+  .nav-link:visited {
+    color: var(--clr-brown-1);
+  }
+
+  .nav-link:hover {
+    color: var(--clr-red-2);
+    background: var(--clr-brown-1);
+  }
+
+  .media-icon {
+    text-decoration: none;
+    font-size: 2rem;
+    padding-bottom: 0.5rem;
+    color: var(--clr-brown-1);
+    transition: var(--transition);
+  }
+
+  .fa-twitter-square {
+    padding-left: 0.5rem;
+  }
+
+  .media-icon:visited {
+    color: var(--clr-brown-1);
+  }
+
+  .media-icon:hover {
+    color: var(--clr-red-2);
+  }
+
+  .fa-bars {
+    color: var(--clr-brown-1);
+    font-size: 1.5rem;
+    transition: var(--transition);
+  }
+
+  .fa-bars:hover {
+    color: var(--clr-red-2);
+  }
+
+  /*
+  ==========
+  BANNER 
+  ========== 
+  */
+
+  #banner-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  .banner {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("./images/images/hero.png") center/cover no-repeat;
+  }
+
+  .banner-title {
+    font-family: var(--ff-primary-1);
+    letter-spacing: 2px;
+    font-size: 2rem;
+    padding: 2rem;
+    color: var(--clr-brown-1);
+    border-top: solid 5px goldenrod;
+    border-bottom: solid 5px goldenrod;
+  }
+
+  .banner-title span {
+    color: var(--clr-red-1);
+  }
+
+  .banner small {
+    color: whitesmoke;
+    letter-spacing: 3px;
+    padding-top: 0.5rem;
+    font-family: var(--ff-primary-3);
+  }
+
+  .down-btn {
+    font-size: 1.5rem;
+    position: absolute;
+    bottom: +20px;
+    align-self: flex-end;
+    color: var(--clr-brown-1);
+    background: none;
+    border: none;
+    transition: var(--transition);
+  }
+
+  .down-btn:hover {
+    color: var(--clr-red-1);
+  }
+
+  /*
+  ==========
+  ABOUT US 
+  ========== 
+  */
+
+  #about-us-container {
+    background: url("./images/images/about-us-bg.png") center/cover no-repeat;
+    padding: 2rem;
+    font-size: 2rem;
+    text-align: center;
+    font-family: var(--ff-primary-2);
+    letter-spacing: 2px;
+    user-select: auto;
+  }
+
+  #about-us-container strong {
+    font-family: var(--ff-primary-1);
+    text-decoration: underline goldenrod;
+  }
+
+  #about-us-container strong span {
+    color: var(--clr-red-1);
+  }
+
+  /*
+  ==========
+  MENU 
+  ========== 
+  */
+
+  #menu-container {
+    width: 100%;
+    background: #666;
+    padding: 2rem 1rem;
+    overflow: hidden;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("./images/images/jakob-braun-5-QAGA7rO3g-unsplash.jpg") center/cover
+        no-repeat;
+  }
+
+  .menu-title {
+    text-align: center;
+    color: whitesmoke;
+    font-size: 2.5rem;
+    padding: 2rem 0 4rem;
+    font-family: var(--ff-primary-2);
+    letter-spacing: 10px;
+    user-select: auto;
+  }
+
+  .menu-grid-container {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .menu-grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: var(--transition);
+  }
+
+  .menu-grid-img {
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+    border-top: solid 3px whitesmoke;
+    border-bottom: solid 3px whitesmoke;
+    border-radius: 4%;
+    transition: var(--transition);
+  }
+
+  .grid-filter {
+    border-top: solid 3px goldenrod;
+    border-bottom: solid 3px var(--clr-red-1);
+    opacity: 0.7;
+    filter: grayscale(75%);
+    transition: var(--transition);
+  }
+
+  .menu-grid-title {
+    display: flex;
+    position: absolute;
+    color: whitesmoke;
+    font-size: 3.5rem;
+    font-family: var(--ff-primary-2);
+    letter-spacing: 3px;
+  }
+
+  /*
+  ==========
+  SLOGAN 
+  ========== 
+  */
+
+  #slogan-container {
+    width: 100%;
+    height: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url("./images/images/slogan.png") center/cover no-repeat;
+  }
+
+  .slogan-title {
+    line-height: 35px;
+    color: yellow;
+    padding: 2rem;
+    letter-spacing: 10px;
+    font-family: var(--ff-primary-2);
+    transition: var(--transition);
+  }
+
+  /*
+  ==========
+  ENVIRONMENT 
+  ========== 
+  */
+
+  #environment-container {
+    width: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("./images/images/wood-texture.png") center/cover no-repeat;
+    user-select: auto;
+  }
+
+  .environment-title {
+    text-align: center;
+    color: whitesmoke;
+    font-size: 2.5rem;
+    padding: 2rem 0 4rem;
+    font-family: var(--ff-primary-2);
+    letter-spacing: 10px;
+  }
+
+  .environment-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .environment-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .environment-article {
+    color: whitesmoke;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .environment-article-title {
+    font-family: var(--ff-primary-2);
+    text-decoration: underline var(--clr-red-1);
+    font-size: 1.5rem;
+    padding: 1rem 0;
+  }
+
+  .environment-article p {
+    font-family: var(--ff-primary-3);
+    font-size: 1.1rem;
+  }
+
+  .environment-img-1 {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    border-radius: 10%;
+    border: solid 5px goldenrod;
+    user-select: none;
+  }
+
+  /*
+  ==========
+  CONTACTS 
+  ========== 
+  */
+
+  #contacts-container {
+    background: url("./images/images/about-us-bg.png") center/cover no-repeat;
+    padding: 1rem;
+    text-align: center;
+    font-family: var(--ff-primary-2);
+    letter-spacing: 2px;
+    user-select: auto;
+  }
+
+  .contacts-title {
+    font-size: 2.5rem;
+    padding: 2rem 0;
+  }
+
+  .contacts-item {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .opening-hours,
+  .contact-info {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+    padding: 2rem;
+    border-radius: 25px;
+    border: dotted 5px goldenrod;
+    transition: var(--transition);
+  }
+
+  .opening-hours:hover,
+  .contact-info:hover {
+    background: linear-gradient(45deg, var(--clr-brown-2), var(--clr-red-1));
+    border: solid 5px var(--clr-red-1);
+    box-shadow: 7px -7px 5px black;
+    transform: translate(-5px, -5px);
+  }
+
+  .opening-hours-title,
+  .contact-title {
+    color: var(--clr-brown-1);
+    letter-spacing: 5px;
+    font-size: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  .opening-hours p {
+    color: whitesmoke;
+    font-size: 1.45rem;
+    padding: 1rem 0;
+  }
+
+  .menu-btn,
+  .reserve-btn {
+    color: var(--clr-brown-3);
+    background: whitesmoke;
+    border: solid 3px var(--clr-brown-3);
+    transition: var(--transition);
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+  }
+
+  .menu-btn:hover,
+  .reserve-btn:hover {
+    color: whitesmoke;
+    background: var(--clr-brown-3);
+    border: solid 3px whitesmoke;
+  }
+
+  .contact-phone,
+  .contact-email,
+  .contact-address {
+    color: whitesmoke;
+    font-size: 1.25rem;
+    padding: 0.5rem 0;
+  }
+
+  .fa-phone-square-alt,
+  .fa-envelope,
+  .fa-address-card {
+    color: goldenrod;
+    display: none;
+  }
+
+  /*
+  ==========
+  WRITE US 
+  ========== 
+  */
+
+  #write-us-container {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url("./images/images/write-us-bg.png") center/cover no-repeat;
+    padding: 1rem;
+    text-align: center;
+    font-family: var(--ff-primary-2);
+    letter-spacing: 2px;
+    user-select: auto;
+  }
+
+  .write-us-title {
+    color: whitesmoke;
+    font-size: 2.5rem;
+    padding: 2rem 0 3rem;
+    letter-spacing: 10px;
+  }
+
+  .form-info {
+    display: flex;
+    position: relative;
+    color: whitesmoke;
+    padding: 2rem 4rem 1rem;
+    background: var(--clr-red-1);
+    color: whitesmoke;
+    border-radius: 25px;
+    border: solid 3px transparent;
+    margin-bottom: 2rem;
+    clip-path: circle(25% at 100% 0%);
+    transition: var(--transition);
+  }
+
+  .fa-info-circle {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    font-size: 1.25rem;
+  }
+
+  .form-info:hover {
+    background: whitesmoke;
+    color: var(--clr-red-1);
+    box-shadow: 3px -3px 5px black;
+    transform: translate(-1px, -1px);
+    border: solid 3px var(--clr-red-1);
+    clip-path: circle(100%);
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+  }
+
+  .form-control {
+    max-width: 500px;
+    margin: 0.5rem 0;
+    border: solid 1px var(--clr-brown-4);
+    transition: var(--transition);
+  }
+
+  .form-control:hover {
+    background: #faecda;
+    box-shadow: 3px -3px 5px black;
+    transform: translate(-1px, -1px);
+  }
+
+  #message {
+    resize: none;
+  }
+
+  .button-container {
+    margin: 1rem 0;
+  }
+
+  .aszf {
+    flex-direction: row;
+    margin: 0.5rem;
+    color: whitesmoke;
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .aszf:hover {
+    color: #fc3;
+  }
+
+  .submit-btn {
+    display: block;
+    margin: 1rem 0 auto;
+    color: whitesmoke;
+    background: var(--clr-red-1);
+    border: solid 3px whitesmoke;
+    font-size: 1.35rem;
+    letter-spacing: 3px;
+    width: 250px;
+    transition: var(--transition);
+  }
+
+  .submit-btn:hover {
+    color: var(--clr-red-1);
+    background: whitesmoke;
+    border: solid 3px var(--clr-red-1);
+  }
+
+  /*
+  ==========
+  IMPRESSZUM 
+  ========== 
+  */
+
+  #impresszum-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    background: #333;
+    text-align: center;
+    color: whitesmoke;
+    padding: 1rem;
+    font-family: var(--ff-primary-2);
+    letter-spacing: 2px;
+    user-select: auto;
+  }
+
+  .footer-contacts,
+  .credit-cards,
+  .footer-aszf-container {
+    margin: 1.5rem 0;
+  }
+
+  .footer-title {
+    color: #fc3;
+  }
+
+  .footer-opening-hours p,
+  .footer-contact-info p {
+    font-size: 1.25rem;
+  }
+
+  .footer-icon {
+    display: inline;
+  }
+
+  .footer-aszf-item {
+    list-style: none;
+    transform: translateX(-15px);
+    line-height: 40px;
+  }
+
+  .footer-aszf-link {
+    color: whitesmoke;
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .footer-aszf-link:hover {
+    color: #fc3;
+  }
+
+  /*
+  ==========
+  CREATOR 
+  ========== 
+  */
+
+  #creator-container {
+    width: 100%;
+    background: black;
+    font-family: var(--ff-primary-2);
+    font-size: 0.75rem;
+    color: whitesmoke;
+    letter-spacing: 4px;
+    padding: 3rem;
+    text-align: center;
+  }
+
+  .heart {
+    color: hotpink;
+  }
+
+  .creator {
+    font-size: 1rem;
+    color: #fc3;
+  }
+
+  #date {
+    font-size: 1rem;
+    color: yellowgreen;
+  }
+
+  /*
+  ==========
+  HOME BUTTON 
+  ========== 
+  */
+
+  .home-btn {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    color: goldenrod;
+    font-size: 1.25rem;
+    transition: var(--transition);
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .home-btn:hover {
+    color: var(--clr-red-2);
+  }
+}
+
+@media screen and (min-width: 360px) {
+  .banner-title {
+    font-size: 2.5rem;
+    padding: 2.5rem;
+  }
+  .banner small {
+    font-size: 1.1rem;
+  }
+
+  .environment-article-title {
+    font-size: 1.75rem;
+  }
+
+  .environment-article p {
+    font-family: var(--ff-primary-3);
+    font-size: 1.2rem;
+  }
+
+  .contacts-title {
+    letter-spacing: 10px;
+  }
+}
+
+@media screen and (min-width: 480px) {
+  .banner-title {
+    font-size: 3rem;
+    padding: 3rem;
+  }
+  .banner small {
+    font-size: 1.5rem;
+  }
+}
