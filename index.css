@@ -301,15 +301,14 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-      url("./slogan.png") center/cover no-repeat;
+    background: linear-gradient(45deg, rgb(216, 216, 0), var(--clr-red-1));
   }
 
   .slogan-title {
     line-height: 35px;
-    color: yellow;
+    color: black;
     padding: 2rem;
-    letter-spacing: 10px;
+    letter-spacing: 20px;
     font-family: var(--ff-primary-2);
     transition: var(--transition);
   }
@@ -864,9 +863,5 @@ body {
   }
   .environment-article {
     padding: 2.5rem;
-  }
-  .test {
-    grid-column: span 2 / auto;
-    grid-row: span 2 / auto;
   }
 }
