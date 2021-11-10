@@ -224,6 +224,55 @@ body {
 
   /*
   ==========
+  ENVIRONMENT 
+  ========== 
+  */
+
+  #environment-container {
+    width: 100%;
+    background: #222;
+    user-select: auto;
+    padding: 1rem;
+  }
+
+  .environment-title {
+    text-align: center;
+    color: whitesmoke;
+    font-size: 2.5rem;
+    padding: 2rem 0 4rem;
+    font-family: var(--ff-primary-2);
+    letter-spacing: 10px;
+  }
+
+  .environment-content-container {
+    max-width: 1170px;
+    margin: 0 auto;
+    text-align: center;
+    display: grid;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .environment-article {
+    background: var(--clr-brown-1);
+    padding: 1rem;
+    font-family: var(--ff-primary-2);
+  }
+
+  .environment-article p {
+    font-family: var(--ff-primary-3);
+    font-size: 1rem;
+  }
+
+  .environment-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /*
+  ==========
   MENU 
   ========== 
   */
@@ -313,51 +362,6 @@ body {
     letter-spacing: 20px;
     font-family: var(--ff-primary-2);
     transition: var(--transition);
-  }
-
-  /*
-  ==========
-  ENVIRONMENT 
-  ========== 
-  */
-
-  #environment-container {
-    width: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("./wood-texture.png") center/cover no-repeat;
-    /* background: #333; */
-    user-select: auto;
-    padding: 1rem;
-  }
-
-  .environment-title {
-    text-align: center;
-    color: whitesmoke;
-    font-size: 2.5rem;
-    padding: 2rem 0 4rem;
-    font-family: var(--ff-primary-2);
-    letter-spacing: 10px;
-  }
-
-  .environment-content-container {
-    max-width: 1170px;
-    margin: 0 auto;
-    text-align: center;
-    display: grid;
-    gap: 1rem;
-    /* grid-template-columns: repeat(3, 1fr); */
-  }
-
-  .environment-article {
-    background: burlywood;
-    padding: 2rem;
-    font-family: var(--ff-primary-2);
-  }
-
-  .environment-img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
   }
 
   /*
@@ -693,7 +697,6 @@ body {
   }
 
   .environment-article p {
-    font-family: var(--ff-primary-3);
     font-size: 1.2rem;
   }
 
@@ -847,6 +850,35 @@ body {
   #environment-container {
     padding: 7rem;
   }
+
+  .environment-content-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .environment-content-container::before {
+    content: "";
+    position: absolute;
+    top: -0.5rem;
+    left: -0.5rem;
+    border-top: solid 10px whitesmoke;
+    border-left: solid 10px whitesmoke;
+    width: 20%;
+    height: 15%;
+    z-index: 1;
+  }
+
+  .environment-content-container::after {
+    content: "";
+    position: absolute;
+    bottom: -0.5rem;
+    right: -0.5rem;
+    border-bottom: solid 10px whitesmoke;
+    border-right: solid 10px whitesmoke;
+    width: 20%;
+    height: 15%;
+    z-index: 1;
+  }
+
   .environment-article {
     padding: 2.5rem;
   }
