@@ -301,7 +301,9 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: linear-gradient(45deg, rgb(216, 216, 0), var(--clr-red-1));
+    border-top: solid 1px blanchedalmond;
+    border-bottom: solid 1px blanchedalmond;
+    background: linear-gradient(45deg, #fc3, orangered, var(--clr-red-1));
   }
 
   .slogan-title {
@@ -323,6 +325,7 @@ body {
     width: 100%;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
       url("./wood-texture.png") center/cover no-repeat;
+    /* background: #333; */
     user-select: auto;
     padding: 1rem;
   }
@@ -337,41 +340,24 @@ body {
   }
 
   .environment-content-container {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .environment-item {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    max-width: 1170px;
+    margin: 0 auto;
+    text-align: center;
+    display: grid;
+    gap: 1rem;
+    /* grid-template-columns: repeat(3, 1fr); */
   }
 
   .environment-article {
-    color: whitesmoke;
-    padding: 1rem;
-    text-align: center;
-  }
-
-  .environment-article-title {
+    background: burlywood;
+    padding: 2rem;
     font-family: var(--ff-primary-2);
-    text-decoration: underline var(--clr-red-1);
-    font-size: 1.5rem;
-    padding: 1rem 0;
   }
 
-  .environment-article p {
-    font-family: var(--ff-primary-3);
-    font-size: 1.1rem;
-  }
-
-  .environment-img-1 {
-    width: 250px;
-    height: 250px;
-    margin: 0 auto;
-    border-radius: 10%;
-    border: solid 5px goldenrod;
-    user-select: none;
+  .environment-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 
   /*
