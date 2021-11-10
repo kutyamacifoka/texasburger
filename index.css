@@ -216,6 +216,7 @@ body {
   #environment-container {
     width: 100%;
     background: #222;
+    color: var(--clr-brown-3);
     user-select: text;
     padding: 1rem;
     border-bottom: solid 3px whitesmoke;
@@ -243,6 +244,10 @@ body {
     background: whitesmoke;
     padding: 1rem;
     font-family: var(--ff-primary-2);
+  }
+
+  .environment-article p {
+    font-family: var(--ff-primary-3);
   }
 
   .environment-img {
