@@ -182,21 +182,6 @@ body {
     font-family: var(--ff-primary-3);
   }
 
-  .down-btn {
-    font-size: 1.5rem;
-    position: absolute;
-    bottom: +20px;
-    align-self: flex-end;
-    color: var(--clr-brown-1);
-    background: none;
-    border: none;
-    transition: var(--transition);
-  }
-
-  .down-btn:hover {
-    color: var(--clr-red-1);
-  }
-
   /*
   ==========
   ABOUT US 
@@ -204,13 +189,13 @@ body {
   */
 
   #about-us-container {
-    background: url("./about-us-bg.png") fixed center/cover no-repeat;
+    background: url("./about-us-bg.png") center/cover no-repeat;
     padding: 2rem;
     font-size: 2rem;
     text-align: center;
     font-family: var(--ff-primary-2);
     letter-spacing: 2px;
-    user-select: auto;
+    user-select: text;
   }
 
   #about-us-container strong {
@@ -231,8 +216,9 @@ body {
   #environment-container {
     width: 100%;
     background: #222;
-    user-select: auto;
+    user-select: text;
     padding: 1rem;
+    border-bottom: solid 3px whitesmoke;
   }
 
   .environment-title {
@@ -250,7 +236,7 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
     padding: 1.5rem;
   }
 
@@ -270,6 +256,7 @@ body {
     height: 100%;
     max-height: 400px;
     object-fit: cover;
+    user-select: none;
   }
 
   /*
@@ -285,6 +272,7 @@ body {
     overflow: hidden;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
       url("./jakob-braun-5-QAGA7rO3g-unsplash.jpg") center/cover no-repeat;
+    border-bottom: solid 3px whitesmoke;
   }
 
   .menu-title {
@@ -294,7 +282,7 @@ body {
     padding: 2rem 0 4rem;
     font-family: var(--ff-primary-2);
     letter-spacing: 10px;
-    user-select: auto;
+    user-select: text;
   }
 
   .menu-grid-container {
@@ -355,7 +343,7 @@ body {
   }
 
   .slogan-title {
-    line-height: 35px;
+    line-height: 50px;
     color: black;
     padding: 2rem;
     letter-spacing: 20px;
@@ -369,15 +357,19 @@ body {
   */
 
   #contacts-container {
-    background: url("./about-us-bg.png") center/cover no-repeat;
+    /* background: url("./about-us-bg.png") center/cover no-repeat; */
+    background: var(--clr-brown-4);
+    border-top: solid 3px whitesmoke;
+    border-bottom: solid 3px whitesmoke;
     padding: 1rem;
     text-align: center;
     font-family: var(--ff-primary-2);
     letter-spacing: 2px;
-    user-select: auto;
+    user-select: text;
   }
 
   .contacts-title {
+    color: whitesmoke;
     font-size: 2.5rem;
     padding: 2rem 0;
   }
@@ -466,7 +458,7 @@ body {
     text-align: center;
     font-family: var(--ff-primary-2);
     letter-spacing: 2px;
-    user-select: auto;
+    user-select: text;
   }
 
   .write-us-title {
@@ -579,7 +571,7 @@ body {
     padding: 1rem;
     font-family: var(--ff-primary-2);
     letter-spacing: 2px;
-    user-select: auto;
+    user-select: text;
   }
 
   .footer-contacts,
@@ -632,6 +624,7 @@ body {
     letter-spacing: 4px;
     padding: 3rem;
     text-align: center;
+    border-top: solid 3px whitesmoke;
   }
 
   .heart {
@@ -840,8 +833,7 @@ body {
   .banner,
   #menu-container,
   #environment-container,
-  #contacts-container,
-  #slogan-container {
+  #write-us-container {
     background-attachment: fixed;
   }
 
@@ -851,6 +843,10 @@ body {
 
   .environment-article {
     padding: 2.5rem;
+  }
+
+  .menu-grid-container {
+    padding: 2rem;
   }
 }
 
@@ -871,20 +867,18 @@ body {
   .environment-img {
     max-height: none;
   }
+  .lg-grid {
+    grid-column: span 2 / 3;
+    grid-row: span 2 / 3;
+  }
 
-  .menu-grid-container {
-    display: grid;
-    gap: 0.75rem;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    padding: 5rem;
+  .lg-grid-item {
+    height: calc(400px + 0.75rem);
   }
 }
 
 @media screen and (min-width: 1366px) {
   .menu-grid-container {
-    display: grid;
-    gap: 0.75rem;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    padding: 2rem 10rem;
   }
 }
