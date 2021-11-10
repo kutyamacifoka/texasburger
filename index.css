@@ -204,7 +204,7 @@ body {
   */
 
   #about-us-container {
-    background: url("./about-us-bg.png") center/cover no-repeat;
+    background: url("./about-us-bg.png") fixed center/cover no-repeat;
     padding: 2rem;
     font-size: 2rem;
     text-align: center;
@@ -351,8 +351,6 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-top: solid 1px blanchedalmond;
-    border-bottom: solid 1px blanchedalmond;
     background: linear-gradient(45deg, #fc3, orangered, var(--clr-red-1));
   }
 
@@ -362,7 +360,6 @@ body {
     padding: 2rem;
     letter-spacing: 20px;
     font-family: var(--ff-primary-2);
-    transition: var(--transition);
   }
 
   /*
@@ -873,5 +870,21 @@ body {
 
   .environment-img {
     max-height: none;
+  }
+
+  .menu-grid-container {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    padding: 5rem;
+  }
+}
+
+@media screen and (min-width: 1366px) {
+  .menu-grid-container {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    padding: 2rem 10rem;
   }
 }
