@@ -236,19 +236,13 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
     padding: 1.5rem;
   }
 
   .environment-article {
-    background: var(--clr-brown-1);
+    background: whitesmoke;
     padding: 1rem;
     font-family: var(--ff-primary-2);
-  }
-
-  .environment-article p {
-    font-family: var(--ff-primary-3);
-    font-size: 1rem;
   }
 
   .environment-img {
@@ -687,10 +681,6 @@ body {
     font-size: 1.75rem;
   }
 
-  .environment-article p {
-    font-size: 1.2rem;
-  }
-
   .contacts-title {
     letter-spacing: 10px;
   }
@@ -715,7 +705,6 @@ body {
   }
 
   .environment-article p {
-    font-family: var(--ff-primary-3);
     font-size: 1.35rem;
   }
 
@@ -879,6 +868,6 @@ body {
 
 @media screen and (min-width: 1366px) {
   .menu-grid-container {
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
 }
