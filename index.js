@@ -54,6 +54,13 @@ class UI {
             item.classList.add("menu-grid-clr-border");
           }
         });
+        item.addEventListener("mouseleave", () => {
+          console.log("sdasdasad");
+          gridItem.forEach((item) => {
+            item.classList.remove("grid-filter");
+            item.classList.remove("menu-grid-clr-border");
+          });
+        });
       });
     } catch (error) {
       console.log(error);

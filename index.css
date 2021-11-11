@@ -295,6 +295,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     max-width: 1500px;
     margin: 0 auto;
+    padding: 1rem 0 2rem;
   }
 
   .menu-grid-item {
@@ -321,11 +322,11 @@ body {
     border-top: solid 3px yellow;
     border-bottom: solid 3px red;
     border-radius: 4%;
-    filter: grayscale(15%);
+    filter: grayscale(5%);
   }
 
   .grid-filter {
-    opacity: 0.7;
+    opacity: 0.5;
     transition: var(--transition);
   }
 
@@ -333,9 +334,9 @@ body {
   .lg-menu-grid-title {
     display: flex;
     position: absolute;
-    opacity: 1;
+    display: flex;
     color: whitesmoke;
-    font-size: 3.5rem;
+    font-size: 3rem;
     font-family: var(--ff-primary-2);
     letter-spacing: 3px;
     transition: var(--transition);
@@ -344,7 +345,7 @@ body {
 
   .menu-grid-item:hover .menu-grid-title,
   .lg-menu-grid-item:hover .lg-menu-grid-title {
-    opacity: 0;
+    display: none;
   }
 
   /*
