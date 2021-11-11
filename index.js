@@ -9,6 +9,7 @@ let menuGrid = document.querySelector(".menu-grid-container");
 
 // CLASSES
 class UI {
+  // display menu grid items
   async displayGrid() {
     try {
       let contentful = await client.getEntries({
@@ -47,8 +48,10 @@ class UI {
           if (e.target.id === item.id) {
             gridItem.forEach((item) => {
               item.classList.add("grid-filter");
+              item.classList.remove("menu-grid-clr-border");
             });
             item.classList.remove("grid-filter");
+            item.classList.add("menu-grid-clr-border");
           }
         });
       });
