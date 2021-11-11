@@ -23,7 +23,8 @@ VARIABLES
   --clr-brown-1: #f2d6b3;
   --clr-brown-2: #d9a76a;
   --clr-brown-3: #40322b;
-  --clr-brown-4: #2b2724;
+  --clr-brown-4: #2a211c;
+  --clr-brown-5: #2b2724;
   /* shades of red */
   --clr-red-1: #d9483b;
   --clr-red-2: #a62929;
@@ -65,7 +66,7 @@ body {
     padding: 0;
     position: fixed;
     width: 100%;
-    background: var(--clr-brown-4);
+    background: var(--clr-brown-5);
     z-index: 9999;
   }
 
@@ -95,7 +96,7 @@ body {
     font-size: 1.25rem;
     letter-spacing: 2px;
     color: var(--clr-brown-1);
-    padding: 1rem 0;
+    padding: 0.75rem 1.25rem;
     transition: var(--transition);
   }
 
@@ -104,14 +105,19 @@ body {
   }
 
   .nav-link:hover {
+    transform: translateX(10px);
     color: var(--clr-red-2);
     background: var(--clr-brown-1);
+  }
+
+  .media-icon-container {
+    padding: 1rem;
+    display: flex;
   }
 
   .media-icon {
     text-decoration: none;
     font-size: 2rem;
-    padding-bottom: 0.5rem;
     color: var(--clr-brown-1);
     transition: var(--transition);
   }
@@ -215,7 +221,7 @@ body {
 
   #environment-container {
     width: 100%;
-    background: #2a211c;
+    background: var(--clr-brown-4);
     color: var(--clr-brown-3);
     user-select: text;
     padding: 1rem;
@@ -386,22 +392,22 @@ body {
   .contact-info {
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
     padding: 2rem;
-    border-radius: 25px;
-    border: dotted 5px goldenrod;
+    /* border-radius: 25px; */
+    border: inset 5px goldenrod;
     transition: var(--transition);
   }
 
   .opening-hours:hover,
   .contact-info:hover {
-    background: linear-gradient(45deg, var(--clr-brown-2), var(--clr-red-1));
-    border: solid 5px var(--clr-red-1);
+    background: linear-gradient(45deg, var(--clr-brown-3), var(--clr-red-2));
+    border: outset 5px whitesmoke;
     box-shadow: 7px -7px 5px black;
     transform: translate(-5px, -5px);
   }
 
   .opening-hours-title,
   .contact-title {
-    color: var(--clr-brown-1);
+    color: whitesmoke;
     letter-spacing: 5px;
     font-size: 1.5rem;
     margin: 2.5rem 0;
@@ -417,7 +423,7 @@ body {
   .reserve-btn {
     color: var(--clr-brown-3);
     background: whitesmoke;
-    border: solid 3px var(--clr-brown-3);
+    border: solid 3px var(--clr-red-1);
     transition: var(--transition);
     font-size: 1.25rem;
     padding: 0.5rem 1rem;
@@ -427,7 +433,7 @@ body {
   .menu-btn:hover,
   .reserve-btn:hover {
     color: whitesmoke;
-    background: var(--clr-brown-3);
+    background: var(--clr-red-1);
     border: solid 3px whitesmoke;
   }
 
@@ -509,7 +515,7 @@ body {
   .form-control {
     max-width: 500px;
     margin: 0.5rem 0;
-    border: solid 1px var(--clr-brown-4);
+    border: solid 1px var(--clr-brown-5);
     transition: var(--transition);
   }
 
@@ -825,9 +831,16 @@ body {
     justify-content: center;
   }
 
+  .nav-link:link {
+    padding: 1.25rem;
+  }
+
+  .nav-link:hover {
+    transform: none;
+  }
+
   .banner,
   #menu-container,
-  #environment-container,
   #write-us-container {
     background-attachment: fixed;
   }
