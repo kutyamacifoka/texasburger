@@ -215,7 +215,7 @@ body {
 
   #environment-container {
     width: 100%;
-    background: #222;
+    background: #2a211c;
     color: var(--clr-brown-3);
     user-select: text;
     padding: 1rem;
@@ -237,7 +237,7 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 4rem 1.5rem;
   }
 
   .environment-article {
@@ -269,7 +269,7 @@ body {
     background: #666;
     padding: 2rem 1rem;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("./") center/cover no-repeat;
+      url("./wood-texture.png") center/cover no-repeat;
     border-bottom: solid 3px whitesmoke;
   }
 
@@ -442,7 +442,7 @@ body {
   .fa-phone-square-alt,
   .fa-envelope,
   .fa-address-card {
-    color: goldenrod;
+    color: var(--clr-red-1);
     display: none;
   }
 
@@ -582,7 +582,7 @@ body {
   }
 
   .footer-title {
-    color: #fc3;
+    color: var(--clr-red-1);
   }
 
   .footer-opening-hours p,
@@ -639,7 +639,6 @@ body {
 
   #date {
     font-size: 1rem;
-    color: yellowgreen;
   }
 
   /*
