@@ -423,7 +423,7 @@ body {
   .reserve-btn {
     color: var(--clr-brown-3);
     background: whitesmoke;
-    border: solid 3px var(--clr-red-1);
+    border: solid 3px transparent;
     transition: var(--transition);
     font-size: 1.25rem;
     padding: 0.5rem 1rem;
