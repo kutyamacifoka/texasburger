@@ -232,7 +232,7 @@ body {
     text-align: center;
     color: whitesmoke;
     font-size: 2.5rem;
-    padding: 2rem 0 4rem;
+    padding: 1rem;
     font-family: var(--ff-primary-2);
     letter-spacing: 10px;
   }
@@ -243,7 +243,7 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    padding: 4rem 1.5rem;
+    padding: 1rem 1.5rem 2rem;
   }
 
   .environment-article {
@@ -283,7 +283,7 @@ body {
     text-align: center;
     color: whitesmoke;
     font-size: 2.5rem;
-    padding: 2rem 0 4rem;
+    padding: 1rem;
     font-family: var(--ff-primary-2);
     letter-spacing: 10px;
     user-select: text;
@@ -295,6 +295,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     max-width: 1500px;
     margin: 0 auto;
+    padding: 1rem 1.5rem 2rem;
   }
 
   .menu-grid-item {
@@ -364,7 +365,6 @@ body {
   */
 
   #contacts-container {
-    /* background: url("./about-us-bg.png") center/cover no-repeat; */
     background: var(--clr-brown-4);
     border-top: solid 3px whitesmoke;
     border-bottom: solid 3px whitesmoke;
@@ -378,21 +378,20 @@ body {
   .contacts-title {
     color: whitesmoke;
     font-size: 2.5rem;
-    padding: 2rem 0;
+    padding: 1rem;
   }
 
   .contacts-item {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
-    margin: 3rem 0;
+    margin: 1rem 1.5rem 2rem;
   }
 
   .opening-hours,
   .contact-info {
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
     padding: 2rem;
-    /* border-radius: 25px; */
     border: inset 5px goldenrod;
     transition: var(--transition);
   }
