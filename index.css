@@ -189,7 +189,7 @@ body {
   */
 
   #about-us-container {
-    background: url("./about-us-bg.png") center/cover no-repeat;
+    background: beige;
     padding: 2rem;
     font-size: 2rem;
     text-align: center;
@@ -268,9 +268,8 @@ body {
     width: 100%;
     background: #666;
     padding: 2rem 1rem;
-    overflow: hidden;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("./jakob-braun-5-QAGA7rO3g-unsplash.jpg") center/cover no-repeat;
+      url("./") center/cover no-repeat;
     border-bottom: solid 3px whitesmoke;
   }
 
@@ -288,6 +287,8 @@ body {
     display: grid;
     gap: 0.75rem;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    max-width: 1500px;
+    margin: 0 auto;
   }
 
   .menu-grid-item {
@@ -347,6 +348,7 @@ body {
     padding: 2rem;
     letter-spacing: 20px;
     font-family: var(--ff-primary-2);
+    font-weight: 550;
   }
 
   /*
@@ -840,7 +842,7 @@ body {
   }
 
   .menu-grid-container {
-    padding: 2rem;
+    padding: 4rem 2rem;
   }
 }
 
