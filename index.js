@@ -74,7 +74,6 @@ class UI {
   // show home button
   displayHomeBtn() {
     window.addEventListener("scroll", () => {
-      console.log(scrollY);
       if (scrollY > 50) {
         homeBtn.classList.add("show-home-btn");
       } else {
