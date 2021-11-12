@@ -55,7 +55,6 @@ class UI {
           }
         });
         item.addEventListener("mouseleave", () => {
-          console.log("sdasdasad");
           gridItem.forEach((item) => {
             item.classList.remove("grid-filter");
             item.classList.remove("menu-grid-clr-border");
