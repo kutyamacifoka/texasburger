@@ -303,7 +303,6 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
-    overflow: hidden;
     transition: var(--transition);
   }
 
@@ -334,7 +333,6 @@ body {
   .lg-menu-grid-title {
     display: flex;
     position: absolute;
-    display: flex;
     color: whitesmoke;
     font-size: 3rem;
     font-family: var(--ff-primary-2);
