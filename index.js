@@ -17,15 +17,18 @@ class UI {
       });
 
       let displayGridItems = await contentful.items;
+      displayGridItems = displayGridItems.map((item) => {
+        const { title } = item.fields;
+        const { id } = item.sys;
+        const image = item.fields.image.fields.file.url;
+        return { title, id, image };
+      });
+
+      let firstImgId = displayGridItems[0].id;
+
       displayGridItems = displayGridItems
         .map((item) => {
-          const { title } = item.fields;
-          const { id } = item.sys;
-          const image = item.fields.image.fields.file.url;
-          return { title, id, image };
-        })
-        .map((item) => {
-          if (item.id == "4ix1oQNokTc2VFY3RJkiYt") {
+          if (item.id == firstImgId) {
             return `<div class="menu-grid-item lg-menu-grid-item">
                 <img src="${item.image}" class="menu-grid-img lg-grid-img" id="${item.id}" alt="${item.title}" srcset="">
                 <p class="lg-menu-grid-title" data-id="${item.title}">${item.title}</p>
