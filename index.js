@@ -6,6 +6,8 @@ const client = contentful.createClient({
 
 // VARIABLES
 let menuGrid = document.querySelector(".menu-grid-container");
+let date = document.querySelector("#date");
+const homeBtn = document.querySelector(".home-btn");
 
 // CLASSES
 class UI {
@@ -68,10 +70,32 @@ class UI {
       console.log(error);
     }
   }
+
+  // show home button
+  displayHomeBtn() {
+    window.addEventListener("scroll", () => {
+      console.log(scrollY);
+      if (scrollY > 50) {
+        homeBtn.classList.add("show-home-btn");
+      } else {
+        homeBtn.classList.remove("show-home-btn");
+      }
+    });
+  }
+
+  // show date
+  displayDate() {
+    date.innerHTML = new Date().getFullYear();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const grid = new UI();
+  const menuGrid = new UI();
+  const showDate = new UI();
+  const showHomeBtn = new UI();
 
-  grid.displayGrid().then();
+  menuGrid
+    .displayGrid()
+    .then(showDate.displayDate())
+    .then(showHomeBtn.displayHomeBtn());
 });

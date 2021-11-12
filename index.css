@@ -667,13 +667,18 @@ body {
   */
 
   .home-btn {
+    opacity: 0;
     position: fixed;
     right: 25px;
     bottom: 25px;
     color: goldenrod;
     font-size: 1.25rem;
-    transition: var(--transition);
     animation: bounce 2s ease-in-out infinite;
+  }
+
+  .show-home-btn {
+    opacity: 1;
+    transition: var(--transition);
   }
 
   @keyframes bounce {
