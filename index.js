@@ -6,29 +6,32 @@ const client = contentful.createClient({
 
 // VARIABLES
 let menuGrid = document.querySelector(".menu-grid-container");
+let sliderContainer = document.querySelector(".slider-container");
+const prevSliderBtn = document.querySelector(".fa-chevron-left");
+const nextSliderBtn = document.querySelector(".fa-chevron-right");
 let date = document.querySelector("#date");
 const homeBtn = document.querySelector(".home-btn");
 
 // CLASSES
 class UI {
   // display menu grid items
-  async displayGrid() {
+  async displayMenuGrid() {
     try {
       let contentful = await client.getEntries({
         content_type: "texasBurger",
       });
 
-      let displayGridItems = await contentful.items;
-      displayGridItems = displayGridItems.map((item) => {
+      let displayMenuGridItems = await contentful.items;
+      displayMenuGridItems = displayMenuGridItems.map((item) => {
         const { title } = item.fields;
         const { id } = item.sys;
         const image = item.fields.image.fields.file.url;
         return { title, id, image };
       });
 
-      let firstImgId = displayGridItems[0].id;
+      let firstImgId = displayMenuGridItems[0].id;
 
-      displayGridItems = displayGridItems
+      displayMenuGridItems = displayMenuGridItems
         .map((item) => {
           if (item.id == firstImgId) {
             return `<div class="menu-grid-item lg-menu-grid-item">
@@ -43,7 +46,7 @@ class UI {
         })
         .join("");
 
-      menuGrid.innerHTML = displayGridItems;
+      menuGrid.innerHTML = displayMenuGridItems;
 
       // grid filter
       const gridItem = [...menuGrid.querySelectorAll(".menu-grid-img")];
@@ -71,6 +74,44 @@ class UI {
     }
   }
 
+  // display menu slider
+  async displayMenuSlider() {
+    try {
+      let contentful = await client.getEntries({
+        content_type: "texasBurger",
+      });
+
+      let displayMenuSliderItems = await contentful.items;
+      displayMenuSliderItems = displayMenuSliderItems
+        .map((item) => {
+          const { title } = item.fields;
+          const { id } = item.sys;
+          const image = item.fields.image.fields.file.url;
+          return { title, id, image };
+        })
+        .map((item) => {
+          return `<div class="slider">
+                    <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                    <p class="slider-name">${item.title}</p>
+                </div>`;
+        })
+        .join("");
+
+      sliderContainer.innerHTML = displayMenuSliderItems;
+
+      const slider = [...document.querySelectorAll(".slider")];
+      slider.forEach((slide) => {
+        console.log();
+        sliderContainer.style.width = `${
+          slide.getBoundingClientRect().width
+        } * ${slider.length - 1}px`;
+      });
+      console.log(sliderContainer.getBoundingClientRect().width);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   // show home button
   displayHomeBtn() {
     window.addEventListener("scroll", () => {
@@ -90,11 +131,13 @@ class UI {
 
 document.addEventListener("DOMContentLoaded", () => {
   const menuGrid = new UI();
+  const menuSlider = new UI();
   const showDate = new UI();
   const showHomeBtn = new UI();
 
   menuGrid
-    .displayGrid()
+    .displayMenuGrid()
+    .then(menuSlider.displayMenuSlider())
     .then(showDate.displayDate())
     .then(showHomeBtn.displayHomeBtn());
 });

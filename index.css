@@ -467,6 +467,86 @@ body {
 
   /*
   ==========
+  SLIDER 
+  ========== 
+  */
+
+  #menu-slider-container {
+    width: 100%;
+    background: #222;
+  }
+
+  .menu-title-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .menu-slider-title {
+    text-align: center;
+    color: whitesmoke;
+    font-size: 2.5rem;
+    padding: 1rem;
+    font-family: var(--ff-primary-2);
+    letter-spacing: 10px;
+    user-select: text;
+  }
+
+  .menu-center {
+    display: flex;
+    justify-content: center;
+    padding: 4rem 2rem;
+  }
+
+  .btn-container {
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+  }
+
+  .slider-btn {
+    font-size: 2rem;
+    color: whitesmoke;
+    transition: var(--transition);
+  }
+
+  .slider-btn:hover {
+    color: goldenrod;
+  }
+
+  .slider-container {
+    display: grid;
+    grid-auto-flow: column;
+    width: min-content;
+    overflow: hidden;
+    position: relative;
+    background: red;
+  }
+
+  .slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 300px;
+    margin: 0 0.25rem;
+  }
+
+  .slider-img {
+    border-radius: 25px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .slider-name {
+    position: absolute;
+    font-size: 2rem;
+    color: black;
+  }
+
+  /*
+  ==========
   WRITE US 
   ========== 
   */
