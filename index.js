@@ -7,8 +7,7 @@ const client = contentful.createClient({
 // VARIABLES
 let menuGrid = document.querySelector(".menu-grid-container");
 let sliderContainer = document.querySelector(".slider-container");
-const prevSliderBtn = document.querySelector(".fa-chevron-left");
-const nextSliderBtn = document.querySelector(".fa-chevron-right");
+
 let date = document.querySelector("#date");
 const homeBtn = document.querySelector(".home-btn");
 
@@ -98,15 +97,6 @@ class UI {
         .join("");
 
       sliderContainer.innerHTML = displayMenuSliderItems;
-
-      const slider = [...document.querySelectorAll(".slider")];
-      slider.forEach((slide) => {
-        console.log();
-        sliderContainer.style.width = `${
-          slide.getBoundingClientRect().width
-        } * ${slider.length - 1}px`;
-      });
-      console.log(sliderContainer.getBoundingClientRect().width);
     } catch (error) {
       console.log(error);
     }
