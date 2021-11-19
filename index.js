@@ -5,12 +5,17 @@ const client = contentful.createClient({
 });
 
 // VARIABLES
+// menu grid
 let menuGrid = document.querySelector(".menu-grid-container");
+// menu slider
 let menuSlider = document.getElementById("menu-slider-container");
 let menuSliderTitle = document.querySelectorAll(".menu-slider-title");
 let sliderContainer = document.querySelector(".slider-container");
+let popularContainer = document.querySelector(".popular-container");
 const sliderBtns = [...document.querySelectorAll(".slider-btn")];
+// date
 let date = document.querySelector("#date");
+// home btn
 const homeBtn = document.querySelector(".home-btn");
 
 // CLASSES
@@ -97,6 +102,7 @@ class UI {
         })
         .map((item) => {
           return `<div class="slider">
+          <i class="far fa-star"></i>
                     <img src="${item.image}" class="slider-img" id="${item.title}" alt="${item.title}" srcset="">
                     <p class="slider-name">${item.title}</p>
                 </div>`;
@@ -141,6 +147,12 @@ class UI {
 
       addFilter(slider);
 
+      const addFavourite = [...document.querySelectorAll(".fa-star")];
+
+      addFavourite.forEach((btn) => {
+        btn.addEventListener("click", (e) => {});
+      });
+
       // display menu slider
       function displaySlider() {
         menuSlider.addEventListener("click", (e) => {
@@ -150,8 +162,9 @@ class UI {
               title.disabled = false;
               e.target.classList.add("menu-active");
               e.target.disabled = true;
+              sliderContainer.classList.remove("hide-slider");
+              popularContainer.classList.add("hide-slider");
             });
-            sliderContainer.innerHTML = displayMenuSliderItems;
           }
           if (e.target.id == "favourite") {
             menuSliderTitle.forEach((title) => {
@@ -159,8 +172,9 @@ class UI {
               title.disabled = false;
               e.target.classList.add("menu-active");
               e.target.disabled = true;
+              popularContainer.classList.remove("hide-slider");
+              sliderContainer.classList.add("hide-slider");
             });
-            sliderContainer.innerHTML = "dddddddddd";
           }
         });
       }
@@ -188,15 +202,16 @@ class UI {
   }
 }
 
+class Storeage {}
+
 document.addEventListener("DOMContentLoaded", () => {
   const menuGrid = new UI();
   const menuSlider = new UI();
   const showDate = new UI();
   const showHomeBtn = new UI();
 
-  menuGrid
-    .displayMenuGrid()
-    .then(menuSlider.displayMenuSlider())
-    .then(showDate.displayDate())
-    .then(showHomeBtn.displayHomeBtn());
+  menuGrid.displayMenuGrid();
+  menuSlider.displayMenuSlider();
+  showDate.displayDate();
+  showHomeBtn.displayHomeBtn();
 });

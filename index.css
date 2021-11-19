@@ -503,17 +503,24 @@ body {
   }
 
   .menu-center {
+    position: relative;
     display: flex;
     justify-content: center;
     gap: 1rem;
     padding: 4rem 1rem;
   }
 
-  .slider-container {
+  .slider-container,
+  .popular-container {
     display: flex;
     overflow: hidden;
     max-width: calc((5 * 300px) + (4 * 0.5rem));
     gap: 0.5rem;
+  }
+
+  .hide-slider {
+    position: absolute;
+    z-index: -1;
   }
 
   .slider {
@@ -521,13 +528,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
 
   .slider-img {
-    border-radius: 25px;
+    position: relative;
+    object-fit: cover;
     height: 300px;
     width: 300px;
-    object-fit: cover;
+    border-radius: 25px;
   }
 
   .slider-name {
@@ -551,6 +560,16 @@ body {
 
   .slider-btn:hover {
     color: goldenrod;
+  }
+
+  .fa-star {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fc3;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 1;
   }
 
   /*
