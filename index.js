@@ -28,15 +28,23 @@ class UI {
       });
 
       let displayMenuGridItems = await contentful.items;
-      displayMenuGridItems = displayMenuGridItems.map((item) => {
-        const { title } = item.fields;
-        const { id } = item.sys;
-        const image = item.fields.image.fields.file.url;
-        return { title, id, image };
-      });
+      displayMenuGridItems = displayMenuGridItems
+        .map((item) => {
+          const { title } = item.fields;
+          const itemClass = item.fields.class;
+          const { id } = item.sys;
+          const image = item.fields.image.fields.file.url;
+          return { title, itemClass, id, image };
+        })
+        .filter((item) => {
+          if (item.itemClass === "grid-item") {
+            return item;
+          }
+        });
 
       let firstImgId = displayMenuGridItems[0].id;
 
+      // iterate over items
       displayMenuGridItems = displayMenuGridItems
         .map((item) => {
           if (item.id == firstImgId) {
@@ -96,9 +104,15 @@ class UI {
       displayMenuSliderItems = displayMenuSliderItems
         .map((item) => {
           const { title } = item.fields;
+          const itemClass = item.fields.class;
           const { id } = item.sys;
           const image = item.fields.image.fields.file.url;
-          return { title, id, image };
+          return { title, itemClass, id, image };
+        })
+        .filter((item) => {
+          if (item.itemClass === "slider-item") {
+            return item;
+          }
         })
         .map((item) => {
           return `<div class="slider">
@@ -147,10 +161,16 @@ class UI {
 
       addFilter(slider);
 
+      // add to favourites
       const addFavourite = [...document.querySelectorAll(".fa-star")];
 
       addFavourite.forEach((btn) => {
-        btn.addEventListener("click", (e) => {});
+        btn.addEventListener("click", (e) => {
+          let favourite = e.target.parentElement;
+          favourite.classList.toggle("toFavourites");
+          if (favourite.classList.contains("toFavourites")) {
+          }
+        });
       });
 
       // display menu slider
@@ -202,7 +222,9 @@ class UI {
   }
 }
 
-class Storeage {}
+class Storeage {
+  static saveToLocalStorage() {}
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const menuGrid = new UI();
