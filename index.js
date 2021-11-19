@@ -109,14 +109,15 @@ class UI {
           const image = item.fields.image.fields.file.url;
           return { title, itemClass, id, image };
         })
-        .filter((item) => {
-          if (item.itemClass === "slider-item") {
-            return item;
-          }
-        })
+        // .filter((item) => {
+        //   if (item.itemClass === "slider-item") {
+        //     return item;
+        //   }
+        // })
         .map((item) => {
           return `<div class="slider">
-          <i class="far fa-star"></i>
+          <i class="far fa-star favourite"></i>
+          <i class="fas fa-star unfavourite"></i>
                     <img src="${item.image}" class="slider-img" id="${item.title}" alt="${item.title}" srcset="">
                     <p class="slider-name">${item.title}</p>
                 </div>`;
@@ -168,11 +169,8 @@ class UI {
         btn.addEventListener("click", (e) => {
           let favourite = e.target.parentElement;
           favourite.classList.toggle("toFavourites");
-          if (favourite.classList.contains("toFavourites")) {
-          }
         });
       });
-
       // display menu slider
       function displaySlider() {
         menuSlider.addEventListener("click", (e) => {
@@ -182,8 +180,8 @@ class UI {
               title.disabled = false;
               e.target.classList.add("menu-active");
               e.target.disabled = true;
-              sliderContainer.classList.remove("hide-slider");
-              popularContainer.classList.add("hide-slider");
+              sliderContainer.classList.remove("hide-item");
+              popularContainer.classList.add("hide-item");
             });
           }
           if (e.target.id == "favourite") {
@@ -192,8 +190,8 @@ class UI {
               title.disabled = false;
               e.target.classList.add("menu-active");
               e.target.disabled = true;
-              popularContainer.classList.remove("hide-slider");
-              sliderContainer.classList.add("hide-slider");
+              popularContainer.classList.remove("hide-item");
+              sliderContainer.classList.add("hide-item");
             });
           }
         });
