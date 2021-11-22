@@ -193,19 +193,28 @@ class UI {
         });
       }
     });
+  }
 
+  addToFavourite() {
     // add to favourites
     let starContainer = [...document.querySelectorAll(".star-container")];
 
     starContainer.forEach((container) => {
       container.addEventListener("click", (e) => {
-        let favourite = e.currentTarget.parentElement;
-        favourite.classList.toggle("favourite");
-        if (favourite.classList.contains("favourite")) {
-          container.innerHTML = `<i class="fas fa-star favourite"></i>`;
-        } else {
-          container.innerHTML = `<i class="far fa-star unfavourite"></i>`;
+        let iconId = e.currentTarget.id;
+        let itemId = e.currentTarget.parentElement.id;
+        let test = { iconId, itemId };
+        console.log(test);
+
+        if (e.target.classList.contains("favourite")) {
+          container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
+          favouriteArray.push(test);
         }
+        if (e.target.classList.contains("unfavourite")) {
+          container.innerHTML = `<i class="far fa-star favourite"></i>`;
+          favouriteArray.pop(favourite);
+        }
+        Storage.saveToLocalStorage(favouriteArray);
       });
     });
   }
@@ -229,7 +238,9 @@ class UI {
 
 // save to local storage
 class Storage {
-  static saveToLocalStorage() {}
+  static saveToLocalStorage(id) {
+    localStorage.setItem("favourite", JSON.stringify(id));
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -241,6 +252,8 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((gridItems) => ui.displayMenuGridItems(gridItems))
     .then(products.getSliderItems)
     .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
-    .then(ui.displayHomeBtn())
-    .then(ui.displayDate());
+    .then(() => ui.addToFavourite());
+
+  // .then(ui.displayHomeBtn())
+  // .then(ui.displayDate());
 });
