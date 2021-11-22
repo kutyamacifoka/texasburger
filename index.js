@@ -115,10 +115,11 @@ class UI {
         //   }
         // })
         .map((item) => {
-          return `<div class="slider">
-          <i class="far fa-star favourite"></i>
-          <i class="fas fa-star unfavourite"></i>
-                    <img src="${item.image}" class="slider-img" id="${item.title}" alt="${item.title}" srcset="">
+          return `<div class="slider" id="${item.id}">
+                  <div class="star-container" id="${item.id}">
+                      <i class="far fa-star favourite"></i>
+                  </div>
+                    <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
                     <p class="slider-name">${item.title}</p>
                 </div>`;
         })
@@ -163,14 +164,21 @@ class UI {
       addFilter(slider);
 
       // add to favourites
-      const addFavourite = [...document.querySelectorAll(".fa-star")];
+      let starContainer = [...document.querySelectorAll(".star-container")];
 
-      addFavourite.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          let favourite = e.target.parentElement;
-          favourite.classList.toggle("toFavourites");
+      starContainer.forEach((container) => {
+        container.addEventListener("click", (e) => {
+          let favourite = e.currentTarget.parentElement;
+          favourite.classList.toggle("favourite");
+
+          if (favourite.classList.contains("favourite")) {
+            container.innerHTML = `<i class="fas fa-star favourite"></i>`;
+          } else {
+            container.innerHTML = `<i class="far fa-star unfavourite"></i>`;
+          }
         });
       });
+
       // display menu slider
       function displaySlider() {
         menuSlider.addEventListener("click", (e) => {
