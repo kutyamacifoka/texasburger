@@ -129,7 +129,7 @@ class UI {
       .map((item) => {
         return `<div class="slider" id="${item.id}">
                   <div class="star-container" id="${item.id}">
-                      <i class="far fa-star favourite"></i>
+                    <i class="far fa-star favourite"></i>
                   </div>
                     <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
                     <p class="slider-name">${item.title}</p>
@@ -193,30 +193,9 @@ class UI {
         });
       }
     });
-  }
 
-  addToFavourite() {
-    // add to favourites
     let starContainer = [...document.querySelectorAll(".star-container")];
-
-    starContainer.forEach((container) => {
-      container.addEventListener("click", (e) => {
-        let iconId = e.currentTarget.id;
-        let itemId = e.currentTarget.parentElement.id;
-        let test = { iconId, itemId };
-        console.log(test);
-
-        if (e.target.classList.contains("favourite")) {
-          container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
-          favouriteArray.push(test);
-        }
-        if (e.target.classList.contains("unfavourite")) {
-          container.innerHTML = `<i class="far fa-star favourite"></i>`;
-          favouriteArray.pop(favourite);
-        }
-        Storage.saveToLocalStorage(favouriteArray);
-      });
-    });
+    return starContainer;
   }
 
   // show home button
@@ -237,11 +216,7 @@ class UI {
 }
 
 // save to local storage
-class Storage {
-  static saveToLocalStorage(id) {
-    localStorage.setItem("favourite", JSON.stringify(id));
-  }
-}
+class Storage {}
 
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
@@ -251,8 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .getMenuGridItems()
     .then((gridItems) => ui.displayMenuGridItems(gridItems))
     .then(products.getSliderItems)
-    .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
-    .then(() => ui.addToFavourite());
+    .then((sliderItems) => ui.displayMenuSliderItems(sliderItems));
 
   // .then(ui.displayHomeBtn())
   // .then(ui.displayDate());
