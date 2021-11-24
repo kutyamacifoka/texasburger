@@ -211,29 +211,35 @@ class UI {
       // find item id in storage
       let inStorage = favouriteArray.find((item) => item.itemID === iconID);
 
+      // icons on document load
       if (inStorage) {
-        // change icon
         container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
-        container.addEventListener("click", (e) => {
+      } else {
+        container.innerHTML = `<i class="far fa-star favourite"></i>`;
+      }
+
+      container.addEventListener("click", (e) => {
+        if (e.target.classList.contains("unfavourite")) {
+          // change icon
+          container.innerHTML = `<i class="far fa-star favourite"></i>`;
           // remove item from local storage
           favouriteArray = favouriteArray.filter((item) => {
             if (item.iconID !== iconID) {
-              console.log("favourite");
               return item;
             }
           });
           Storage.saveFavourite(favouriteArray);
-          container.innerHTML = `<i class="far fa-star favourite"></i>`;
-        });
-      } else {
-        container.innerHTML = `<i class="far fa-star favourite"></i>`;
-        container.addEventListener("click", (e) => {
+        }
+
+        if (e.target.classList.contains("favourite")) {
+          // change icon
           container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
 
+          // add to local storage
           favouriteArray.push(id);
           Storage.saveFavourite(favouriteArray);
-        });
-      }
+        }
+      });
     });
   }
 
