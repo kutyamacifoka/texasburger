@@ -18,7 +18,7 @@ let date = document.querySelector("#date");
 // home btn
 const homeBtn = document.querySelector(".home-btn");
 
-let favouriteArray = [];
+let favouriteArray = [{ itemID: "wLfueQdHiNohLx2sUg3Zv" }];
 
 // CLASSES
 // get products
@@ -129,7 +129,7 @@ class UI {
       .map((item) => {
         return `<div class="slider" id="${item.id}">
                   <div class="star-container" id="${item.id}">
-                    <i class="far fa-star favourite"></i>
+                    
                   </div>
                     <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
                     <p class="slider-name">${item.title}</p>
@@ -198,6 +198,21 @@ class UI {
     return starContainer;
   }
 
+  addFavourites(starContainer) {
+    starContainer.forEach((container) => {
+      let itemID = container.parentElement.id;
+      let iconID = container.id;
+      let id = { itemID, iconID };
+
+      let inStorage = favouriteArray.find((item) => item.itemID === iconID);
+      if (inStorage) {
+        container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
+      } else {
+        container.innerHTML = `<i class="far fa-star favourite"></i>  `;
+      }
+    });
+  }
+
   // show home button
   displayHomeBtn() {
     window.addEventListener("scroll", () => {
@@ -216,7 +231,16 @@ class UI {
 }
 
 // save to local storage
-class Storage {}
+class Storage {
+  static saveFavourite() {
+    localStorage.setItem("favourite", JSON.stringify(favouriteArray));
+  }
+
+  static getFavourite(id) {
+    favouriteArray = JSON.parse(localStorage.getItem("favourite"));
+    return favouriteArray.find((item) => item.itemID === id);
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
@@ -226,7 +250,8 @@ document.addEventListener("DOMContentLoaded", () => {
     .getMenuGridItems()
     .then((gridItems) => ui.displayMenuGridItems(gridItems))
     .then(products.getSliderItems)
-    .then((sliderItems) => ui.displayMenuSliderItems(sliderItems));
+    .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
+    .then((starContainer) => ui.addFavourites(starContainer));
 
   // .then(ui.displayHomeBtn())
   // .then(ui.displayDate());
