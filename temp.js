@@ -1,12 +1,21 @@
-container.addEventListener("click", (e) => {
-  let itemID = e.currentTarget.parentElement.id;
-  let iconID = e.currentTarget.id;
-  let id = { itemID, iconID };
+if (!inStorage) {
+  Storage.getFavourite();
 
-  let inStorage = favouriteArray.find((item) => item.itemID === iconID);
-  if (inStorage) {
-    e.currentTarget.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
-  }
-  favouriteArray.push(id);
+  container.innerHTML = `<i class="far fa-star favourite"></i>`;
+  container.addEventListener("click", (e) => {
+    favouriteArray.push(id);
+    Storage.saveFavourite(favouriteArray);
+    // container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
+  });
+}
+container.addEventListener("click", (e) => {
+  // remove item from local storage
+  favouriteArray = favouriteArray.filter((item) => {
+    if (item.iconID !== iconID) {
+      return item;
+    }
+  });
   Storage.saveFavourite(favouriteArray);
+  // change icon
+  // container.innerHTML = `<i class="far fa-star favourite"></i>`;
 });
