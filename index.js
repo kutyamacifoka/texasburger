@@ -18,7 +18,7 @@ let date = document.querySelector("#date");
 // home btn
 const homeBtn = document.querySelector(".home-btn");
 
-let favouriteArray = [{ itemID: "wLfueQdHiNohLx2sUg3Zv" }];
+let favouriteArray;
 
 // CLASSES
 // get products
@@ -200,15 +200,39 @@ class UI {
 
   addFavourites(starContainer) {
     starContainer.forEach((container) => {
+      // variables
       let itemID = container.parentElement.id;
       let iconID = container.id;
       let id = { itemID, iconID };
 
+      // parse back storage
+      Storage.getFavourite();
+
+      // find item id in storage
       let inStorage = favouriteArray.find((item) => item.itemID === iconID);
+
       if (inStorage) {
+        // change icon
         container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
+        container.addEventListener("click", (e) => {
+          // remove item from local storage
+          favouriteArray = favouriteArray.filter((item) => {
+            if (item.iconID !== iconID) {
+              console.log("favourite");
+              return item;
+            }
+          });
+          Storage.saveFavourite(favouriteArray);
+          container.innerHTML = `<i class="far fa-star favourite"></i>`;
+        });
       } else {
-        container.innerHTML = `<i class="far fa-star favourite"></i>  `;
+        container.innerHTML = `<i class="far fa-star favourite"></i>`;
+        container.addEventListener("click", (e) => {
+          container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
+
+          favouriteArray.push(id);
+          Storage.saveFavourite(favouriteArray);
+        });
       }
     });
   }
@@ -236,9 +260,12 @@ class Storage {
     localStorage.setItem("favourite", JSON.stringify(favouriteArray));
   }
 
-  static getFavourite(id) {
-    favouriteArray = JSON.parse(localStorage.getItem("favourite"));
-    return favouriteArray.find((item) => item.itemID === id);
+  static getFavourite() {
+    if (localStorage.getItem("favourite") === null) {
+      favouriteArray = [];
+    } else {
+      return (favouriteArray = JSON.parse(localStorage.getItem("favourite")));
+    }
   }
 }
 
