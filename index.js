@@ -18,7 +18,11 @@ let date = document.querySelector("#date");
 // home btn
 const homeBtn = document.querySelector(".home-btn");
 
+// local storage
 let favouriteArray;
+
+// media query
+let media = matchMedia("(min-width: 1024px)");
 
 // CLASSES
 // get products
@@ -166,19 +170,21 @@ class UI {
     });
 
     // add filter
-    slider.forEach((item) => {
-      item.addEventListener("mouseover", () => {
-        slider.forEach((item) => {
-          item.classList.add("grid-filter");
-        });
-        item.classList.remove("grid-filter");
-      });
-      item.addEventListener("mouseleave", () => {
-        slider.forEach((item) => {
+    if (media.matches) {
+      slider.forEach((item) => {
+        item.addEventListener("mouseover", () => {
+          slider.forEach((item) => {
+            item.classList.add("grid-filter");
+          });
           item.classList.remove("grid-filter");
         });
+        item.addEventListener("mouseleave", () => {
+          slider.forEach((item) => {
+            item.classList.remove("grid-filter");
+          });
+        });
       });
-    });
+    }
 
     // choose slider container
     menuSlider.addEventListener("click", (e) => {
