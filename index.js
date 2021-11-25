@@ -95,7 +95,7 @@ class UI {
   displayMenuGridItems(gridItems) {
     gridItems = gridItems
       .map((item) => {
-        let lgGrid = item.itemClass.find((value) => {
+        const lgGrid = item.itemClass.find((value) => {
           if (value === "large-grid-item") {
             return value;
           }
