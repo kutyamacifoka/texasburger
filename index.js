@@ -52,6 +52,7 @@ class Products {
             }
           }
         });
+
       return gridItems;
     } catch (error) {
       console.log(error);
@@ -80,6 +81,7 @@ class Products {
             }
           }
         });
+
       return sliderItems;
     } catch (error) {
       console.log(error);
