@@ -234,11 +234,9 @@ class UI {
       let inStorage = favouriteArray.find((item) => item.itemID === iconID);
 
       // icons on document load
-      if (inStorage) {
-        container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
-      } else {
-        container.innerHTML = `<i class="far fa-star favourite"></i>`;
-      }
+      inStorage
+        ? (container.innerHTML = `<i class="fas fa-star unfavourite"></i>`)
+        : (container.innerHTML = `<i class="far fa-star favourite"></i>`);
 
       container.addEventListener("click", (e) => {
         if (e.target.classList.contains("unfavourite")) {
@@ -268,11 +266,9 @@ class UI {
   // show home button
   displayHomeBtn() {
     window.addEventListener("scroll", () => {
-      if (scrollY > 50) {
-        homeBtn.classList.add("show-home-btn");
-      } else {
-        homeBtn.classList.remove("show-home-btn");
-      }
+      scrollY > 50
+        ? homeBtn.classList.add("show-home-btn")
+        : homeBtn.classList.remove("show-home-btn");
     });
   }
 
