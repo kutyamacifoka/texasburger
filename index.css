@@ -317,18 +317,6 @@ body {
     transition: var(--transition);
   }
 
-  .menu-grid-clr-border {
-    border-top: solid 3px yellow;
-    border-bottom: solid 3px red;
-    border-radius: 4%;
-    filter: grayscale(5%);
-  }
-
-  .grid-filter {
-    opacity: 0.5;
-    transition: var(--transition);
-  }
-
   .menu-grid-title,
   .lg-menu-grid-title {
     display: flex;
@@ -1035,6 +1023,18 @@ body {
 
   .environment-img {
     max-height: none;
+  }
+
+  .menu-grid-clr-border {
+    border-top: solid 3px yellow;
+    border-bottom: solid 3px red;
+    border-radius: 4%;
+    filter: grayscale(5%);
+  }
+
+  .grid-filter {
+    opacity: 0.5;
+    transition: var(--transition);
   }
 
   .lg-menu-grid-item {
