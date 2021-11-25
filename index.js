@@ -95,11 +95,9 @@ class UI {
   displayMenuGridItems(gridItems) {
     gridItems = gridItems
       .map((item) => {
-        const lgGrid = item.itemClass.find((value) => {
-          if (value === "large-grid-item") {
-            return value;
-          }
-        });
+        const lgGrid = item.itemClass.find(
+          (grid) => grid === "large-grid-item"
+        );
         if (lgGrid) {
           return `<div class="menu-grid-item lg-menu-grid-item">
                 <img src="${item.image}" class="menu-grid-img lg-grid-img" id="${item.id}" alt="${item.title}" srcset="">
@@ -124,7 +122,6 @@ class UI {
         if (e.target.id === item.id) {
           gridImg.forEach((item) => {
             item.classList.add("grid-filter");
-            item.classList.remove("menu-grid-clr-border");
           });
           item.classList.remove("grid-filter");
           item.classList.add("menu-grid-clr-border");
