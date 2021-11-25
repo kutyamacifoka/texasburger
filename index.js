@@ -171,7 +171,7 @@ class UI {
       });
     });
 
-    // add filter
+    // add filter at min 1024px
     if (media.matches) {
       slider.forEach((item) => {
         item.addEventListener("mouseover", () => {
@@ -187,6 +187,13 @@ class UI {
         });
       });
     }
+
+    // active title on load
+    menuSliderTitle.forEach((title) => {
+      if (title.id === "popular") {
+        title.classList.add("menu-active");
+      }
+    });
 
     // choose slider container
     menuSlider.addEventListener("click", (e) => {
