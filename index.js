@@ -39,11 +39,13 @@ class Products {
           return { title, itemClass, id, image };
         })
         .filter((item) => {
-          if (
-            item.itemClass === "grid-item" ||
-            item.itemClass === "large-grid-item"
-          ) {
-            return item;
+          for (let i = 0; i < gridItems.length; i++) {
+            if (
+              item.itemClass[i] === "grid-item" ||
+              item.itemClass[i] === "large-grid-item"
+            ) {
+              return item;
+            }
           }
         });
       return gridItems;
@@ -59,18 +61,21 @@ class Products {
       });
 
       let sliderItems = await contentful.items;
-      sliderItems = sliderItems.map((item) => {
-        const { title } = item.fields;
-        const itemClass = item.fields.class;
-        const { id } = item.sys;
-        const image = item.fields.image.fields.file.url;
-        return { title, itemClass, id, image };
-      });
-      // .filter((item) => {
-      //   if (item.itemClass === "slider-item") {
-      //     return item;
-      //   }
-      // })
+      sliderItems = sliderItems
+        .map((item) => {
+          const { title } = item.fields;
+          const itemClass = item.fields.class;
+          const { id } = item.sys;
+          const image = item.fields.image.fields.file.url;
+          return { title, itemClass, id, image };
+        })
+        .filter((item) => {
+          for (let i = 0; i < sliderItems.length; i++) {
+            if (item.itemClass[i] === "slider-item") {
+              return item;
+            }
+          }
+        });
       return sliderItems;
     } catch (error) {
       console.log(error);
@@ -84,7 +89,12 @@ class UI {
   displayMenuGridItems(gridItems) {
     gridItems = gridItems
       .map((item) => {
-        if (item.itemClass === "large-grid-item") {
+        let lgGrid = item.itemClass.find((value) => {
+          if (value === "large-grid-item") {
+            return value;
+          }
+        });
+        if (lgGrid) {
           return `<div class="menu-grid-item lg-menu-grid-item">
                 <img src="${item.image}" class="menu-grid-img lg-grid-img" id="${item.id}" alt="${item.title}" srcset="">
                 <p class="lg-menu-grid-title" data-id="${item.title}">${item.title}</p>
@@ -270,7 +280,7 @@ class Storage {
     if (localStorage.getItem("favourite") === null) {
       favouriteArray = [];
     } else {
-      return (favouriteArray = JSON.parse(localStorage.getItem("favourite")));
+      favouriteArray = JSON.parse(localStorage.getItem("favourite"));
     }
   }
 }
@@ -284,8 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((gridItems) => ui.displayMenuGridItems(gridItems))
     .then(products.getSliderItems)
     .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
-    .then((starContainer) => ui.addFavourites(starContainer));
-
-  // .then(ui.displayHomeBtn())
-  // .then(ui.displayDate());
+    .then((starContainer) => ui.addFavourites(starContainer))
+    .then(ui.displayHomeBtn())
+    .then(ui.displayDate());
 });
