@@ -506,15 +506,15 @@ body {
     position: relative;
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    padding: 4rem 1rem;
+    gap: 0.5rem;
+    padding: 4rem 0.5rem;
   }
 
   .slider-container,
   .popular-container {
     display: flex;
     overflow: hidden;
-    max-width: calc((200px) + (0.5rem));
+    max-width: calc((170px) + (0.5rem));
     gap: 0.5rem;
     transition: var(--transition);
   }
@@ -530,8 +530,8 @@ body {
   .slider-img {
     position: relative;
     object-fit: cover;
-    height: 200px;
-    width: 200px;
+    height: 170px;
+    width: 170px;
     border-radius: 25px;
   }
 
@@ -823,6 +823,21 @@ body {
 
   .contacts-title {
     letter-spacing: 10px;
+  }
+
+  .menu-center {
+    gap: 1rem;
+    padding: 4rem 1rem;
+  }
+
+  .slider-container,
+  .popular-container {
+    max-width: calc((200px) + (0.5rem));
+  }
+
+  .slider-img {
+    width: 200px;
+    height: 200px;
   }
 }
 
