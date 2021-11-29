@@ -185,22 +185,22 @@ class UI {
     // menu btn events
     sliderBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
-        if (e.target.classList.contains("fa-chevron-left")) {
+        // insert before
+        if (
+          e.target.classList.contains("fa-chevron-left") &&
+          !sliderContainer.classList.contains("hide-item")
+        ) {
           sliderContainer.insertBefore(slider[slider.length - 1], slider[0]);
           slider = [...document.querySelectorAll(".slider")];
-
-          popularContainer.insertBefore(
-            favourite[favourite.length - 1],
-            favourite[0]
-          );
-          favourite = [...document.querySelectorAll(".favourite")];
         }
-        if (e.target.classList.contains("fa-chevron-right")) {
+
+        // insert after
+        if (
+          e.target.classList.contains("fa-chevron-right") &&
+          !sliderContainer.classList.contains("hide-item")
+        ) {
           sliderContainer.appendChild(slider[0]);
           slider = [...document.querySelectorAll(".slider")];
-
-          popularContainer.appendChild(favourite[0]);
-          favourite = document.querySelectorAll(".favourite");
         }
       });
     });
@@ -239,7 +239,6 @@ class UI {
     });
 
     this.addFavourites(starContainer);
-    return slider;
   }
 
   addFavourites(item) {
@@ -288,45 +287,56 @@ class UI {
   }
 
   displayFavourites(favouriteArray) {
-    // variables
+    Storage.getFavourite(favouriteArray);
+    // copy favourite array
     let favouriteProducts = [...favouriteArray];
-    let favouriteItems = [...document.querySelectorAll(".slider")];
 
     favouriteProducts = favouriteProducts
       .map((item) => {
         return `<div class="favourite" id="${item.itemID}">
-                  <div class="star-container" id="${item.itemID}">
-                    <i class="fas fa-star unfavourite"></i>
-                  </div>
-                    <img src="${item.image}" class="favourite-img" alt="${item.itemTitle}" srcset="">
-                    <p class="favourite-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
-                </div>`;
+                    <div class="star-container" id="${item.itemID}">
+                        <i class="fas fa-star unfavourite"></i>
+                    </div>
+                        <img src="${item.image}" class="favourite-img" alt="${item.itemTitle}" srcset="">
+                        <p class="favourite-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
+                 </div>`;
       })
       .join("");
 
     popularContainer.innerHTML = favouriteProducts;
 
+    let favouriteItems = [...document.querySelectorAll(".favourite")];
+
+    // menu btn events
+    sliderBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        // insert before
+        if (
+          e.target.classList.contains("fa-chevron-left") &&
+          !popularContainer.classList.contains("hide-item")
+        ) {
+          popularContainer.insertBefore(
+            favouriteItems[favouriteItems.length - 1],
+            favouriteItems[0]
+          );
+          favouriteItems = [...document.querySelectorAll(".favourite")];
+        }
+
+        // insert after
+        if (
+          e.target.classList.contains("fa-chevron-right") &&
+          !popularContainer.classList.contains("hide-item")
+        ) {
+          popularContainer.appendChild(favouriteItems[0]);
+          favouriteItems = document.querySelectorAll(".favourite");
+        }
+      });
+    });
+
     popularContainer.addEventListener("click", (e) => {
       // variables
       const iconID = e.target.parentElement.id;
       const currentSlider = e.target.parentElement.parentElement;
-
-      // menu btn events
-      sliderBtns.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          if (e.target.classList.contains("fa-chevron-left")) {
-            popularContainer.insertBefore(
-              favourite[favourite.length - 1],
-              favourite[0]
-            );
-            favourite = [...document.querySelectorAll(".favourite")];
-          }
-          if (e.target.classList.contains("fa-chevron-right")) {
-            popularContainer.appendChild(favourite[0]);
-            favourite = document.querySelectorAll(".favourite");
-          }
-        });
-      });
 
       // unfavourite item & remove from local storage
       if (e.target.classList.contains("unfavourite")) {
