@@ -87,6 +87,33 @@ class Products {
       console.log(error);
     }
   }
+
+  async getMenuItems() {
+    try {
+      let contentful = await client.getEntries({
+        content_type: "texasBurger",
+      });
+
+      let menuItems = await contentful.items;
+      menuItems = menuItems
+        .map((item) => {
+          const { title } = item.fields.title;
+          const itemClass = item.fields.class;
+          const { id } = item.sys;
+          const image = item.fields.image.fields.file.url;
+          return { title, itemClass, id, image };
+        })
+        .filter((item) => {
+          for (let i = 0; i < menuItems.length; i++) {
+            return item;
+          }
+        });
+
+      return menuItems;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 // display products
@@ -145,7 +172,7 @@ class UI {
                     
                   </div>
                     <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                    <p class="slider-name">${item.title}</p>
+                    <p class="slider-name" data-id="${item.title}">${item.title}</p>
                 </div>`;
       })
       .join("");
@@ -153,6 +180,7 @@ class UI {
 
     // menu slider images
     let slider = [...document.querySelectorAll(".slider")];
+    let starContainer = [...document.querySelectorAll(".star-container")];
 
     // menu btn events
     sliderBtns.forEach((btn) => {
@@ -160,30 +188,24 @@ class UI {
         if (e.target.classList.contains("fa-chevron-left")) {
           sliderContainer.insertBefore(slider[slider.length - 1], slider[0]);
           slider = [...document.querySelectorAll(".slider")];
+
+          popularContainer.insertBefore(
+            favourite[favourite.length - 1],
+            favourite[0]
+          );
+          favourite = [...document.querySelectorAll(".favourite")];
         }
         if (e.target.classList.contains("fa-chevron-right")) {
           sliderContainer.appendChild(slider[0]);
           slider = [...document.querySelectorAll(".slider")];
+
+          popularContainer.appendChild(favourite[0]);
+          favourite = document.querySelectorAll(".favourite");
         }
       });
     });
 
-    // add filter at min 1024px
-    if (media.matches) {
-      slider.forEach((item) => {
-        item.addEventListener("mouseover", () => {
-          slider.forEach((item) => {
-            item.classList.add("grid-filter");
-          });
-          item.classList.remove("grid-filter");
-        });
-        item.addEventListener("mouseleave", () => {
-          slider.forEach((item) => {
-            item.classList.remove("grid-filter");
-          });
-        });
-      });
-    }
+    this.addFilters(slider);
 
     // active title on load
     menuSliderTitle.forEach((title) => {
@@ -216,22 +238,23 @@ class UI {
       }
     });
 
-    let starContainer = [...document.querySelectorAll(".star-container")];
-    return starContainer;
+    this.addFavourites(starContainer);
+    return slider;
   }
 
-  addFavourites(starContainer) {
-    starContainer.forEach((container) => {
+  addFavourites(item) {
+    item.forEach((container) => {
       // variables
-      let itemID = container.parentElement.id;
-      let iconID = container.id;
-      let id = { itemID, iconID };
+      let itemID = container.id;
+      let itemTitle = container.parentElement.children[2].dataset.id;
+      let image = container.parentElement.children[1].src;
+      let id = { itemTitle, itemID, image };
 
       // parse back storage
       Storage.getFavourite();
 
       // find item id in storage
-      let inStorage = favouriteArray.find((item) => item.itemID === iconID);
+      let inStorage = favouriteArray.find((item) => item.itemID === itemID);
 
       // icons on document load
       inStorage
@@ -244,7 +267,7 @@ class UI {
           container.innerHTML = `<i class="far fa-star favourite"></i>`;
           // remove item from local storage
           favouriteArray = favouriteArray.filter((item) => {
-            if (item.iconID !== iconID) {
+            if (item.itemID !== itemID) {
               return item;
             }
           });
@@ -258,9 +281,70 @@ class UI {
           // add to local storage
           favouriteArray.push(id);
           Storage.saveFavourite(favouriteArray);
+          this.displayFavourites(favouriteArray);
         }
       });
     });
+  }
+
+  displayFavourites(favouriteArray) {
+    // variables
+    let favouriteProducts = [...favouriteArray];
+    let favouriteItems = [...document.querySelectorAll(".slider")];
+
+    favouriteProducts = favouriteProducts
+      .map((item) => {
+        return `<div class="favourite" id="${item.itemID}">
+                  <div class="star-container" id="${item.itemID}">
+                    <i class="fas fa-star unfavourite"></i>
+                  </div>
+                    <img src="${item.image}" class="favourite-img" alt="${item.itemTitle}" srcset="">
+                    <p class="favourite-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
+                </div>`;
+      })
+      .join("");
+
+    popularContainer.innerHTML = favouriteProducts;
+
+    popularContainer.addEventListener("click", (e) => {
+      // variables
+      const iconID = e.target.parentElement.id;
+      const currentSlider = e.target.parentElement.parentElement;
+
+      // menu btn events
+      sliderBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          if (e.target.classList.contains("fa-chevron-left")) {
+            popularContainer.insertBefore(
+              favourite[favourite.length - 1],
+              favourite[0]
+            );
+            favourite = [...document.querySelectorAll(".favourite")];
+          }
+          if (e.target.classList.contains("fa-chevron-right")) {
+            popularContainer.appendChild(favourite[0]);
+            favourite = document.querySelectorAll(".favourite");
+          }
+        });
+      });
+
+      // unfavourite item & remove from local storage
+      if (e.target.classList.contains("unfavourite")) {
+        // remove current item
+        popularContainer.removeChild(currentSlider);
+
+        // find current target in local storage
+        favouriteArray = favouriteArray.filter((item) => {
+          if (item.itemID !== iconID) {
+            return item;
+          }
+        });
+
+        localStorage.setItem("favourite", JSON.stringify(favouriteArray));
+      }
+    });
+
+    this.addFilters(favouriteItems);
   }
 
   // show home button
@@ -275,6 +359,25 @@ class UI {
   // show date
   displayDate() {
     date.innerHTML = new Date().getFullYear();
+  }
+
+  // add filter at min 1024px
+  addFilters(slider) {
+    if (media.matches) {
+      slider.forEach((item) => {
+        item.addEventListener("mouseover", () => {
+          slider.forEach((item) => {
+            item.classList.add("grid-filter");
+          });
+          item.classList.remove("grid-filter");
+        });
+        item.addEventListener("mouseleave", () => {
+          slider.forEach((item) => {
+            item.classList.remove("grid-filter");
+          });
+        });
+      });
+    }
   }
 }
 
@@ -302,7 +405,8 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((gridItems) => ui.displayMenuGridItems(gridItems))
     .then(products.getSliderItems)
     .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
-    .then((starContainer) => ui.addFavourites(starContainer))
+    .then(() => ui.displayFavourites(favouriteArray))
+    .then(products.getMenuItems)
     .then(ui.displayHomeBtn())
     .then(ui.displayDate());
 });

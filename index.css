@@ -519,7 +519,8 @@ body {
     transition: var(--transition);
   }
 
-  .slider {
+  .slider,
+  .favourite {
     position: relative;
     display: flex;
     justify-content: center;
@@ -527,7 +528,8 @@ body {
     cursor: pointer;
   }
 
-  .slider-img {
+  .slider-img,
+  .favourite-img {
     position: relative;
     object-fit: cover;
     height: 170px;
@@ -535,7 +537,8 @@ body {
     border-radius: 25px;
   }
 
-  .slider-name {
+  .slider-name,
+  .favourite-name {
     position: absolute;
     font-size: 3rem;
     font-weight: 600;
@@ -934,7 +937,8 @@ body {
     max-width: calc((300px) + (0.5rem));
   }
 
-  .slider-img {
+  .slider-img,
+  .favourite-img {
     position: relative;
     object-fit: cover;
     height: 300px;
