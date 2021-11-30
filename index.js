@@ -345,22 +345,30 @@ class UI {
     });
 
     popularContainer.addEventListener("click", (e) => {
-      // variables
-      const iconID = e.target.parentElement.id;
-      const currentSlider = e.target.parentElement.parentElement;
-
       // unfavourite item & remove from local storage
       if (e.target.classList.contains("unfavourite")) {
-        let starID = allItems.find((item) => {
+        // variables
+        const iconID = e.target.parentElement.parentElement.id;
+        const currentSlider = e.target.parentElement.parentElement;
+
+        // globally find product
+        let product = allItems.find((item) => {
           if (item.id === iconID) {
             return item;
           }
         });
 
+        // update star container
         let starContainer = [...document.querySelectorAll(".star-container")];
 
-        // remove current item
-        currentSlider.remove();
+        // globally remove favourite icon
+        if (product) {
+          starContainer.forEach((star) => {
+            if (star.id == product.id) {
+              star.innerHTML = `<i class="far fa-star favourite"></i>`;
+            }
+          });
+        }
 
         // find current target in local storage
         favouriteArray = favouriteArray.filter((item) => {
@@ -368,6 +376,9 @@ class UI {
             return item;
           }
         });
+
+        // remove current item
+        currentSlider.remove();
 
         localStorage.setItem("favourite", JSON.stringify(favouriteArray));
       }
