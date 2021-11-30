@@ -480,13 +480,14 @@ body {
     display: grid;
     justify-content: center;
     gap: 0.5rem;
+    padding-top: 2rem;
   }
 
   .menu-slider-title {
     text-align: center;
     color: whitesmoke;
-    font-size: 2rem;
-    padding: 0.5rem;
+    font-size: 1.25rem;
+    padding: 0.25rem;
     font-family: var(--ff-primary-2);
     letter-spacing: 10px;
     user-select: text;
@@ -506,15 +507,15 @@ body {
     position: relative;
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
-    padding: 4rem 0.5rem;
+    gap: 0.25rem;
+    padding: 4rem 0.25rem;
   }
 
   .slider-container,
   .popular-container {
     display: flex;
     overflow: hidden;
-    max-width: calc((170px) + (0.5rem));
+    max-width: calc((200px) + (0.5rem));
     gap: 0.5rem;
     transition: var(--transition);
   }
@@ -532,8 +533,8 @@ body {
   .favourite-img {
     position: relative;
     object-fit: cover;
-    height: 170px;
-    width: 170px;
+    height: 200px;
+    width: 200px;
     border-radius: 25px;
   }
 
@@ -551,7 +552,7 @@ body {
   }
 
   .slider-btn {
-    padding: 0 0.5rem;
+    padding: 0 0.25rem;
     font-size: 2rem;
     color: whitesmoke;
     transition: var(--transition);
@@ -912,6 +913,11 @@ body {
     font-size: 1.25rem;
   }
 
+  .menu-slider-title {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+  }
+
   #creator-container {
     font-size: 1.25rem;
   }
@@ -931,6 +937,11 @@ body {
   #about-us-container {
     padding: 5rem;
     font-size: 2.75rem;
+  }
+
+  .menu-slider-title {
+    font-size: 2rem;
+    padding: 0.5rem;
   }
 
   .slider-container,

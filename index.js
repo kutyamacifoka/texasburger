@@ -270,7 +270,7 @@ class UI {
               return item;
             }
           });
-          Storage.saveFavourite(favouriteArray);
+          Storage.saveFavourite();
         }
 
         if (e.target.classList.contains("favourite")) {
@@ -279,33 +279,59 @@ class UI {
 
           // add to local storage
           favouriteArray.push(id);
-          Storage.saveFavourite(favouriteArray);
-          this.displayFavourites(favouriteArray);
+          Storage.saveFavourite();
+          this.displayFavourites();
         }
       });
     });
   }
 
-  displayFavourites(favouriteArray) {
+  displayFavourites() {
     // copy favourite array
     let favouriteProducts = [...favouriteArray];
 
-    favouriteProducts = favouriteProducts
-      .map((item) => {
-        return `<div class="favourite-item" id="${item.itemID}">
+    menuSlider.addEventListener("click", (e) => {
+      if (e.target.id == "favourite") {
+        favouriteProducts = [...favouriteArray];
+
+        favouriteProducts = favouriteProducts
+          .map((item) => {
+            return `<div class="favourite-item" id="${item.itemID}">
                     <div class="star-container" id="${item.itemID}">
                         <i class="fas fa-star unfavourite"></i>
                     </div>
                         <img src="${item.image}" class="favourite-img" alt="${item.itemTitle}" srcset="">
                         <p class="favourite-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
                  </div>`;
-      })
-      .join("");
+          })
+          .join("");
 
-    popularContainer.innerHTML = favouriteProducts;
+        popularContainer.innerHTML = favouriteProducts;
+      }
+    });
 
-    // menu slider images
     let favouriteItems = [...document.querySelectorAll(".favourite-item")];
+
+    popularContainer.addEventListener("click", (e) => {
+      // variables
+      const iconID = e.target.parentElement.id;
+      const currentSlider = e.target.parentElement.parentElement;
+
+      // unfavourite item & remove from local storage
+      if (e.target.classList.contains("unfavourite")) {
+        // remove current item
+        currentSlider.remove();
+
+        // find current target in local storage
+        favouriteArray = favouriteArray.filter((item) => {
+          if (item.itemID !== iconID) {
+            return item;
+          }
+        });
+
+        Storage.saveFavourite();
+      }
+    });
 
     // menu btn events
     sliderBtns.forEach((btn) => {
@@ -328,30 +354,9 @@ class UI {
           !popularContainer.classList.contains("hide-item")
         ) {
           popularContainer.appendChild(favouriteItems[0]);
-          favouriteItems = [...document.querySelectorAll(".favourite-item")];
+          favouriteItems = document.querySelectorAll(".favourite-item");
         }
       });
-    });
-
-    popularContainer.addEventListener("click", (e) => {
-      // variables
-      const iconID = e.target.parentElement.id;
-      const currentSlider = e.target.parentElement.parentElement;
-
-      // unfavourite item & remove from local storage
-      if (e.target.classList.contains("unfavourite")) {
-        // remove current item
-        popularContainer.removeChild(currentSlider);
-
-        // find current target in local storage
-        favouriteArray = favouriteArray.filter((item) => {
-          if (item.itemID !== iconID) {
-            return item;
-          }
-        });
-
-        localStorage.setItem("favourite", JSON.stringify(favouriteArray));
-      }
     });
 
     this.addFilters(favouriteItems);
