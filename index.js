@@ -20,6 +20,7 @@ const homeBtn = document.querySelector(".home-btn");
 
 // local storage
 let favouriteArray;
+let allItems = [];
 
 // media query
 let media = matchMedia("(min-width: 1024px)");
@@ -182,6 +183,8 @@ class UI {
     let slider = [...document.querySelectorAll(".slider")];
     let starContainer = [...document.querySelectorAll(".star-container")];
 
+    allItems = [...slider];
+
     // menu btn events
     sliderBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
@@ -239,6 +242,7 @@ class UI {
     });
 
     this.addFavourites(starContainer);
+    return starContainer;
   }
 
   addFavourites(item) {
@@ -286,13 +290,11 @@ class UI {
     });
   }
 
-  displayFavourites() {
-    // copy favourite array
-    let favouriteProducts = [...favouriteArray];
-
+  displayFavourites(starContainer) {
     menuSlider.addEventListener("click", (e) => {
       if (e.target.id == "favourite") {
-        favouriteProducts = [...favouriteArray];
+        // copy favourite array
+        let favouriteProducts = [...favouriteArray];
 
         favouriteProducts = favouriteProducts
           .map((item) => {
@@ -307,10 +309,40 @@ class UI {
           .join("");
 
         popularContainer.innerHTML = favouriteProducts;
+
+        let favouriteItems = [...document.querySelectorAll(".favourite-item")];
+
+        // menu btn events
+        sliderBtns.forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            // insert before
+            if (
+              e.target.classList.contains("fa-chevron-left") &&
+              !popularContainer.classList.contains("hide-item")
+            ) {
+              popularContainer.insertBefore(
+                favouriteItems[favouriteItems.length - 1],
+                favouriteItems[0]
+              );
+              favouriteItems = [
+                ...document.querySelectorAll(".favourite-item"),
+              ];
+            }
+
+            // insert after
+            if (
+              e.target.classList.contains("fa-chevron-right") &&
+              !popularContainer.classList.contains("hide-item")
+            ) {
+              popularContainer.appendChild(favouriteItems[0]);
+              favouriteItems = document.querySelectorAll(".favourite-item");
+            }
+          });
+        });
+
+        this.addFilters(favouriteItems);
       }
     });
-
-    let favouriteItems = [...document.querySelectorAll(".favourite-item")];
 
     popularContainer.addEventListener("click", (e) => {
       // variables
@@ -319,6 +351,14 @@ class UI {
 
       // unfavourite item & remove from local storage
       if (e.target.classList.contains("unfavourite")) {
+        let starID = allItems.find((item) => {
+          if (item.id === iconID) {
+            return item;
+          }
+        });
+
+        let starContainer = [...document.querySelectorAll(".star-container")];
+
         // remove current item
         currentSlider.remove();
 
@@ -329,37 +369,9 @@ class UI {
           }
         });
 
-        Storage.saveFavourite();
+        localStorage.setItem("favourite", JSON.stringify(favouriteArray));
       }
     });
-
-    // menu btn events
-    sliderBtns.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        // insert before
-        if (
-          e.target.classList.contains("fa-chevron-left") &&
-          !popularContainer.classList.contains("hide-item")
-        ) {
-          popularContainer.insertBefore(
-            favouriteItems[favouriteItems.length - 1],
-            favouriteItems[0]
-          );
-          favouriteItems = [...document.querySelectorAll(".favourite-item")];
-        }
-
-        // insert after
-        if (
-          e.target.classList.contains("fa-chevron-right") &&
-          !popularContainer.classList.contains("hide-item")
-        ) {
-          popularContainer.appendChild(favouriteItems[0]);
-          favouriteItems = document.querySelectorAll(".favourite-item");
-        }
-      });
-    });
-
-    this.addFilters(favouriteItems);
   }
 
   // show home button
@@ -408,6 +420,7 @@ class Storage {
     } else {
       favouriteArray = JSON.parse(localStorage.getItem("favourite"));
     }
+    return favouriteArray;
   }
 }
 
@@ -420,7 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((gridItems) => ui.displayMenuGridItems(gridItems))
     .then(products.getSliderItems)
     .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
-    .then(() => ui.displayFavourites(favouriteArray))
+    .then((starContainer) => ui.displayFavourites(starContainer))
     .then(products.getMenuItems)
     .then(ui.displayHomeBtn())
     .then(ui.displayDate());
