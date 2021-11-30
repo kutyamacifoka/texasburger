@@ -314,40 +314,34 @@ class UI {
           .join("");
 
         popularContainer.innerHTML = favouriteProducts;
+      }
 
-        // variables
-        let favouriteItems = [...document.querySelectorAll(".favourite-item")];
+      // variables
+      let favouriteItems = [...document.querySelectorAll(".favourite-item")];
 
-        // menu btn events
-        sliderBtns.forEach((btn) => {
-          btn.addEventListener("click", (e) => {
-            // insert before
-            if (
-              e.target.classList.contains("fa-chevron-left") &&
-              !popularContainer.classList.contains("hide-item")
-            ) {
-              popularContainer.insertBefore(
-                favouriteItems[favouriteItems.length - 1],
-                favouriteItems[0]
-              );
-              favouriteItems = [
-                ...document.querySelectorAll(".favourite-item"),
-              ];
-            }
+      // add filter
+      this.addFilters(favouriteItems);
 
-            // insert after
-            if (
-              e.target.classList.contains("fa-chevron-right") &&
-              !popularContainer.classList.contains("hide-item")
-            ) {
-              popularContainer.appendChild(favouriteItems[0]);
-              favouriteItems = document.querySelectorAll(".favourite-item");
-            }
-          });
-        });
+      // SLIDER BUTTONS
+      // insert before
+      if (
+        e.target.classList.contains("fa-chevron-left") &&
+        !popularContainer.classList.contains("hide-item")
+      ) {
+        popularContainer.insertBefore(
+          favouriteItems[favouriteItems.length - 1],
+          favouriteItems[0]
+        );
+        favouriteItems = [...document.querySelectorAll(".favourite-item")];
+      }
 
-        // add filter
-        this.addFilters(favouriteItems);
+      // insert after
+      if (
+        e.target.classList.contains("fa-chevron-right") &&
+        !popularContainer.classList.contains("hide-item")
+      ) {
+        popularContainer.appendChild(favouriteItems[0]);
+        favouriteItems = document.querySelectorAll(".favourite-item");
       }
     });
 
