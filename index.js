@@ -369,7 +369,7 @@ class UI {
         });
 
         // globally remove favourite icon
-        if (product && e.target.classList.contains("unfavourite")) {
+        if (product) {
           starContainer.forEach((star) => {
             if (star.id == product.id) {
               star.innerHTML = `<i class="far fa-star favourite"></i>`;
