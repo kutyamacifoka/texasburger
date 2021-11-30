@@ -142,7 +142,7 @@ class UI {
     menuGrid.innerHTML = gridItems;
 
     // grid filter
-    let gridImg = [...menuGrid.querySelectorAll(".menu-grid-img")];
+    let gridImg = [...document.querySelectorAll(".menu-grid-img")];
 
     // add filter
     gridImg.forEach((item) => {
@@ -242,7 +242,6 @@ class UI {
     });
 
     this.addFavourites(starContainer);
-    return starContainer;
   }
 
   addFavourites(item) {
@@ -268,12 +267,15 @@ class UI {
         if (e.target.classList.contains("unfavourite")) {
           // change icon
           container.innerHTML = `<i class="far fa-star favourite"></i>`;
+
           // remove item from local storage
           favouriteArray = favouriteArray.filter((item) => {
             if (item.itemID !== itemID) {
               return item;
             }
           });
+
+          // update storage
           Storage.saveFavourite();
         }
 
@@ -283,6 +285,8 @@ class UI {
 
           // add to local storage
           favouriteArray.push(id);
+
+          // update storage
           Storage.saveFavourite();
           this.displayFavourites();
         }
@@ -290,12 +294,13 @@ class UI {
     });
   }
 
-  displayFavourites(starContainer) {
+  displayFavourites() {
     menuSlider.addEventListener("click", (e) => {
       if (e.target.id == "favourite") {
         // copy favourite array
         let favouriteProducts = [...favouriteArray];
 
+        // iterate over array
         favouriteProducts = favouriteProducts
           .map((item) => {
             return `<div class="favourite-item" id="${item.itemID}">
@@ -310,6 +315,7 @@ class UI {
 
         popularContainer.innerHTML = favouriteProducts;
 
+        // variables
         let favouriteItems = [...document.querySelectorAll(".favourite-item")];
 
         // menu btn events
@@ -340,17 +346,21 @@ class UI {
           });
         });
 
+        // add filter
         this.addFilters(favouriteItems);
       }
     });
 
+    // update star container
+    let starContainer = [...document.querySelectorAll(".star-container")];
+
     popularContainer.addEventListener("click", (e) => {
+      // variables
+      const iconID = e.target.parentElement.parentElement.id;
+      const currentSlider = e.target.parentElement.parentElement;
+
       // unfavourite item & remove from local storage
       if (e.target.classList.contains("unfavourite")) {
-        // variables
-        const iconID = e.target.parentElement.parentElement.id;
-        const currentSlider = e.target.parentElement.parentElement;
-
         // globally find product
         let product = allItems.find((item) => {
           if (item.id === iconID) {
@@ -358,29 +368,27 @@ class UI {
           }
         });
 
-        // update star container
-        let starContainer = [...document.querySelectorAll(".star-container")];
-
         // globally remove favourite icon
-        if (product) {
+        if (product && e.target.classList.contains("unfavourite")) {
           starContainer.forEach((star) => {
             if (star.id == product.id) {
               star.innerHTML = `<i class="far fa-star favourite"></i>`;
             }
+
+            // find current target in local storage
+            favouriteArray = favouriteArray.filter((item) => {
+              if (item.itemID !== iconID) {
+                return item;
+              }
+            });
+
+            // remove current item
+            currentSlider.remove();
+
+            // update local storage
+            localStorage.setItem("favourite", JSON.stringify(favouriteArray));
           });
         }
-
-        // find current target in local storage
-        favouriteArray = favouriteArray.filter((item) => {
-          if (item.itemID !== iconID) {
-            return item;
-          }
-        });
-
-        // remove current item
-        currentSlider.remove();
-
-        localStorage.setItem("favourite", JSON.stringify(favouriteArray));
       }
     });
   }
@@ -444,7 +452,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((gridItems) => ui.displayMenuGridItems(gridItems))
     .then(products.getSliderItems)
     .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
-    .then((starContainer) => ui.displayFavourites(starContainer))
+    .then(() => ui.displayFavourites())
     .then(products.getMenuItems)
     .then(ui.displayHomeBtn())
     .then(ui.displayDate());
