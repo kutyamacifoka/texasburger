@@ -292,7 +292,7 @@ class UI {
 
     favouriteProducts = favouriteProducts
       .map((item) => {
-        return `<div class="favourite" id="${item.itemID}">
+        return `<div class="favourite-item" id="${item.itemID}">
                     <div class="star-container" id="${item.itemID}">
                         <i class="fas fa-star unfavourite"></i>
                     </div>
@@ -304,7 +304,8 @@ class UI {
 
     popularContainer.innerHTML = favouriteProducts;
 
-    let favouriteItems = [...document.querySelectorAll(".favourite")];
+    // menu slider images
+    let favouriteItems = [...document.querySelectorAll(".favourite-item")];
 
     // menu btn events
     sliderBtns.forEach((btn) => {
@@ -318,7 +319,7 @@ class UI {
             favouriteItems[favouriteItems.length - 1],
             favouriteItems[0]
           );
-          favouriteItems = [...document.querySelectorAll(".favourite")];
+          favouriteItems = [...document.querySelectorAll(".favourite-item")];
         }
 
         // insert after
@@ -327,7 +328,7 @@ class UI {
           !popularContainer.classList.contains("hide-item")
         ) {
           popularContainer.appendChild(favouriteItems[0]);
-          favouriteItems = document.querySelectorAll(".favourite");
+          favouriteItems = [...document.querySelectorAll(".favourite-item")];
         }
       });
     });

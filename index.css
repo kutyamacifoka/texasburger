@@ -520,7 +520,7 @@ body {
   }
 
   .slider,
-  .favourite {
+  .favourite-item {
     position: relative;
     display: flex;
     justify-content: center;
