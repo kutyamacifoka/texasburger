@@ -287,7 +287,6 @@ class UI {
   }
 
   displayFavourites(favouriteArray) {
-    Storage.getFavourite(favouriteArray);
     // copy favourite array
     let favouriteProducts = [...favouriteArray];
 
