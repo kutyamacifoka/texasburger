@@ -241,7 +241,7 @@ class UI {
       }
     });
 
-    this.addFavourites(starContainer);
+    return starContainer;
   }
 
   addFavourites(item) {
@@ -315,43 +315,22 @@ class UI {
 
         popularContainer.innerHTML = favouriteProducts;
       }
-
-      // variables
-      let favouriteItems = [...document.querySelectorAll(".favourite-item")];
-
-      // add filter
-      this.addFilters(favouriteItems);
-
-      // SLIDER BUTTONS
-      // insert before
-      if (
-        e.target.classList.contains("fa-chevron-left") &&
-        !popularContainer.classList.contains("hide-item")
-      ) {
-        popularContainer.insertBefore(
-          favouriteItems[favouriteItems.length - 1],
-          favouriteItems[0]
-        );
-        favouriteItems = [...document.querySelectorAll(".favourite-item")];
-      }
-
-      // insert after
-      if (
-        e.target.classList.contains("fa-chevron-right") &&
-        !popularContainer.classList.contains("hide-item")
-      ) {
-        popularContainer.appendChild(favouriteItems[0]);
-        favouriteItems = document.querySelectorAll(".favourite-item");
-      }
     });
+
+    // variables
+    let favouriteItems = [...document.querySelectorAll(".favourite-item")];
+
+    // add filter
+    this.addFilters(favouriteItems);
 
     // update star container
     let starContainer = [...document.querySelectorAll(".star-container")];
 
-    popularContainer.addEventListener("click", (e) => {
+    popularContainer.addEventListener("click", (e, favouriteItems) => {
       // variables
       const iconID = e.target.parentElement.parentElement.id;
       const currentSlider = e.target.parentElement.parentElement;
+      favouriteItems = [...document.querySelectorAll(".favourite-item")];
 
       // unfavourite item & remove from local storage
       if (e.target.classList.contains("unfavourite")) {
@@ -379,11 +358,47 @@ class UI {
             // remove current item
             currentSlider.remove();
 
+            // remove grid filter from remaining items
+            favouriteItems.forEach((item) => {
+              item.classList.remove("grid-filter");
+            });
+
             // update local storage
             localStorage.setItem("favourite", JSON.stringify(favouriteArray));
           });
         }
       }
+    });
+
+    return favouriteItems;
+  }
+
+  btns() {
+    // SLIDER BUTTONS
+    // insert before
+    sliderBtns.forEach((btn) => {
+      btn.addEventListener("click", (e, favouriteItems) => {
+        favouriteItems = [...document.querySelectorAll(".favourite-item")];
+
+        if (
+          e.target.classList.contains("fa-chevron-left") &&
+          !popularContainer.classList.contains("hide-item")
+        ) {
+          popularContainer.insertBefore(
+            favouriteItems[favouriteItems.length - 1],
+            favouriteItems[0]
+          );
+          favouriteItems = [...document.querySelectorAll(".favourite-item")];
+        }
+        // insert after
+        if (
+          e.target.classList.contains("fa-chevron-right") &&
+          !popularContainer.classList.contains("hide-item")
+        ) {
+          popularContainer.appendChild(favouriteItems[0]);
+          favouriteItems = document.querySelectorAll(".favourite-item");
+        }
+      });
     });
   }
 
@@ -441,13 +456,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
 
+  // get grid items
   products
     .getMenuGridItems()
     .then((gridItems) => ui.displayMenuGridItems(gridItems))
+    // popular items
     .then(products.getSliderItems)
     .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
+    // favourites
+    .then((starContainer) => ui.addFavourites(starContainer))
     .then(() => ui.displayFavourites())
+    // carousel btns
+    .then((favouriteItems) => ui.btns(favouriteItems))
     .then(products.getMenuItems)
+    // date & home btn
     .then(ui.displayHomeBtn())
     .then(ui.displayDate());
 });
