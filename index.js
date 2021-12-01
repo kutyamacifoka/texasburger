@@ -288,10 +288,10 @@ class UI {
 
           // update storage
           Storage.saveFavourite();
-          this.displayFavourites();
         }
       });
     });
+    this.displayFavourites();
   }
 
   displayFavourites() {
@@ -315,13 +315,12 @@ class UI {
 
         popularContainer.innerHTML = favouriteProducts;
       }
+      // variables
+      let favouriteItems = [...document.querySelectorAll(".favourite-item")];
+
+      // add filter
+      this.addFilters(favouriteItems);
     });
-
-    // variables
-    let favouriteItems = [...document.querySelectorAll(".favourite-item")];
-
-    // add filter
-    this.addFilters(favouriteItems);
 
     // update star container
     let starContainer = [...document.querySelectorAll(".star-container")];
@@ -369,8 +368,6 @@ class UI {
         }
       }
     });
-
-    return favouriteItems;
   }
 
   btns() {
@@ -465,7 +462,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
     // favourites
     .then((starContainer) => ui.addFavourites(starContainer))
-    .then(() => ui.displayFavourites())
     // carousel btns
     .then((favouriteItems) => ui.btns(favouriteItems))
     .then(products.getMenuItems)
