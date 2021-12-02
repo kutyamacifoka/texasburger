@@ -189,6 +189,73 @@ class UI {
     return values;
   }
 
+  chooseContainer(values) {
+    // active title on load
+    popularBtn.classList.add("menu-active");
+    popularBtn.disabled = true;
+
+    popularBtn.addEventListener("click", () => {
+      popularBtn.classList.add("menu-active");
+      popularBtn.disabled = true;
+      favouriteBtn.classList.remove("menu-active");
+      favouriteBtn.disabled = false;
+    });
+
+    favouriteBtn.addEventListener("click", () => {
+      popularBtn.classList.remove("menu-active");
+      popularBtn.disabled = false;
+      favouriteBtn.classList.add("menu-active");
+      favouriteBtn.disabled = true;
+    });
+
+    menuSliderContainer.addEventListener("click", (e) => {
+      if (e.target === popularBtn) {
+        let slider = values.sliders;
+        slider = slider
+          .map((item) => {
+            let test = JSON.parse(localStorage.getItem("favourite"));
+
+            test.forEach((container) => {
+              let itemID = container.id;
+
+              if (inStorage) {
+                container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
+              } else {
+                container.innerHTML = `<i class="far fa-star favourite"></i>`;
+              }
+            });
+
+            if (inStorage) {
+              return `<div class="slider" id="${item.id}">
+                  <div class="star-container" id="${item.id}">
+
+                  </div>
+                    <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                    <p class="slider-name" data-id="${item.title}">${item.title}</p>
+                </div>`;
+            }
+          })
+          .join("");
+
+        sliderContainer.innerHTML = slider;
+
+        let starContainer = values.starContainer;
+
+        starContainer.forEach((container) => {
+          // parse back storage
+          Storage.getFavourite();
+
+          // find item id in storage
+
+          console.log(inStorage);
+          // icons on document load
+        });
+      }
+    });
+
+    return values;
+  }
+
   addFavourites(values) {
     let starContainer = values.starContainer;
     starContainer.forEach((container) => {
@@ -235,55 +302,9 @@ class UI {
           Storage.saveFavourite();
         }
       });
-      this.chooseContainer(values);
+
       this.displayFavourites(values);
     });
-  }
-
-  chooseContainer(values) {
-    // menu slider images
-    // let slider = [...document.querySelectorAll(".slider")];
-
-    let starContainer = values.starContainer;
-
-    // active title on load
-    popularBtn.classList.add("menu-active");
-    popularBtn.disabled = true;
-
-    popularBtn.addEventListener("click", () => {
-      popularBtn.classList.add("menu-active");
-      popularBtn.disabled = true;
-      favouriteBtn.classList.remove("menu-active");
-      favouriteBtn.disabled = false;
-    });
-
-    favouriteBtn.addEventListener("click", () => {
-      popularBtn.classList.remove("menu-active");
-      popularBtn.disabled = false;
-      favouriteBtn.classList.add("menu-active");
-      favouriteBtn.disabled = true;
-    });
-
-    menuSliderContainer.addEventListener("click", (e) => {
-      if (e.target === popularBtn) {
-        let slider = values.sliders;
-        slider = slider
-          .map((item) => {
-            return `<div class="slider" id="${item.id}">
-                  <div class="star-container" id="${item.id}">
-                  
-                  </div>
-                    <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                    <p class="slider-name" data-id="${item.title}">${item.title}</p>
-                </div>`;
-          })
-          .join("");
-
-        sliderContainer.innerHTML = slider;
-      }
-    });
-
-    return starContainer;
   }
 
   displayFavourites(starContainer) {
@@ -398,6 +419,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // popular items
     .then(products.getSliderItems)
     .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
+    .then((values) => ui.chooseContainer(values))
     .then((values) => ui.addFavourites(values));
 
   // date & home btn
