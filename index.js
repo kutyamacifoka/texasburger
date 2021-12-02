@@ -208,10 +208,43 @@ class UI {
       favouriteBtn.disabled = true;
     });
 
+    menuSliderContainer.addEventListener("click", (e) => {
+      if (e.target === popularBtn) {
+        let slides = [...allItems];
+        slides = slides
+          .map((item) => {
+            let test = JSON.parse(localStorage.getItem("favourite"));
+            let itemID = test.find((value) => value.itemID === item.id);
+
+            if (itemID) {
+              return `<div class="favourite-item" id="${item.id}">
+                    <div class="star-container" id="${item.id}">
+                        <i class="fas fa-star unfavourite"></i>
+                    </div>
+                        <img src="${item.image}" class="favourite-img" alt="${item.title}" srcset="">
+                        <p class="favourite-name" data-id="${item.title}">${item.title}</p>
+                 </div>`;
+            }
+            return `<div class="favourite-item" id="${item.id}">
+                    <div class="star-container" id="${item.id}">
+                        <i class="far fa-star favourite"></i>
+                    </div>
+                        <img src="${item.image}" class="favourite-img" alt="${item.title}" srcset="">
+                        <p class="favourite-name" data-id="${item.title}">${item.title}</p>
+                 </div>`;
+          })
+          .join("");
+
+        sliderContainer.innerHTML = slides;
+        this.addFavourites(starContainer);
+      }
+    });
     return starContainer;
   }
 
   addFavourites(starContainer) {
+    starContainer = [...document.querySelectorAll(".star-container")];
+
     starContainer.forEach((container) => {
       // variables
       let itemID = container.id;
@@ -327,35 +360,6 @@ class UI {
 
         // update local storage
         localStorage.setItem("favourite", JSON.stringify(favouriteArray));
-      }
-
-      if (e.target === popularBtn) {
-        let slides = [...allItems];
-        slides = slides
-          .map((item) => {
-            let test = JSON.parse(localStorage.getItem("favourite"));
-            let itemID = test.find((value) => value.itemID === item.id);
-
-            if (itemID) {
-              return `<div class="favourite-item" id="${item.id}">
-                    <div class="star-container" id="${item.id}">
-                        <i class="fas fa-star unfavourite"></i>
-                    </div>
-                        <img src="${item.image}" class="favourite-img" alt="${item.title}" srcset="">
-                        <p class="favourite-name" data-id="${item.title}">${item.title}</p>
-                 </div>`;
-            }
-            return `<div class="favourite-item" id="${item.id}">
-                    <div class="star-container" id="${item.id}">
-                        <i class="far fa-star favourite"></i>
-                    </div>
-                        <img src="${item.image}" class="favourite-img" alt="${item.title}" srcset="">
-                        <p class="favourite-name" data-id="${item.title}">${item.title}</p>
-                 </div>`;
-          })
-          .join("");
-
-        sliderContainer.innerHTML = slides;
       }
     });
   }
