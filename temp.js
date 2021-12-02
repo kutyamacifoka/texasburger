@@ -473,3 +473,42 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(ui.displayHomeBtn())
     .then(ui.displayDate());
 });
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+test.forEach((container) => {
+              let itemID = container.id;
+
+              if (inStorage) {
+                container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
+              } else {
+                container.innerHTML = `<i class="far fa-star favourite"></i>`;
+              }
+            });
+
+            if (inStorage) {
+              return `<div class="slider" id="${item.id}">
+                  <div class="star-container" id="${item.id}">
+
+                  </div>
+                    <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                    <p class="slider-name" data-id="${item.title}">${item.title}</p>
+                </div>`;
+            }
+          })
+          .join("");
+
+        sliderContainer.innerHTML = slider;
+
+        let starContainer = values.starContainer;
+
+        starContainer.forEach((container) => {
+          // parse back storage
+          Storage.getFavourite();
+
+          // find item id in storage
+
+          console.log(inStorage);
+          // icons on document load
+        });
+      }
