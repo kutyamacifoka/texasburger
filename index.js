@@ -185,21 +185,28 @@ class UI {
     sliderContainer.innerHTML = sliderItems;
 
     let starContainer = [...document.querySelectorAll(".star-container")];
-    allItems = { sliders, starContainer };
+    let values = { sliders, starContainer };
 
-    return allItems;
+    this.chooseContainer(values);
   }
 
-  chooseContainer() {
+  chooseContainer(values) {
     // menu slider images
-    let slider = [...document.querySelectorAll(".slider")];
+    // let slider = [...document.querySelectorAll(".slider")];
+
+    let starContainer = values.starContainer;
+    let slider = values.sliders;
+
+    allItems = [...slider];
 
     // active title on load
     popularBtn.classList.add("menu-active");
     popularBtn.disabled = true;
 
     menuSliderContainer.addEventListener("click", (e) => {
-      if (e.target === favouriteBtn) {
+      if (favouriteBtn.classList.contains("menu-active")) {
+        favouriteArray = JSON.parse(localStorage.getItem("favourite"));
+
         // copy favourite array
         let favouriteProducts = [...favouriteArray];
 
@@ -222,7 +229,6 @@ class UI {
 
         // unfavourite item & remove from local storage
         if (e.target.classList.contains("unfavourite")) {
-          console.log(e.target);
           // variables
           const iconID = e.target.parentElement.parentElement.id;
           const currentSlider = e.target.parentElement.parentElement;
@@ -230,6 +236,7 @@ class UI {
           // globally find product
           let product = allItems.find((item) => {
             if (item.id === iconID) {
+              console.log(item);
               return item;
             }
           });
@@ -263,14 +270,12 @@ class UI {
         }
       }
 
-      if (e.target === popularBtn) {
-        let sliders = allItems.sliders;
-
-        sliders = sliders
+      if (popularBtn) {
+        let valami = allItems
           .map((item) => {
             return `<div class="slider" id="${item.id}">
                   <div class="star-container" id="${item.id}">
-
+                     <i class="far fa-star favourite"></i>
                   </div>
                     <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
                     <p class="slider-name" data-id="${item.title}">${item.title}</p>
@@ -278,7 +283,7 @@ class UI {
           })
           .join("");
 
-        sliderContainer.innerHTML = sliders;
+        sliderContainer.innerHTML = valami;
       }
     });
 
@@ -296,13 +301,11 @@ class UI {
       favouriteBtn.disabled = true;
     });
 
-    const starContainer = allItems.starContainer;
-
-    this.addFavourites(starContainer);
+    UI.addFavourites(starContainer);
   }
 
-  addFavourites(item) {
-    item.forEach((container) => {
+  static addFavourites(starContainer) {
+    starContainer.forEach((container) => {
       // variables
       let itemID = container.id;
       let itemTitle = container.parentElement.children[2].dataset.id;
@@ -324,7 +327,7 @@ class UI {
         if (e.target.classList.contains("unfavourite")) {
           // change icon
           container.innerHTML = `<i class="far fa-star favourite"></i>`;
-
+          console.log(e.target);
           // remove item from local storage
           favouriteArray = favouriteArray.filter((item) => {
             if (item.itemID !== itemID) {
@@ -391,12 +394,9 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((gridItems) => ui.displayMenuGridItems(gridItems))
     // popular items
     .then(products.getSliderItems)
-    .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
-    .then(() => ui.chooseContainer(allItems))
-    // favourites
+    .then((sliderItems) => ui.displayMenuSliderItems(sliderItems));
 
-    .then(products.getMenuItems)
-    // date & home btn
-    .then(ui.displayHomeBtn())
-    .then(ui.displayDate());
+  // date & home btn
+  // .then(ui.displayHomeBtn())
+  // .then(ui.displayDate());
 });
