@@ -8,8 +8,10 @@ const client = contentful.createClient({
 // menu grid
 let menuGrid = document.querySelector(".menu-grid-container");
 // menu slider
-let menuSlider = document.getElementById("menu-slider-container");
-let menuSliderTitle = document.querySelectorAll(".menu-slider-title");
+let menuSliderContainer = document.getElementById("menu-slider-container");
+const popularBtn = document.querySelector("#popular");
+const favouriteBtn = document.querySelector("#favourite");
+
 let sliderContainer = document.querySelector(".slider-container");
 let popularContainer = document.querySelector(".popular-container");
 const sliderBtns = [...document.querySelectorAll(".slider-btn")];
@@ -164,8 +166,10 @@ class UI {
     });
   }
 
-  // display slider items
+  // display sliders
   displayMenuSliderItems(sliderItems) {
+    let sliders = [...sliderItems];
+    // display sliders on load
     sliderItems = sliderItems
       .map((item) => {
         return `<div class="slider" id="${item.id}">
@@ -177,71 +181,123 @@ class UI {
                 </div>`;
       })
       .join("");
+
     sliderContainer.innerHTML = sliderItems;
 
+    let starContainer = [...document.querySelectorAll(".star-container")];
+    allItems = { sliders, starContainer };
+
+    return allItems;
+  }
+
+  chooseContainer() {
     // menu slider images
     let slider = [...document.querySelectorAll(".slider")];
-    let starContainer = [...document.querySelectorAll(".star-container")];
-
-    allItems = [...slider];
-
-    // menu btn events
-    sliderBtns.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        // insert before
-        if (
-          e.target.classList.contains("fa-chevron-left") &&
-          !sliderContainer.classList.contains("hide-item")
-        ) {
-          sliderContainer.insertBefore(slider[slider.length - 1], slider[0]);
-          slider = [...document.querySelectorAll(".slider")];
-        }
-
-        // insert after
-        if (
-          e.target.classList.contains("fa-chevron-right") &&
-          !sliderContainer.classList.contains("hide-item")
-        ) {
-          sliderContainer.appendChild(slider[0]);
-          slider = [...document.querySelectorAll(".slider")];
-        }
-      });
-    });
-
-    this.addFilters(slider);
 
     // active title on load
-    menuSliderTitle.forEach((title) => {
-      if (title.id === "popular") {
-        title.classList.add("menu-active");
+    popularBtn.classList.add("menu-active");
+    popularBtn.disabled = true;
+
+    favouriteBtn.addEventListener("click", (e) => {
+      // copy favourite array
+      let favouriteProducts = [...favouriteArray];
+
+      // iterate over array
+      favouriteProducts = favouriteProducts
+        .map((item) => {
+          return `<div class="favourite-item" id="${item.itemID}">
+                    <div class="star-container" id="${item.itemID}">
+                        <i class="fas fa-star unfavourite"></i>
+                    </div>
+                        <img src="${item.image}" class="favourite-img" alt="${item.itemTitle}" srcset="">
+                        <p class="favourite-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
+                 </div>`;
+        })
+        .join("");
+
+      sliderContainer.innerHTML = favouriteProducts;
+
+      let favouriteItems = [...document.querySelectorAll(".favourite-item")];
+
+      // unfavourite item & remove from local storage
+      if (e.target.classList.contains("unfavourite")) {
+        // variables
+        const iconID = e.target.parentElement.parentElement.id;
+        const currentSlider = e.target.parentElement.parentElement;
+
+        // globally find product
+        let product = allItems.find((item) => {
+          if (item.id === iconID) {
+            return item;
+          }
+        });
+
+        // globally remove favourite icon
+        if (product) {
+          starContainer.forEach((star) => {
+            if (star.id == product.id) {
+              star.innerHTML = `<i class="far fa-star favourite"></i>`;
+            }
+
+            // find current target in local storage
+            favouriteArray = favouriteArray.filter((item) => {
+              if (item.itemID !== iconID) {
+                return item;
+              }
+            });
+
+            // remove current item
+            currentSlider.remove();
+
+            // remove grid filter from remaining items
+            favouriteItems.forEach((item) => {
+              item.classList.remove("grid-filter");
+            });
+
+            // update local storage
+            localStorage.setItem("favourite", JSON.stringify(favouriteArray));
+          });
+        }
       }
+
+      this.addFavourites(starContainer);
     });
 
-    // choose slider container
-    menuSlider.addEventListener("click", (e) => {
-      if (e.target.id == "popular") {
-        menuSliderTitle.forEach((title) => {
-          title.classList.remove("menu-active");
-          title.disabled = false;
-          e.target.classList.add("menu-active");
-          e.target.disabled = true;
-          sliderContainer.classList.remove("hide-item");
-          popularContainer.classList.add("hide-item");
-        });
-      }
-      if (e.target.id == "favourite") {
-        menuSliderTitle.forEach((title) => {
-          title.classList.remove("menu-active");
-          title.disabled = false;
-          e.target.classList.add("menu-active");
-          e.target.disabled = true;
-          popularContainer.classList.remove("hide-item");
-          sliderContainer.classList.add("hide-item");
-        });
-      }
+    popularBtn.addEventListener("click", (e) => {
+      let sliders = allItems.sliders;
+
+      sliders = sliders
+        .map((item) => {
+          return `<div class="slider" id="${item.id}">
+                  <div class="star-container" id="${item.id}">
+
+                  </div>
+                    <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                    <p class="slider-name" data-id="${item.title}">${item.title}</p>
+                </div>`;
+        })
+        .join("");
+
+      sliderContainer.innerHTML = sliders;
     });
 
-    return starContainer;
+    popularBtn.addEventListener("click", () => {
+      popularBtn.classList.add("menu-active");
+      popularBtn.disabled = true;
+      favouriteBtn.classList.remove("menu-active");
+      favouriteBtn.disabled = false;
+    });
+
+    favouriteBtn.addEventListener("click", () => {
+      popularBtn.classList.remove("menu-active");
+      popularBtn.disabled = false;
+      favouriteBtn.classList.add("menu-active");
+      favouriteBtn.disabled = true;
+    });
+
+    const starContainer = allItems.starContainer;
+
+    this.addFavourites(starContainer);
   }
 
   addFavourites(item) {
@@ -291,112 +347,6 @@ class UI {
         }
       });
     });
-    this.displayFavourites();
-  }
-
-  displayFavourites() {
-    menuSlider.addEventListener("click", (e) => {
-      if (e.target.id == "favourite") {
-        // copy favourite array
-        let favouriteProducts = [...favouriteArray];
-
-        // iterate over array
-        favouriteProducts = favouriteProducts
-          .map((item) => {
-            return `<div class="favourite-item" id="${item.itemID}">
-                    <div class="star-container" id="${item.itemID}">
-                        <i class="fas fa-star unfavourite"></i>
-                    </div>
-                        <img src="${item.image}" class="favourite-img" alt="${item.itemTitle}" srcset="">
-                        <p class="favourite-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
-                 </div>`;
-          })
-          .join("");
-
-        popularContainer.innerHTML = favouriteProducts;
-      }
-      // variables
-      let favouriteItems = [...document.querySelectorAll(".favourite-item")];
-
-      // add filter
-      this.addFilters(favouriteItems);
-    });
-
-    // update star container
-    let starContainer = [...document.querySelectorAll(".star-container")];
-
-    popularContainer.addEventListener("click", (e, favouriteItems) => {
-      // variables
-      const iconID = e.target.parentElement.parentElement.id;
-      const currentSlider = e.target.parentElement.parentElement;
-      favouriteItems = [...document.querySelectorAll(".favourite-item")];
-
-      // unfavourite item & remove from local storage
-      if (e.target.classList.contains("unfavourite")) {
-        // globally find product
-        let product = allItems.find((item) => {
-          if (item.id === iconID) {
-            return item;
-          }
-        });
-
-        // globally remove favourite icon
-        if (product) {
-          starContainer.forEach((star) => {
-            if (star.id == product.id) {
-              star.innerHTML = `<i class="far fa-star favourite"></i>`;
-            }
-
-            // find current target in local storage
-            favouriteArray = favouriteArray.filter((item) => {
-              if (item.itemID !== iconID) {
-                return item;
-              }
-            });
-
-            // remove current item
-            currentSlider.remove();
-
-            // remove grid filter from remaining items
-            favouriteItems.forEach((item) => {
-              item.classList.remove("grid-filter");
-            });
-
-            // update local storage
-            localStorage.setItem("favourite", JSON.stringify(favouriteArray));
-          });
-        }
-      }
-    });
-  }
-
-  btns() {
-    // SLIDER BUTTONS
-    // insert before
-    sliderBtns.forEach((btn) => {
-      btn.addEventListener("click", (e, favouriteItems) => {
-        favouriteItems = [...document.querySelectorAll(".favourite-item")];
-
-        if (
-          e.target.classList.contains("fa-chevron-left") &&
-          !popularContainer.classList.contains("hide-item")
-        ) {
-          popularContainer.insertBefore(
-            favouriteItems[favouriteItems.length - 1],
-            favouriteItems[0]
-          );
-          favouriteItems = [...document.querySelectorAll(".favourite-item")];
-        }
-        // insert after
-        if (
-          e.target.classList.contains("fa-chevron-right") &&
-          !popularContainer.classList.contains("hide-item")
-        ) {
-          popularContainer.appendChild(favouriteItems[0]);
-          favouriteItems = document.querySelectorAll(".favourite-item");
-        }
-      });
-    });
   }
 
   // show home button
@@ -411,25 +361,6 @@ class UI {
   // show date
   displayDate() {
     date.innerHTML = new Date().getFullYear();
-  }
-
-  // add filter at min 1024px
-  addFilters(slider) {
-    if (media.matches) {
-      slider.forEach((item) => {
-        item.addEventListener("mouseover", () => {
-          slider.forEach((item) => {
-            item.classList.add("grid-filter");
-          });
-          item.classList.remove("grid-filter");
-        });
-        item.addEventListener("mouseleave", () => {
-          slider.forEach((item) => {
-            item.classList.remove("grid-filter");
-          });
-        });
-      });
-    }
   }
 }
 
@@ -460,10 +391,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // popular items
     .then(products.getSliderItems)
     .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
+    .then(() => ui.chooseContainer(allItems))
     // favourites
-    .then((starContainer) => ui.addFavourites(starContainer))
-    // carousel btns
-    .then((favouriteItems) => ui.btns(favouriteItems))
+
     .then(products.getMenuItems)
     // date & home btn
     .then(ui.displayHomeBtn())
