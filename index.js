@@ -198,87 +198,88 @@ class UI {
     popularBtn.classList.add("menu-active");
     popularBtn.disabled = true;
 
-    favouriteBtn.addEventListener("click", (e) => {
-      // copy favourite array
-      let favouriteProducts = [...favouriteArray];
+    menuSliderContainer.addEventListener("click", (e) => {
+      if (e.target === favouriteBtn) {
+        // copy favourite array
+        let favouriteProducts = [...favouriteArray];
 
-      // iterate over array
-      favouriteProducts = favouriteProducts
-        .map((item) => {
-          return `<div class="favourite-item" id="${item.itemID}">
+        // iterate over array
+        favouriteProducts = favouriteProducts
+          .map((item) => {
+            return `<div class="favourite-item" id="${item.itemID}">
                     <div class="star-container" id="${item.itemID}">
                         <i class="fas fa-star unfavourite"></i>
                     </div>
                         <img src="${item.image}" class="favourite-img" alt="${item.itemTitle}" srcset="">
                         <p class="favourite-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
                  </div>`;
-        })
-        .join("");
+          })
+          .join("");
 
-      sliderContainer.innerHTML = favouriteProducts;
+        sliderContainer.innerHTML = favouriteProducts;
 
-      let favouriteItems = [...document.querySelectorAll(".favourite-item")];
+        let favouriteItems = [...document.querySelectorAll(".favourite-item")];
 
-      // unfavourite item & remove from local storage
-      if (e.target.classList.contains("unfavourite")) {
-        // variables
-        const iconID = e.target.parentElement.parentElement.id;
-        const currentSlider = e.target.parentElement.parentElement;
+        // unfavourite item & remove from local storage
+        if (e.target.classList.contains("unfavourite")) {
+          console.log(e.target);
+          // variables
+          const iconID = e.target.parentElement.parentElement.id;
+          const currentSlider = e.target.parentElement.parentElement;
 
-        // globally find product
-        let product = allItems.find((item) => {
-          if (item.id === iconID) {
-            return item;
-          }
-        });
-
-        // globally remove favourite icon
-        if (product) {
-          starContainer.forEach((star) => {
-            if (star.id == product.id) {
-              star.innerHTML = `<i class="far fa-star favourite"></i>`;
+          // globally find product
+          let product = allItems.find((item) => {
+            if (item.id === iconID) {
+              return item;
             }
-
-            // find current target in local storage
-            favouriteArray = favouriteArray.filter((item) => {
-              if (item.itemID !== iconID) {
-                return item;
-              }
-            });
-
-            // remove current item
-            currentSlider.remove();
-
-            // remove grid filter from remaining items
-            favouriteItems.forEach((item) => {
-              item.classList.remove("grid-filter");
-            });
-
-            // update local storage
-            localStorage.setItem("favourite", JSON.stringify(favouriteArray));
           });
+
+          // globally remove favourite icon
+          if (product) {
+            starContainer.forEach((star) => {
+              if (star.id == product.id) {
+                star.innerHTML = `<i class="far fa-star favourite"></i>`;
+              }
+
+              // find current target in local storage
+              favouriteArray = favouriteArray.filter((item) => {
+                if (item.itemID !== iconID) {
+                  return item;
+                }
+              });
+
+              // remove current item
+              currentSlider.remove();
+
+              // remove grid filter from remaining items
+              favouriteItems.forEach((item) => {
+                item.classList.remove("grid-filter");
+              });
+
+              // update local storage
+              localStorage.setItem("favourite", JSON.stringify(favouriteArray));
+            });
+          }
         }
       }
 
-      this.addFavourites(starContainer);
-    });
+      if (e.target === popularBtn) {
+        let sliders = allItems.sliders;
 
-    popularBtn.addEventListener("click", (e) => {
-      let sliders = allItems.sliders;
-
-      sliders = sliders
-        .map((item) => {
-          return `<div class="slider" id="${item.id}">
+        sliders = sliders
+          .map((item) => {
+            return `<div class="slider" id="${item.id}">
                   <div class="star-container" id="${item.id}">
 
                   </div>
                     <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
                     <p class="slider-name" data-id="${item.title}">${item.title}</p>
                 </div>`;
-        })
-        .join("");
+          })
+          .join("");
 
-      sliderContainer.innerHTML = sliders;
+        sliderContainer.innerHTML = sliders;
+      }
     });
 
     popularBtn.addEventListener("click", () => {
