@@ -262,7 +262,7 @@ class UI {
     });
   }
 
-  // display favourite sliders on click event
+  // display favourite sliders on click
   displayFavouriteItems() {
     menuSliderContainer.addEventListener("click", (e) => {
       if (e.target === favouriteBtn) {
@@ -273,12 +273,12 @@ class UI {
         sliders = sliders
           .map((item) => {
             return `<div class="slider" id="${item.itemID}">
-                    <div class="star-container" id="${item.itemID}">
-                        <i class="fas fa-star unfavourite"></i>
-                    </div>
-                        <img src="${item.image}" class="favourite-img" alt="${item.itemTitle}" srcset="">
-                        <p class="favourite-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
-                 </div>`;
+                        <div class="star-container" id="${item.itemID}">
+                            <i class="fas fa-star unfavourite"></i>
+                        </div>
+                            <img src="${item.image}" class="favourite-img" alt="${item.itemTitle}" srcset="">
+                            <p class="favourite-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
+                     </div>`;
           })
           .join("");
 
@@ -410,7 +410,7 @@ class UI {
     prevBtn.addEventListener("click", () => {
       // popular btn
       if (popularBtn.classList.contains("menu-active")) {
-        // update sliders
+        // get sliders
         sliders = [...document.querySelectorAll(".slider")];
 
         // insert before
@@ -422,7 +422,7 @@ class UI {
 
       // favourite btn
       if (favouriteBtn.classList.contains("menu-active")) {
-        // update sliders
+        // get sliders
         sliders = [...document.querySelectorAll(".slider")];
 
         // insert before
@@ -436,7 +436,7 @@ class UI {
     nextBtn.addEventListener("click", () => {
       // popular btn
       if (popularBtn.classList.contains("menu-active")) {
-        // update sliders
+        // get sliders
         sliders = [...document.querySelectorAll(".slider")];
 
         // insert after
@@ -448,7 +448,7 @@ class UI {
 
       // favourite btn
       if (favouriteBtn.classList.contains("menu-active")) {
-        // update sliders
+        // get sliders
         sliders = [...document.querySelectorAll(".slider")];
 
         // insert after
