@@ -285,6 +285,18 @@ class UI {
         sliderContainer.innerHTML = sliders;
       }
 
+      // hide carousel btns if 1 or less item in storage
+      if (
+        favouriteArray.length <= 1 &&
+        favouriteBtn.classList.contains("menu-active")
+      ) {
+        prevBtn.style.display = "none";
+        nextBtn.style.display = "none";
+      } else {
+        prevBtn.style.display = "flex";
+        nextBtn.style.display = "flex";
+      }
+
       // variables
       let sliders = [...document.querySelectorAll(".slider")];
 
