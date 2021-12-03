@@ -20,7 +20,7 @@ let date = document.querySelector("#date");
 const homeBtn = document.querySelector(".home-btn");
 
 // variables
-let favouriteArray;
+let favouriteArray = [];
 let allItems = [];
 let media = matchMedia("(min-width: 1024px)");
 
@@ -495,23 +495,21 @@ class UI {
 
 // save to local storage
 class Storage {
-  static getFavourite() {
-    if (localStorage.getItem("favourite") === null) {
-      favouriteArray = [];
-    } else {
-      favouriteArray = JSON.parse(localStorage.getItem("favourite"));
-    }
-    return favouriteArray;
-  }
-
   static saveFavourite() {
     localStorage.setItem("favourite", JSON.stringify(favouriteArray));
+  }
+
+  static getFavourite() {
+    favouriteArray = JSON.parse(localStorage.getItem("favourite"));
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
+
+  // create array in local storage
+  Storage.saveFavourite();
 
   // get grid items
   products
