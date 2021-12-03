@@ -781,7 +781,7 @@ body {
   */
 
   .home-btn {
-    opacity: 0;
+    display: none;
     position: fixed;
     right: 25px;
     bottom: 25px;
@@ -791,7 +791,7 @@ body {
   }
 
   .show-home-btn {
-    opacity: 1;
+    display: flex;
     transition: var(--transition);
   }
 

@@ -19,11 +19,9 @@ let date = document.querySelector("#date");
 // home btn
 const homeBtn = document.querySelector(".home-btn");
 
-// local storage
+// variables
 let favouriteArray;
 let allItems = [];
-
-// media query
 let media = matchMedia("(min-width: 1024px)");
 
 // CLASSES
@@ -262,94 +260,6 @@ class UI {
     });
   }
 
-  // display favourite sliders on click
-  displayFavouriteItems() {
-    menuSliderContainer.addEventListener("click", (e) => {
-      if (e.target === favouriteBtn) {
-        // copy favourite array
-        let sliders = [...favouriteArray];
-
-        // iterate over array
-        sliders = sliders
-          .map((item) => {
-            return `<div class="slider" id="${item.itemID}">
-                        <div class="star-container" id="${item.itemID}">
-                            <i class="fas fa-star unfavourite"></i>
-                        </div>
-                            <img src="${item.image}" class="favourite-img" alt="${item.itemTitle}" srcset="">
-                            <p class="favourite-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
-                     </div>`;
-          })
-          .join("");
-
-        sliderContainer.innerHTML = sliders;
-      }
-
-      // hide carousel btns if 1 or less item in storage
-      if (
-        favouriteArray.length <= 1 &&
-        favouriteBtn.classList.contains("menu-active")
-      ) {
-        prevBtn.style.display = "none";
-        nextBtn.style.display = "none";
-      } else {
-        prevBtn.style.display = "flex";
-        nextBtn.style.display = "flex";
-      }
-
-      // variables
-      let sliders = [...document.querySelectorAll(".slider")];
-
-      // functions
-      this.addFilters(sliders);
-      this.carouselBtns(sliders);
-
-      // unfavourite item & remove from local storage
-      if (
-        e.target.classList.contains("unfavourite") &&
-        favouriteBtn.classList.contains("menu-active")
-      ) {
-        // variables
-        const sliderID = e.target.parentElement.parentElement.id;
-        const currentSlider = e.target.parentElement.parentElement;
-
-        // globally find product
-        const product = allItems.find((item) => {
-          if (item.id === sliderID) {
-            return item;
-          }
-        });
-
-        // globally remove favourite icon
-        if (product) {
-          starContainer.forEach((star) => {
-            if (star.id == product.id) {
-              star.innerHTML = `<i class="far fa-star favourite"></i>`;
-            }
-          });
-        }
-
-        // find current target in local storage
-        favouriteArray = favouriteArray.filter((item) => {
-          if (item.itemID !== sliderID) {
-            return item;
-          }
-        });
-
-        // remove current slider
-        currentSlider.remove();
-
-        // remove filter effect from remaining items
-        sliders.forEach((item) => {
-          item.classList.remove("filter-effect");
-        });
-
-        // update local storage
-        localStorage.setItem("favourite", JSON.stringify(favouriteArray));
-      }
-    });
-  }
-
   // add items to storage, delete from storage, set icons on document load
   addFavourites() {
     // select star container
@@ -402,6 +312,95 @@ class UI {
 
       // functions
       this.displayFavouriteItems(starContainer);
+    });
+  }
+
+  // display favourite sliders on click
+  displayFavouriteItems(starContainer) {
+    menuSliderContainer.addEventListener("click", (e) => {
+      if (e.target === favouriteBtn) {
+        // copy favourite array
+        let sliders = [...favouriteArray];
+
+        // iterate over array
+        sliders = sliders
+          .map((item) => {
+            return `<div class="slider" id="${item.itemID}">
+                        <div class="star-container" id="${item.itemID}">
+                            <i class="fas fa-star unfavourite"></i>
+                        </div>
+                            <img src="${item.image}" class="favourite-img" alt="${item.itemTitle}" srcset="">
+                            <p class="favourite-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
+                     </div>`;
+          })
+          .join("");
+
+        sliderContainer.innerHTML = sliders;
+      }
+
+      // hide carousel btns if 1 or less item in storage
+      if (
+        favouriteArray.length <= 1 &&
+        favouriteBtn.classList.contains("menu-active")
+      ) {
+        prevBtn.style.display = "none";
+        nextBtn.style.display = "none";
+      } else {
+        prevBtn.style.display = "flex";
+        nextBtn.style.display = "flex";
+      }
+
+      // variables
+      let sliders = [...document.querySelectorAll(".slider")];
+
+      // functions
+      this.addFilters(sliders);
+      this.carouselBtns(sliders);
+
+      // unfavourite item & remove from local storage
+      if (
+        e.target.classList.contains("unfavourite") &&
+        favouriteBtn.classList.contains("menu-active")
+      ) {
+        // variables
+        const sliderID = e.target.parentElement.parentElement.id;
+        const currentSlider = e.target.parentElement.parentElement;
+
+        // globally find product
+        let product = allItems[0].sliderItems;
+        product = product.find((item) => {
+          if (item.id === sliderID) {
+            return item;
+          }
+        });
+
+        // globally remove favourite icon
+        if (product) {
+          starContainer.forEach((star) => {
+            if (star.id == product.id) {
+              star.innerHTML = `<i class="far fa-star favourite"></i>`;
+            }
+          });
+        }
+
+        // find current target in local storage
+        favouriteArray = favouriteArray.filter((item) => {
+          if (item.itemID !== sliderID) {
+            return item;
+          }
+        });
+
+        // remove current slider
+        currentSlider.remove();
+
+        // remove filter effect from remaining items
+        sliders.forEach((item) => {
+          item.classList.remove("filter-effect");
+        });
+
+        // update local storage
+        localStorage.setItem("favourite", JSON.stringify(favouriteArray));
+      }
     });
   }
 
@@ -496,10 +495,6 @@ class UI {
 
 // save to local storage
 class Storage {
-  static saveFavourite() {
-    localStorage.setItem("favourite", JSON.stringify(favouriteArray));
-  }
-
   static getFavourite() {
     if (localStorage.getItem("favourite") === null) {
       favouriteArray = [];
@@ -507,6 +502,10 @@ class Storage {
       favouriteArray = JSON.parse(localStorage.getItem("favourite"));
     }
     return favouriteArray;
+  }
+
+  static saveFavourite() {
+    localStorage.setItem("favourite", JSON.stringify(favouriteArray));
   }
 }
 
