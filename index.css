@@ -324,7 +324,7 @@ body {
     filter: grayscale(5%);
   }
 
-  .grid-filter {
+  .filter-effect {
     opacity: 0.5;
     transition: var(--transition);
   }
