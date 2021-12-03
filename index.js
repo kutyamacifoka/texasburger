@@ -9,10 +9,11 @@ const client = contentful.createClient({
 let menuGrid = document.querySelector(".menu-grid-container");
 // menu slider
 let menuSliderContainer = document.getElementById("menu-slider-container");
+let sliderContainer = document.querySelector(".slider-container");
 const popularBtn = document.querySelector("#popular");
 const favouriteBtn = document.querySelector("#favourite");
-let sliderContainer = document.querySelector(".slider-container");
-const sliderBtns = [...document.querySelectorAll(".slider-btn")];
+const prevBtn = document.querySelector(".fa-chevron-left");
+const nextBtn = document.querySelector(".fa-chevron-right");
 // date
 let date = document.querySelector("#date");
 // home btn
@@ -186,9 +187,10 @@ class UI {
     sliderContainer.innerHTML = sliderItems;
 
     // variables
-    const sliders = [...document.querySelectorAll(".slider")];
+    let sliders = [...document.querySelectorAll(".slider")];
 
     // functions
+    this.carouselBtns(sliders);
     this.addFilters(sliders);
   }
 
@@ -265,12 +267,12 @@ class UI {
     menuSliderContainer.addEventListener("click", (e) => {
       if (e.target === favouriteBtn) {
         // copy favourite array
-        let favouriteItems = [...favouriteArray];
+        let sliders = [...favouriteArray];
 
         // iterate over array
-        favouriteItems = favouriteItems
+        sliders = sliders
           .map((item) => {
-            return `<div class="favourite-item" id="${item.itemID}">
+            return `<div class="slider" id="${item.itemID}">
                     <div class="star-container" id="${item.itemID}">
                         <i class="fas fa-star unfavourite"></i>
                     </div>
@@ -280,14 +282,15 @@ class UI {
           })
           .join("");
 
-        sliderContainer.innerHTML = favouriteItems;
+        sliderContainer.innerHTML = sliders;
       }
 
       // variables
-      const favouriteItems = [...document.querySelectorAll(".favourite-item")];
+      let sliders = [...document.querySelectorAll(".slider")];
 
       // functions
-      this.addFilters(favouriteItems);
+      this.addFilters(sliders);
+      this.carouselBtns(sliders);
 
       // unfavourite item & remove from local storage
       if (
@@ -325,7 +328,7 @@ class UI {
         currentSlider.remove();
 
         // remove filter effect from remaining items
-        favouriteItems.forEach((item) => {
+        sliders.forEach((item) => {
           item.classList.remove("filter-effect");
         });
 
@@ -391,7 +394,59 @@ class UI {
   }
 
   // carousel buttons
-  carouselBtns() {}
+  carouselBtns(sliders) {
+    prevBtn.addEventListener("click", () => {
+      // popular btn
+      if (popularBtn.classList.contains("menu-active")) {
+        // update sliders
+        sliders = [...document.querySelectorAll(".slider")];
+
+        // insert before
+        sliderContainer.insertBefore(sliders[sliders.length - 1], sliders[0]);
+
+        // update sliders
+        sliders = [...document.querySelectorAll(".slider")];
+      }
+
+      // favourite btn
+      if (favouriteBtn.classList.contains("menu-active")) {
+        // update sliders
+        sliders = [...document.querySelectorAll(".slider")];
+
+        // insert before
+        sliderContainer.insertBefore(sliders[sliders.length - 1], sliders[0]);
+
+        // update sliders
+        sliders = [...document.querySelectorAll(".slider")];
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      // popular btn
+      if (popularBtn.classList.contains("menu-active")) {
+        // update sliders
+        sliders = [...document.querySelectorAll(".slider")];
+
+        // insert after
+        sliderContainer.appendChild(sliders[0]);
+
+        // update sliders
+        sliders = [...document.querySelectorAll(".slider")];
+      }
+
+      // favourite btn
+      if (favouriteBtn.classList.contains("menu-active")) {
+        // update sliders
+        sliders = [...document.querySelectorAll(".slider")];
+
+        // insert after
+        sliderContainer.appendChild(sliders[0]);
+
+        // update sliders
+        sliders = [...document.querySelectorAll(".slider")];
+      }
+    });
+  }
 
   // add filter at min 1024px
   addFilters(slider) {
