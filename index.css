@@ -577,6 +577,7 @@ body {
   .favourite,
   .unfavourite {
     padding: 1rem;
+    background: red;
   }
 
   .hide-item {
