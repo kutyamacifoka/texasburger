@@ -8,6 +8,7 @@ const client = contentful.createClient({
 // navbar
 const navbar = document.getElementById("navbar-collapse");
 const navLink = [...document.querySelectorAll(".nav-link")];
+const navbarToggler = document.querySelector(".navbar-toggler");
 // menu grid
 let menuGrid = document.querySelector(".menu-grid-container");
 // menu slider
@@ -97,13 +98,13 @@ class UI {
   // navbar collapse
   static navCollapse(e) {
     const bsCollapse = new bootstrap.Collapse(navbar);
-    navLink.forEach((item) => {
-      if (e.target === item) {
+    if (e.target === navLink) {
+      navLink.forEach((item) => {
         item.addEventListener("click", () => {
-          bsCollapse.Collapse();
+          bsCollapse.toggle();
         });
-      }
-    });
+      });
+    }
   }
 
   // display grid items
@@ -501,8 +502,10 @@ class Storage {
 }
 
 // collapse navbar
-navbar.addEventListener("click", (e) => {
-  UI.navCollapse(e);
+document.addEventListener("click", (e) => {
+  if (window.innerWidth < 992) {
+    UI.navCollapse(e);
+  }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -511,7 +514,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // create array in local storage
   Storage.saveFavourite();
-
   // get grid items
   products
     .getMenuGridItems()
