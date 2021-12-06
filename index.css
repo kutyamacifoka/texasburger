@@ -308,18 +308,14 @@ body {
     cursor: pointer;
     height: 200px;
     width: 100%;
-    border-top: solid 3px whitesmoke;
-    border-bottom: solid 3px whitesmoke;
-    border-right: solid 3px transparent;
-    border-left: solid 3px transparent;
+    border-top: solid 2px whitesmoke;
+    border-bottom: solid 2px whitesmoke;
     transition: var(--transition);
   }
 
   .menu-grid-clr-border {
-    border-top: solid 3px goldenrod;
-    border-bottom: solid 3px var(--clr-red-1);
-    border-right: solid 3px var(--clr-red-1);
-    border-left: solid 3px goldenrod;
+    border-top: solid 2px goldenrod;
+    border-bottom: solid 2px var(--clr-red-1);
     filter: grayscale(5%);
   }
 
