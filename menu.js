@@ -87,13 +87,13 @@ class UI {
   // navbar collapse
   static navCollapse(e) {
     const bsCollapse = new bootstrap.Collapse(navbar);
-    navLink.forEach((item) => {
-      if (e.target === item) {
+    if (e.target === navLink) {
+      navLink.forEach((item) => {
         item.addEventListener("click", () => {
-          bsCollapse.Collapse();
+          bsCollapse.toggle();
         });
-      }
-    });
+      });
+    }
   }
 
   // create menu btns
@@ -110,14 +110,13 @@ class UI {
     const btns = [...document.querySelectorAll(".menu-btn")];
 
     btns.forEach((btn) => {
-      console.log(btn);
       btn.addEventListener("mouseover", (e) => {
         const id = e.target.dataset.id;
         bgImages.forEach((item) => {
           if (id === item.title) {
             document.querySelector(
               ".banner"
-            ).style.background = `url(${item.image}) center/cover no-repeat`;
+            ).style.background = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${item.image}) center/cover no-repeat`;
           }
           if (id === "all") {
             document.querySelector(
@@ -144,11 +143,6 @@ class UI {
   }
 }
 
-// collapse navbar
-navbar.addEventListener("click", (e) => {
-  UI.navCollapse(e);
-});
-
 // save to local storage
 class Storage {
   static saveFavourite() {
@@ -159,6 +153,13 @@ class Storage {
     favouriteArray = JSON.parse(localStorage.getItem("favourite"));
   }
 }
+
+// collapse navbar
+document.addEventListener("click", (e) => {
+  if (window.innerWidth < 992) {
+    UI.navCollapse(e);
+  }
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
