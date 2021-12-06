@@ -38,22 +38,22 @@ class Products {
 
       let gridItems = await contentful.items;
       gridItems = gridItems
+        .filter((item) => {
+          for (let i = 0; i < gridItems.length; i++) {
+            if (
+              item.fields.class[i] === "grid-item" ||
+              item.fields.class[i] === "large-grid-item"
+            ) {
+              return item;
+            }
+          }
+        })
         .map((item) => {
           const { title } = item.fields;
           const itemClass = item.fields.class;
           const { id } = item.sys;
           const image = item.fields.image.fields.file.url;
           return { title, itemClass, id, image };
-        })
-        .filter((item) => {
-          for (let i = 0; i < gridItems.length; i++) {
-            if (
-              item.itemClass[i] === "grid-item" ||
-              item.itemClass[i] === "large-grid-item"
-            ) {
-              return item;
-            }
-          }
         });
 
       return gridItems;
@@ -70,49 +70,22 @@ class Products {
 
       let sliderItems = await contentful.items;
       sliderItems = sliderItems
+        .filter((item) => {
+          for (let i = 0; i < sliderItems.length; i++) {
+            if (item.fields.class[i] === "slider-item") {
+              return item;
+            }
+          }
+        })
         .map((item) => {
           const { title } = item.fields;
           const itemClass = item.fields.class;
           const { id } = item.sys;
           const image = item.fields.image.fields.file.url;
           return { title, itemClass, id, image };
-        })
-        .filter((item) => {
-          for (let i = 0; i < sliderItems.length; i++) {
-            if (item.itemClass[i] === "slider-item") {
-              return item;
-            }
-          }
         });
 
       return sliderItems;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async getMenuItems() {
-    try {
-      let contentful = await client.getEntries({
-        content_type: "texasBurger",
-      });
-
-      let menuItems = await contentful.items;
-      menuItems = menuItems
-        .map((item) => {
-          const { title } = item.fields.title;
-          const itemClass = item.fields.class;
-          const { id } = item.sys;
-          const image = item.fields.image.fields.file.url;
-          return { title, itemClass, id, image };
-        })
-        .filter((item) => {
-          for (let i = 0; i < menuItems.length; i++) {
-            return item;
-          }
-        });
-
-      return menuItems;
     } catch (error) {
       console.log(error);
     }

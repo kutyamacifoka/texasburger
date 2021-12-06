@@ -159,13 +159,14 @@ body {
 
   .banner {
     width: 100%;
-    min-height: 50vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
       url("./hero2.png") center/cover no-repeat;
+      transition: var(--transition);
   }
 
   .banner-title {
@@ -184,6 +185,33 @@ body {
     letter-spacing: 3px;
     padding-top: 0.5rem;
     font-family: var(--ff-primary-3);
+  }
+
+  .btn-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
+      gap: .5rem;
+            padding: .5rem;
+
+      width: 100%;
+      height: max-content;
+      position: absolute;
+      align-self: flex-end;
+  }
+
+  .menu-btn {
+      background: goldenrod;
+      border: solid 1.5px black;
+      color: black;
+      font-family: var(--ff-primary-2);
+      font-size: 1.25rem;
+      transition: var(--transition);
+  }
+
+  .menu-btn:hover {
+      background: black;
+      color: goldenrod;
+      border: solid 1.5px goldenrod;
   }
 
   /*

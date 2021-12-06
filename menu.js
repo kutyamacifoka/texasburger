@@ -8,6 +8,10 @@ const client = contentful.createClient({
 // navbar
 const navbar = document.getElementById("navbar-collapse");
 const navLink = [...document.querySelectorAll(".nav-link")];
+// btn container
+let btnContainer = document.querySelector(".btn-container");
+// banner contiainer
+let banner = document.querySelector(".banner");
 // date
 let date = document.querySelector("#date");
 // home btn
@@ -20,18 +24,114 @@ let media = matchMedia("(min-width: 1024px)");
 
 // CLASSES
 // get products
-class Products {}
+class Products {
+  async getMenuGridItems() {
+    try {
+      let contentful = await client.getEntries({
+        content_type: "texasBurger",
+      });
+
+      let gridItems = await contentful.items;
+      gridItems = gridItems
+        .filter((item) => {
+          for (let i = 0; i < gridItems.length; i++) {
+            if (
+              item.fields.class[i] === "grid-item" ||
+              item.fields.class[i] === "large-grid-item"
+            ) {
+              return item;
+            }
+          }
+        })
+        .map((item) => {
+          const { title } = item.fields;
+          const itemClass = item.fields.class;
+          const { id } = item.sys;
+          const image = item.fields.image.fields.file.url;
+          return { title, itemClass, id, image };
+        });
+
+      return gridItems;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getMenuItems() {
+    try {
+      let contentful = await client.getEntries({
+        content_type: "texasBurger",
+      });
+
+      let menuItems = await contentful.items;
+      menuItems = menuItems
+        .filter((item) => {
+          for (let i = 0; i < menuItems.length; i++) {
+            if (item.fields.class[i] === "menu-item") {
+              return item;
+            }
+          }
+        })
+        .map((item) => {
+          const { title } = item.fields;
+          const itemClass = item.fields.class;
+          const { id } = item.sys;
+          const image = item.fields.image.fields.file.url;
+          return { title, itemClass, id, image };
+        });
+
+      return menuItems;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
 
 // display products
 class UI {
   // navbar collapse
-  navCollapse() {
-    // const bsCollapse = new bootstrap.Collapse(navbar);
-    // navLink.forEach((item) => {
-    //   item.addEventListener("click", () => {
-    //     bsCollapse.toggle();
-    //   });
-    // });
+  static navCollapse(e) {
+    const bsCollapse = new bootstrap.Collapse(navbar);
+    navLink.forEach((item) => {
+      if (e.target === item) {
+        item.addEventListener("click", () => {
+          bsCollapse.Collapse();
+        });
+      }
+    });
+  }
+
+  // create menu btns
+  createMenuBtns(gridItems) {
+    let bg = gridItems.map((item) => {
+      const { title } = item;
+      const image = item.image;
+      return { title, image };
+    });
+
+    let menuBtns = ["all", ...new Set(gridItems.map((item) => item.title))];
+
+    menuBtns = menuBtns
+      .map((item) => {
+        return `<button class="btn menu-btn" data-id="${item}">${item}`;
+      })
+      .join("");
+    btnContainer.innerHTML = menuBtns;
+
+    const btns = [...document.querySelectorAll(".menu-btn")];
+
+    btns.forEach((btn) => {
+      btn.addEventListener("mouseover", (e) => {
+        const id = e.target.dataset.id;
+        bg.forEach((test) => {
+          if (id === test.title) {
+            document.querySelector(
+              ".banner"
+            ).style.background = `url(${test.image}) center/cover no-repeat`;
+          }
+        });
+      });
+    });
   }
 
   // show home button
@@ -49,6 +149,11 @@ class UI {
   }
 }
 
+// collapse navbar
+navbar.addEventListener("click", (e) => {
+  UI.navCollapse(e);
+});
+
 // save to local storage
 class Storage {
   static saveFavourite() {
@@ -64,9 +169,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
 
-  // create array in local storage
-  Storage.saveFavourite();
-
-  // collapse navbar
-  ui.navCollapse();
+  products
+    .getMenuGridItems()
+    .then(products.getMenuItems())
+    .then((gridItems) => ui.createMenuBtns(gridItems));
 });
