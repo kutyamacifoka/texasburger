@@ -155,7 +155,7 @@ class Storage {
 }
 
 // collapse navbar
-document.addEventListener("click", (e) => {
+navbar.addEventListener("click", (e) => {
   if (window.innerWidth < 992) {
     UI.navCollapse(e);
   }

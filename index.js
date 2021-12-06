@@ -8,7 +8,6 @@ const client = contentful.createClient({
 // navbar
 const navbar = document.getElementById("navbar-collapse");
 const navLink = [...document.querySelectorAll(".nav-link")];
-const navbarToggler = document.querySelector(".navbar-toggler");
 // menu grid
 let menuGrid = document.querySelector(".menu-grid-container");
 // menu slider
@@ -502,7 +501,7 @@ class Storage {
 }
 
 // collapse navbar
-document.addEventListener("click", (e) => {
+navbar.addEventListener("click", (e) => {
   if (window.innerWidth < 992) {
     UI.navCollapse(e);
   }
