@@ -329,13 +329,21 @@ class UI {
                         <div class="star-container" id="${item.itemID}">
                             <i class="fas fa-star unfavourite"></i>
                         </div>
-                            <img src="${item.image}" class="favourite-img" alt="${item.itemTitle}" srcset="">
-                            <p class="favourite-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
+                            <img src="${item.image}" class="slider-img" alt="${item.itemTitle}" srcset="">
+                            <p class="slider-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
                      </div>`;
           })
           .join("");
 
         sliderContainer.innerHTML = sliders;
+      }
+
+      // innerHTML when favourite array is empty
+      if (
+        favouriteArray.length === 0 &&
+        favouriteBtn.classList.contains("menu-active")
+      ) {
+        sliderContainer.innerHTML = `<h1 class="empty">Még nincsenek kedvencek</h1>`;
       }
 
       // hide carousel btns if 1 or less item in storage
