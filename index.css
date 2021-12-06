@@ -71,7 +71,7 @@ body {
   }
 
   .navbar-brand {
-    color: var(--clr-brown-1);
+    color: whitesmoke;
     font-size: 2rem;
     letter-spacing: 1px;
     text-decoration: underline goldenrod;
@@ -164,17 +164,14 @@ body {
     justify-content: center;
     align-items: center;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("./hero.png") center/cover no-repeat;
+      url("./hero2.png") center/cover no-repeat;
   }
 
   .banner-title {
     font-family: var(--ff-primary-1);
     letter-spacing: 2px;
     font-size: 2rem;
-    padding: 2rem;
-    color: var(--clr-brown-1);
-    border-top: solid 5px goldenrod;
-    border-bottom: solid 5px goldenrod;
+    color: whitesmoke;
   }
 
   .banner-title span {
@@ -182,7 +179,7 @@ body {
   }
 
   .banner small {
-    color: whitesmoke;
+    color: goldenrod;
     letter-spacing: 3px;
     padding-top: 0.5rem;
     font-family: var(--ff-primary-3);
@@ -577,9 +574,11 @@ body {
   }
 
   .empty {
+    text-align: center;
+    line-height: 50px;
     color: whitesmoke;
     font-family: var(--ff-primary-3);
-    padding: 5rem;
+    padding: 2.5rem 0;
     text-decoration: underline goldenrod;
   }
 
