@@ -25,33 +25,28 @@ let media = matchMedia("(min-width: 1024px)");
 // CLASSES
 // get products
 class Products {
-  async getMenuGridItems() {
+  async getBgImages() {
     try {
       let contentful = await client.getEntries({
         content_type: "texasBurger",
       });
 
-      let gridItems = await contentful.items;
-      gridItems = gridItems
+      let bgImages = await contentful.items;
+      bgImages = bgImages
         .filter((item) => {
-          for (let i = 0; i < gridItems.length; i++) {
-            if (
-              item.fields.class[i] === "grid-item" ||
-              item.fields.class[i] === "large-grid-item"
-            ) {
+          for (let i = 0; i < bgImages.length; i++) {
+            if (item.fields.class[i] === "large-image") {
               return item;
             }
           }
         })
         .map((item) => {
           const { title } = item.fields;
-          const itemClass = item.fields.class;
-          const { id } = item.sys;
           const image = item.fields.image.fields.file.url;
-          return { title, itemClass, id, image };
+          return { title, image };
         });
 
-      return gridItems;
+      return bgImages;
     } catch (error) {
       console.log(error);
     }
@@ -102,14 +97,8 @@ class UI {
   }
 
   // create menu btns
-  createMenuBtns(gridItems) {
-    let bg = gridItems.map((item) => {
-      const { title } = item;
-      const image = item.image;
-      return { title, image };
-    });
-
-    let menuBtns = ["all", ...new Set(gridItems.map((item) => item.title))];
+  createMenuBtns(bgImages) {
+    let menuBtns = ["all", ...new Set(bgImages.map((item) => item.title))];
 
     menuBtns = menuBtns
       .map((item) => {
@@ -121,13 +110,19 @@ class UI {
     const btns = [...document.querySelectorAll(".menu-btn")];
 
     btns.forEach((btn) => {
+      console.log(btn);
       btn.addEventListener("mouseover", (e) => {
         const id = e.target.dataset.id;
-        bg.forEach((test) => {
-          if (id === test.title) {
+        bgImages.forEach((item) => {
+          if (id === item.title) {
             document.querySelector(
               ".banner"
-            ).style.background = `url(./natalie-toombs-KwCaIGKdlps-unsplash.jpg) center/cover no-repeat`;
+            ).style.background = `url(${item.image}) center/cover no-repeat`;
+          }
+          if (id === "all") {
+            document.querySelector(
+              ".banner"
+            ).style.background = `url(./hero2.png) center/cover no-repeat`;
           }
         });
       });
@@ -170,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const products = new Products();
 
   products
-    .getMenuGridItems()
+    .getBgImages()
     .then(products.getMenuItems())
-    .then((gridItems) => ui.createMenuBtns(gridItems));
+    .then((bgImages) => ui.createMenuBtns(bgImages));
 });

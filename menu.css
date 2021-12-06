@@ -166,7 +166,7 @@ body {
     align-items: center;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
       url("./hero2.png") center/cover no-repeat;
-      transition: var(--transition);
+      /* transition: var(--transition); */
   }
 
   .banner-title {
