@@ -471,6 +471,7 @@ body {
     height: 600px;
     background: #222;
     border-bottom: solid 3px whitesmoke;
+    transition: var(--transition);
   }
 
   .menu-title-container {
@@ -1078,6 +1079,12 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
 
+  .slider-container {
+    max-width: calc((4 * 300px) + (4 * 0.5rem));
+  }
+}
+
+@media screen and (min-width: 1700px) {
   .slider-container {
     max-width: calc((5 * 300px) + (5 * 0.5rem));
   }
