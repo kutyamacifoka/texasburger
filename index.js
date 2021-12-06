@@ -122,12 +122,14 @@ class Products {
 // display products
 class UI {
   // navbar collapse
-  navCollapse() {
+  static navCollapse(e) {
     const bsCollapse = new bootstrap.Collapse(navbar);
     navLink.forEach((item) => {
-      item.addEventListener("click", () => {
-        bsCollapse.toggle();
-      });
+      if (e.target === item) {
+        item.addEventListener("click", () => {
+          bsCollapse.Collapse();
+        });
+      }
     });
   }
 
@@ -525,15 +527,17 @@ class Storage {
   }
 }
 
+// collapse navbar
+navbar.addEventListener("click", (e) => {
+  UI.navCollapse(e);
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
 
   // create array in local storage
   Storage.saveFavourite();
-
-  // collapse navbar
-  ui.navCollapse();
 
   // get grid items
   products
