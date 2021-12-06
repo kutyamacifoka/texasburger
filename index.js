@@ -5,6 +5,9 @@ const client = contentful.createClient({
 });
 
 // VARIABLES
+// navbar
+const navbar = document.getElementById("navbar-collapse");
+const navLink = [...document.querySelectorAll(".nav-link")];
 // menu grid
 let menuGrid = document.querySelector(".menu-grid-container");
 // menu slider
@@ -118,6 +121,16 @@ class Products {
 
 // display products
 class UI {
+  // navbar collapse
+  navCollapse() {
+    const bsCollapse = new bootstrap.Collapse(navbar);
+    navLink.forEach((item) => {
+      item.addEventListener("click", () => {
+        bsCollapse.toggle();
+      });
+    });
+  }
+
   // display grid items
   displayMenuGridItems(gridItems) {
     // iterate over array
@@ -519,14 +532,19 @@ document.addEventListener("DOMContentLoaded", () => {
   // create array in local storage
   Storage.saveFavourite();
 
+  // collapse navbar
+  ui.navCollapse();
+
   // get grid items
   products
     .getMenuGridItems()
     .then((gridItems) => ui.displayMenuGridItems(gridItems))
-    // popular items
+    // get popular items
     .then(products.getSliderItems)
     .then((sliderItems) => ui.displayMenuSliderItems(sliderItems))
+    // display popular items
     .then(ui.displayPopularItems())
+    // add items to favourite array
     .then(() => ui.addFavourites())
     // date & home btn
     .then(ui.displayHomeBtn())

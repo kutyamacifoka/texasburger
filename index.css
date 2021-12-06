@@ -1009,6 +1009,7 @@ body {
   }
 
   .nav-link:link {
+    font-size: 1rem;
     padding: 1.25rem;
   }
 
@@ -1069,6 +1070,10 @@ body {
 }
 
 @media screen and (min-width: 1061px) {
+  .nav-link:link {
+    font-size: 1.25rem;
+  }
+
   .slider-container {
     max-width: calc((3 * 300px) + (3 * 0.5rem));
   }

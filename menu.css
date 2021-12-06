@@ -1,0 +1,56 @@
+/*
+=====================
+GOOGLE FONTS
+=====================
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Nanum+Gothic&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lobster&family=Oswald&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Josefin+Sans&family=Lobster&family=Oswald&display=swap");
+
+/*
+=====================
+VARIABLES
+=====================
+*/
+
+:root {
+  /* fonts */
+  --ff-primary-1: "Lobster", cursive;
+  --ff-primary-2: "Bebas Neue", cursive;
+  --ff-primary-3: "Josefin Sans", sans-serif;
+  /* shades of brown */
+  --clr-brown-1: #f2d6b3;
+  --clr-brown-2: #d9a76a;
+  --clr-brown-3: #40322b;
+  --clr-brown-4: #2a211c;
+  --clr-brown-5: #2b2724;
+  /* shades of red */
+  --clr-red-1: #d9483b;
+  --clr-red-2: #a62929;
+  /* main transition */
+  --transition: all 0.3s ease-in-out;
+  /* max width */
+  --max-width: 1170px;
+}
+
+/*
+=====================
+GLOBAL STYLES
+=====================
+*/
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 58px;
+}
+
+body {
+  user-select: none;
+  box-sizing: border-box;
+}
