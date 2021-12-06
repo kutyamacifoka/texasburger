@@ -127,7 +127,7 @@ class UI {
           if (id === test.title) {
             document.querySelector(
               ".banner"
-            ).style.background = `url(${test.image}) center/cover no-repeat`;
+            ).style.background = `url(./emerson-vieira-cpkPJ-U9eUM-unsplash.jpg) center/cover no-repeat`;
           }
         });
       });
