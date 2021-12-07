@@ -240,10 +240,10 @@ body {
   }
 
   .menu-btn-container {
-    height: max-content;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    height: max-content;
     max-width: 500px;
     gap: 0.25rem;
     padding: 0.5rem;

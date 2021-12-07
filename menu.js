@@ -47,7 +47,7 @@ class Products {
         })
         .map((item) => {
           const { title } = item.fields;
-          const itemClass = [{ ...item.fields.class }];
+          const itemClass = [item.fields.class];
           const image = item.fields.image.fields.file.url;
           return { title, itemClass, image };
         });
@@ -104,25 +104,39 @@ class UI {
 
   // create menu btns
   createMenuBtns(bgImages) {
-    let menuBtns = ["összes", ...new Set(bgImages.map((item) => item.title))];
-
     // screen size is larger than 1069px
+    let menuBtns = ["összes", ...new Set(bgImages.map((item) => item.title))];
     if (media.matches) {
       menuBtns = menuBtns
         .map((item) => {
           return `<button class="btn menu-btn" data-id="${item}">${item}`;
         })
         .join("");
+
       btnContainer.innerHTML = menuBtns;
     }
 
     // screen size is smaller than 1069px
     if (!media.matches) {
-      btnContainer.classList.add("max-container-width");
-      btnContainer.innerHTML = `<button class="btn menu-btn" data-id="összes">összes
-                                <button class="btn menu-btn" data-id="foods">étlap
-                                <button class="btn menu-btn" data-id="drinks">itallap
-                                <button class="btn menu-btn" data-id="other">egyéb`;
+      let menuBtns = [
+        "összes",
+        ...new Set(
+          bgImages.map((item) => {
+            let itemClass = item.itemClass[0];
+            for (let i = 0; i < bgImages.length; i++) {
+              if (itemClass[i] !== "large-image") {
+                let buttons = itemClass[i];
+                return buttons;
+              }
+            }
+          })
+        ),
+      ]
+        .map((item) => {
+          return `<button class="btn menu-btn test-btn" data-id="${item}">${item}`;
+        })
+        .join("");
+      btnContainer.innerHTML = menuBtns;
     }
 
     this.displayMenuBtns(bgImages);
@@ -131,78 +145,39 @@ class UI {
   }
 
   displayMenuBtns(bgImages) {
-    document.addEventListener("click", (e) => {
-      const id = e.target.dataset.id;
+    if (!media.matches) {
+      let menuBtns = [...document.querySelectorAll(".test-btn")];
+      menuBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const id = e.currentTarget.dataset.id;
+          let filtered = bgImages
+            .filter((item) => {
+              let itemClass = item.itemClass[0];
+              for (let i = 0; i < bgImages.length; i++) {
+                if (id === itemClass[i]) {
+                  let items = itemClass[i];
+                  return items;
+                }
+              }
+            })
+            .map((item) => {
+              return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
+            })
+            .join("");
 
-      // get foods
-      if (id === "foods") {
-        let foods = bgImages.filter((item) => {
-          let itemClass = item.itemClass[0];
-          for (let i = 0; i < bgImages.length; i++) {
-            if (itemClass[i] === "food") {
-              return item;
-            }
+          menuBtnContainer.innerHTML = filtered;
+
+          if (id === "összes") {
+            let showAll = bgImages
+              .map((item) => {
+                return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
+              })
+              .join("");
+            menuBtnContainer.innerHTML = showAll;
           }
         });
-        foods = foods
-          .map((item) => {
-            return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
-          })
-          .join("");
-
-        menuBtnContainer.innerHTML = foods;
-      }
-
-      // get drinks
-      if (id === "drinks") {
-        let drinks = bgImages.filter((item) => {
-          let itemClass = item.itemClass[0];
-          for (let i = 0; i < bgImages.length; i++) {
-            if (itemClass[i] === "drink") {
-              return item;
-            }
-          }
-        });
-        drinks = drinks
-          .map((item) => {
-            return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
-          })
-          .join("");
-
-        menuBtnContainer.innerHTML = drinks;
-      }
-
-      // get other
-      if (id === "other") {
-        let others = bgImages.filter((item) => {
-          let itemClass = item.itemClass[0];
-          for (let i = 0; i < bgImages.length; i++) {
-            if (itemClass[i] === "other") {
-              return item;
-            }
-          }
-        });
-        others = others
-          .map((item) => {
-            return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
-          })
-          .join("");
-
-        menuBtnContainer.innerHTML = others;
-      }
-
-      // get all items
-      if (id === "összes" && !media.matches) {
-        let menuBtns = [...new Set(bgImages.map((item) => item.title))];
-
-        menuBtns = menuBtns
-          .map((item) => {
-            return `<button class="btn menu-btn" data-id="${item}">${item}`;
-          })
-          .join("");
-        menuBtnContainer.innerHTML = menuBtns;
-      }
-    });
+      });
+    }
   }
 
   // display background on hover
