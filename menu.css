@@ -200,19 +200,17 @@ body {
 
   .menu-btn {
     background: bisque;
-    border: solid 1.5px black;
     color: black;
     font-family: var(--ff-primary-2);
     font-size: 1.25rem;
     transition: var(--transition);
     text-align: center;
-    padding: 0.25rem;
+    padding: 0.5rem 0.25rem;
   }
 
   .menu-btn:hover {
     background: black;
     color: bisque;
-    border: solid 1.5px bisque;
   }
 
   .banner-bg {
@@ -243,6 +241,12 @@ body {
     max-width: 500px;
     gap: 0.25rem;
     padding: 0.5rem;
+    transition: var(--transition);
+  }
+
+  .active-btn {
+    background: goldenrod;
+    transform: translateY(-0.25rem);
     transition: var(--transition);
   }
 

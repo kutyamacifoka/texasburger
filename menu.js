@@ -115,6 +115,8 @@ class UI {
         .join("");
 
       btnContainer.innerHTML = menuBtns;
+
+      this.showActiveBtn(menuBtns);
     }
 
     // screen size is smaller than 1069px
@@ -135,11 +137,13 @@ class UI {
         ),
       ]
         .map((item) => {
-          return `<button class="btn menu-btn test-btn" data-id="${item}">${item}`;
+          return `<button class="btn menu-btn" data-id="${item}">${item}`;
         })
         .join("");
 
       btnContainer.innerHTML = menuBtns;
+
+      this.showActiveBtn(menuBtns);
     }
 
     // functions
@@ -149,11 +153,11 @@ class UI {
     return bgImages;
   }
 
-  // display menu buttons
+  // display on small screen menu buttons
   displayMenuBtns(bgImages) {
     if (!media.matches) {
       // variables
-      let menuBtns = [...document.querySelectorAll(".test-btn")];
+      let menuBtns = [...document.querySelectorAll(".menu-btn")];
 
       // button events
       menuBtns.forEach((btn) => {
@@ -180,6 +184,7 @@ class UI {
           menuBtnContainer.innerHTML = filtered;
 
           this.displayBG(bgImages);
+          this.showActiveBtn(menuBtns);
 
           // display all menu item
           if (id === "összes") {
@@ -192,6 +197,7 @@ class UI {
             menuBtnContainer.innerHTML = showAll;
 
             this.displayBG(bgImages);
+            this.showActiveBtn(menuBtns);
           }
         });
       });
@@ -227,6 +233,20 @@ class UI {
             bannerSpan.style.opacity = 1;
           }
         });
+      });
+    });
+  }
+
+  // show active button
+  showActiveBtn() {
+    let menuBtns = [...document.querySelectorAll(".menu-btn")];
+
+    menuBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        menuBtns.forEach((item) => {
+          item.classList.remove("active-btn");
+        });
+        e.currentTarget.classList.add("active-btn");
       });
     });
   }
