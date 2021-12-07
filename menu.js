@@ -106,6 +106,7 @@ class UI {
   createMenuBtns(bgImages) {
     // screen size is larger than 1069px
     let menuBtns = ["összes", ...new Set(bgImages.map((item) => item.title))];
+
     if (media.matches) {
       menuBtns = menuBtns
         .map((item) => {
@@ -118,6 +119,7 @@ class UI {
 
     // screen size is smaller than 1069px
     if (!media.matches) {
+      // get buttons
       let menuBtns = [
         "összes",
         ...new Set(
@@ -136,20 +138,30 @@ class UI {
           return `<button class="btn menu-btn test-btn" data-id="${item}">${item}`;
         })
         .join("");
+
       btnContainer.innerHTML = menuBtns;
     }
 
+    // functions
     this.displayMenuBtns(bgImages);
     this.displayBG(bgImages);
+
     return bgImages;
   }
 
+  // display menu buttons
   displayMenuBtns(bgImages) {
     if (!media.matches) {
+      // variables
       let menuBtns = [...document.querySelectorAll(".test-btn")];
+
+      // button events
       menuBtns.forEach((btn) => {
         btn.addEventListener("click", (e) => {
+          // get button ID
           const id = e.currentTarget.dataset.id;
+
+          // display menu category
           let filtered = bgImages
             .filter((item) => {
               let itemClass = item.itemClass[0];
@@ -167,40 +179,52 @@ class UI {
 
           menuBtnContainer.innerHTML = filtered;
 
+          this.displayBG(bgImages);
+
+          // display all menu item
           if (id === "összes") {
             let showAll = bgImages
               .map((item) => {
                 return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
               })
               .join("");
+
             menuBtnContainer.innerHTML = showAll;
+
+            this.displayBG(bgImages);
           }
         });
       });
     }
+    return bgImages;
   }
 
   // display background on hover
   displayBG(bgImages) {
+    // variables
     const btns = [...document.querySelectorAll(".menu-btn")];
+
+    // button events
     btns.forEach((btn) => {
       btn.addEventListener("mouseover", (e) => {
+        // get ID
         const id = e.target.dataset.id;
+
         bgImages.forEach((item) => {
           if (id === item.title) {
             document.querySelector(
               ".banner"
-            ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),url(${item.image}) center/cover no-repeat`;
-            bannerTitle.innerHTML = `<h1 class="banner-bg">${item.title}</h1>`;
-            bannerSpan.style.display = "none";
+            ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
+            bannerTitle.innerHTML = `${item.title}`;
+            bannerSpan.style.opacity = 0;
           }
+
           if (id === "összes") {
             document.querySelector(
               ".banner"
-            ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),url(./hero2.png) center/cover no-repeat`;
-            bannerTitle.innerHTML = `Texas <span>Burger</span=>
-            </h1>`;
-            bannerSpan.style.display = "flex";
+            ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero2.png) center/cover no-repeat`;
+            bannerTitle.innerHTML = `Texas <span>Burger</span>`;
+            bannerSpan.style.opacity = 1;
           }
         });
       });

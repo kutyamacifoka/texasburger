@@ -160,7 +160,7 @@ body {
 
   .banner {
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -172,7 +172,7 @@ body {
   .banner-title {
     font-family: var(--ff-primary-1);
     letter-spacing: 2px;
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: whitesmoke;
   }
 
@@ -220,10 +220,6 @@ body {
     letter-spacing: 5px;
     color: whitesmoke;
     text-decoration: underline goldenrod;
-  }
-
-  .max-container-width {
-    max-width: var(--max-width);
   }
 
   /*
