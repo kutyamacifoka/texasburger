@@ -31,7 +31,7 @@ VARIABLES
   /* main transition */
   --transition: all 0.3s ease-in-out;
   /* max width */
-  --max-width: 1170px;
+  --max-width: 900px;
 }
 
 /*
@@ -222,6 +222,10 @@ body {
     text-decoration: underline goldenrod;
   }
 
+  .max-container-width {
+    max-width: var(--max-width);
+  }
+
   /*
   ==========
   MENU CONTAINER
@@ -235,16 +239,15 @@ body {
     justify-content: center;
   }
 
-  .test-btn {
+  .menu-btn-container {
     height: max-content;
-    padding: 2rem;
-    font-size: 3rem;
-  }
-
-  .test-container {
-    width: 100%;
-    height: 200px;
-    background: red;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 500px;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    transition: var(--transition);
   }
 
   /*

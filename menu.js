@@ -15,6 +15,8 @@ let bannerTitle = document.querySelector(".banner-title");
 let bannerSpan = document.querySelector(".banner-span");
 // btn container
 let btnContainer = document.querySelector(".btn-container");
+// menu container
+let menuBtnContainer = document.querySelector(".menu-btn-container");
 // date
 let date = document.querySelector("#date");
 // home btn
@@ -104,15 +106,108 @@ class UI {
   createMenuBtns(bgImages) {
     let menuBtns = ["összes", ...new Set(bgImages.map((item) => item.title))];
 
-    menuBtns = menuBtns
-      .map((item) => {
-        return `<button class="btn menu-btn" data-id="${item}">${item}`;
-      })
-      .join("");
-    btnContainer.innerHTML = menuBtns;
+    // screen size is larger than 1069px
+    if (media.matches) {
+      menuBtns = menuBtns
+        .map((item) => {
+          return `<button class="btn menu-btn" data-id="${item}">${item}`;
+        })
+        .join("");
+      btnContainer.innerHTML = menuBtns;
+    }
 
+    // screen size is smaller than 1069px
+    if (!media.matches) {
+      btnContainer.classList.add("max-container-width");
+      btnContainer.innerHTML = `<button class="btn menu-btn" data-id="összes">összes
+                                <button class="btn menu-btn" data-id="foods">étlap
+                                <button class="btn menu-btn" data-id="drinks">itallap
+                                <button class="btn menu-btn" data-id="other">egyéb`;
+    }
+
+    this.displayMenuBtns(bgImages);
+    this.displayBG(bgImages);
+    return bgImages;
+  }
+
+  displayMenuBtns(bgImages) {
+    document.addEventListener("click", (e) => {
+      const id = e.target.dataset.id;
+
+      // get foods
+      if (id === "foods") {
+        let foods = bgImages.filter((item) => {
+          let itemClass = item.itemClass[0];
+          for (let i = 0; i < bgImages.length; i++) {
+            if (itemClass[i] === "food") {
+              return item;
+            }
+          }
+        });
+        foods = foods
+          .map((item) => {
+            return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
+          })
+          .join("");
+
+        menuBtnContainer.innerHTML = foods;
+      }
+
+      // get drinks
+      if (id === "drinks") {
+        let drinks = bgImages.filter((item) => {
+          let itemClass = item.itemClass[0];
+          for (let i = 0; i < bgImages.length; i++) {
+            if (itemClass[i] === "drink") {
+              return item;
+            }
+          }
+        });
+        drinks = drinks
+          .map((item) => {
+            return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
+          })
+          .join("");
+
+        menuBtnContainer.innerHTML = drinks;
+      }
+
+      // get other
+      if (id === "other") {
+        let others = bgImages.filter((item) => {
+          let itemClass = item.itemClass[0];
+          for (let i = 0; i < bgImages.length; i++) {
+            if (itemClass[i] === "other") {
+              return item;
+            }
+          }
+        });
+        others = others
+          .map((item) => {
+            return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
+          })
+          .join("");
+
+        menuBtnContainer.innerHTML = others;
+      }
+
+      // get all items
+      if (id === "összes" && !media.matches) {
+        let menuBtns = [...new Set(bgImages.map((item) => item.title))];
+
+        menuBtns = menuBtns
+          .map((item) => {
+            return `<button class="btn menu-btn" data-id="${item}">${item}`;
+          })
+          .join("");
+        menuBtnContainer.innerHTML = menuBtns;
+      }
+    });
+  }
+
+  // display background on hover
+  displayBG(bgImages) {
     const btns = [...document.querySelectorAll(".menu-btn")];
-
     btns.forEach((btn) => {
       btn.addEventListener("mouseover", (e) => {
         const id = e.target.dataset.id;
@@ -134,30 +229,6 @@ class UI {
           }
         });
       });
-    });
-    return bgImages;
-  }
-
-  test(bgImages) {
-    const testBtn = document.querySelector(".test-btn");
-
-    let drinks = bgImages.filter((item) => {
-      let valami = item.itemClass[0];
-      for (let i = 0; i < bgImages.length; i++) {
-        if (valami[i] === "drink") {
-          return item;
-        }
-      }
-    });
-    const testContainer = document.querySelector(".test-container");
-    testBtn.addEventListener("click", () => {
-      drinks = drinks
-        .map((item) => {
-          return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
-        })
-        .join("");
-
-      testContainer.innerHTML = drinks;
     });
   }
 
@@ -201,6 +272,5 @@ document.addEventListener("DOMContentLoaded", () => {
   products
     .getBgImages()
     .then(products.getMenuItems())
-    .then((bgImages) => ui.createMenuBtns(bgImages))
-    .then((bgImages) => ui.test(bgImages));
+    .then((bgImages) => ui.createMenuBtns(bgImages));
 });
