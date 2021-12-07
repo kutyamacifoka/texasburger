@@ -6,12 +6,15 @@ const client = contentful.createClient({
 
 // VARIABLES
 // navbar
-const navbar = document.getElementById("navbar-collapse");
+const navbar = document.querySelector(".navbar");
+const navCollapse = document.getElementById("navbar-collapse");
 const navLink = [...document.querySelectorAll(".nav-link")];
+// banner container
+let banner = document.querySelector(".banner");
+let bannerTitle = document.querySelector(".banner-title");
+let bannerSpan = document.querySelector(".banner-span");
 // btn container
 let btnContainer = document.querySelector(".btn-container");
-// banner contiainer
-let banner = document.querySelector(".banner");
 // date
 let date = document.querySelector("#date");
 // home btn
@@ -20,7 +23,7 @@ const homeBtn = document.querySelector(".home-btn");
 // variables
 let favouriteArray = [];
 let allItems = [];
-let media = matchMedia("(min-width: 1024px)");
+let media = matchMedia("(min-width: 1069px)");
 
 // CLASSES
 // get products
@@ -42,8 +45,9 @@ class Products {
         })
         .map((item) => {
           const { title } = item.fields;
+          const itemClass = [{ ...item.fields.class }];
           const image = item.fields.image.fields.file.url;
-          return { title, image };
+          return { title, itemClass, image };
         });
 
       return bgImages;
@@ -86,7 +90,7 @@ class Products {
 class UI {
   // navbar collapse
   static navCollapse(e) {
-    const bsCollapse = new bootstrap.Collapse(navbar);
+    const bsCollapse = new bootstrap.Collapse(navCollapse);
     if (e.target === navLink) {
       navLink.forEach((item) => {
         item.addEventListener("click", () => {
@@ -98,7 +102,7 @@ class UI {
 
   // create menu btns
   createMenuBtns(bgImages) {
-    let menuBtns = ["all", ...new Set(bgImages.map((item) => item.title))];
+    let menuBtns = ["összes", ...new Set(bgImages.map((item) => item.title))];
 
     menuBtns = menuBtns
       .map((item) => {
@@ -116,15 +120,44 @@ class UI {
           if (id === item.title) {
             document.querySelector(
               ".banner"
-            ).style.background = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${item.image}) center/cover no-repeat`;
+            ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),url(${item.image}) center/cover no-repeat`;
+            bannerTitle.innerHTML = `<h1 class="banner-bg">${item.title}</h1>`;
+            bannerSpan.style.display = "none";
           }
-          if (id === "all") {
+          if (id === "összes") {
             document.querySelector(
               ".banner"
-            ).style.background = `url(./hero2.png) center/cover no-repeat`;
+            ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),url(./hero2.png) center/cover no-repeat`;
+            bannerTitle.innerHTML = `Texas <span>Burger</span=>
+            </h1>`;
+            bannerSpan.style.display = "flex";
           }
         });
       });
+    });
+    return bgImages;
+  }
+
+  test(bgImages) {
+    const testBtn = document.querySelector(".test-btn");
+
+    let drinks = bgImages.filter((item) => {
+      let valami = item.itemClass[0];
+      for (let i = 0; i < bgImages.length; i++) {
+        if (valami[i] === "drink") {
+          return item;
+        }
+      }
+    });
+    const testContainer = document.querySelector(".test-container");
+    testBtn.addEventListener("click", () => {
+      drinks = drinks
+        .map((item) => {
+          return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
+        })
+        .join("");
+
+      testContainer.innerHTML = drinks;
     });
   }
 
@@ -155,7 +188,7 @@ class Storage {
 }
 
 // collapse navbar
-navbar.addEventListener("click", (e) => {
+navCollapse.addEventListener("click", (e) => {
   if (window.innerWidth < 992) {
     UI.navCollapse(e);
   }
@@ -168,5 +201,6 @@ document.addEventListener("DOMContentLoaded", () => {
   products
     .getBgImages()
     .then(products.getMenuItems())
-    .then((bgImages) => ui.createMenuBtns(bgImages));
+    .then((bgImages) => ui.createMenuBtns(bgImages))
+    .then((bgImages) => ui.test(bgImages));
 });

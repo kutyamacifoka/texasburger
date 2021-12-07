@@ -62,6 +62,7 @@ body {
   NAVBAR
   ========== 
   */
+
   .navbar {
     margin: 0;
     padding: 0;
@@ -164,9 +165,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
       url("./hero2.png") center/cover no-repeat;
-      /* transition: var(--transition); */
   }
 
   .banner-title {
@@ -180,7 +180,7 @@ body {
     color: var(--clr-red-1);
   }
 
-  .banner small {
+  .banner-span {
     color: goldenrod;
     letter-spacing: 3px;
     padding-top: 0.5rem;
@@ -188,30 +188,63 @@ body {
   }
 
   .btn-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
-      gap: .5rem;
-            padding: .5rem;
-
-      width: 100%;
-      height: max-content;
-      position: absolute;
-      align-self: flex-end;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.25rem;
+    padding: 0.5rem;
+    width: 100%;
+    height: max-content;
+    position: absolute;
+    align-self: flex-end;
   }
 
   .menu-btn {
-      background: goldenrod;
-      border: solid 1.5px black;
-      color: black;
-      font-family: var(--ff-primary-2);
-      font-size: 1.25rem;
-      transition: var(--transition);
+    background: bisque;
+    border: solid 1.5px black;
+    color: black;
+    font-family: var(--ff-primary-2);
+    font-size: 1.25rem;
+    transition: var(--transition);
+    text-align: center;
+    padding: 0.25rem;
   }
 
   .menu-btn:hover {
-      background: black;
-      color: goldenrod;
-      border: solid 1.5px goldenrod;
+    background: black;
+    color: bisque;
+    border: solid 1.5px bisque;
+  }
+
+  .banner-bg {
+    font-size: 2.5rem;
+    letter-spacing: 5px;
+    color: whitesmoke;
+    text-decoration: underline goldenrod;
+  }
+
+  /*
+  ==========
+  MENU CONTAINER
+  ========== 
+  */
+
+  #menu-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+
+  .test-btn {
+    height: max-content;
+    padding: 2rem;
+    font-size: 3rem;
+  }
+
+  .test-container {
+    width: 100%;
+    height: 200px;
+    background: red;
   }
 
   /*
@@ -353,15 +386,10 @@ body {
 }
 
 @media screen and (min-width: 600px) {
-  
-
   .home-btn {
     font-size: 1.75rem;
   }
 }
-
-
-
 
 @media screen and (min-width: 992px) {
   .navbar-nav {
@@ -377,7 +405,7 @@ body {
   .nav-link:hover {
     transform: none;
   }
-
+}
 
 @media screen and (min-width: 1061px) {
   .nav-link:link {
