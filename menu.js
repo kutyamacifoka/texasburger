@@ -14,7 +14,7 @@ let banner = document.querySelector(".banner");
 let bannerTitle = document.querySelector(".banner-title");
 let bannerSpan = document.querySelector(".banner-span");
 // btn container
-let btnContainer = document.querySelector(".btn-container");
+let categoryBtnContainer = document.querySelector(".category-btn-container");
 // menu container
 let menuBtnContainer = document.querySelector(".menu-btn-container");
 // date
@@ -103,7 +103,7 @@ class UI {
   }
 
   // create menu btns
-  createMenuBtns(bgImages) {
+  createCategoryBtns(bgImages) {
     // screen size is larger than 1069px
     let categoryBtns = [
       "összes",
@@ -116,7 +116,7 @@ class UI {
         })
         .join("");
 
-      btnContainer.innerHTML = categoryBtns;
+      categoryBtnContainer.innerHTML = categoryBtns;
     }
 
     // screen size is smaller than 1069px
@@ -141,7 +141,7 @@ class UI {
         })
         .join("");
 
-      btnContainer.innerHTML = categoryBtns;
+      categoryBtnContainer.innerHTML = categoryBtns;
     }
 
     // functions
@@ -160,6 +160,24 @@ class UI {
       // button events
       categoryBtns.forEach((btn) => {
         btn.addEventListener("click", (e) => {
+          // disable category btns
+          categoryBtns.forEach((item) => {
+            item.disabled = true;
+          });
+
+          // add animation
+          menuBtnContainer.classList.add("container-animation");
+          menuBtnContainer.classList.add("active-container");
+
+          // remove animation and enable buttons
+          menuBtnContainer.addEventListener("animationend", () => {
+            menuBtnContainer.classList.remove("container-animation");
+
+            categoryBtns.forEach((item) => {
+              item.disabled = false;
+            });
+          });
+
           // get button ID
           const id = e.currentTarget.dataset.id;
 
@@ -181,6 +199,7 @@ class UI {
 
           menuBtnContainer.innerHTML = filtered;
 
+          // functions
           this.displayBG(bgImages);
           this.showActiveBtn(bgImages);
 
@@ -194,19 +213,21 @@ class UI {
 
             menuBtnContainer.innerHTML = showAll;
 
+            // functions
             this.displayBG(bgImages);
             this.showActiveBtn(bgImages);
           }
         });
       });
     }
+
     this.showActiveBtn(bgImages);
   }
 
   // display background on hover
   displayBG(bgImages) {
     // variables
-    const btns = [...document.querySelectorAll(".menu-btn")];
+    const btns = [...document.querySelectorAll(".btn")];
 
     // button events
     btns.forEach((btn) => {
@@ -241,42 +262,70 @@ class UI {
     let menuBtns = [...document.querySelectorAll(".menu-btn")];
     const categoryBtns = [...document.querySelectorAll(".category-btn")];
 
-    // active category button
+    // active category button on large screen
     categoryBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         categoryBtns.forEach((item) => {
+          // remove active from all
           item.classList.remove("active-btn");
-          item.classList.remove("active-category-btn");
+          item.style.transform = "translateY(0)";
         });
+
+        // add active to current target
         e.currentTarget.classList.add("active-btn");
-        e.currentTarget.classList.add("active-category-btn");
+        e.currentTarget.style.transform = "translateY(-0.15rem)";
       });
+
+      // on mouse leave, the banner is the last active item
+      if (media.matches) {
+        categoryBtnContainer.addEventListener("mouseleave", (e) => {
+          if (btn.classList.contains("active-btn")) {
+            const id = btn.dataset.id;
+
+            bgImages.forEach((item) => {
+              if (id === item.title) {
+                document.querySelector(
+                  ".banner"
+                ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
+                bannerTitle.innerHTML = `${item.title}`;
+                bannerSpan.style.opacity = 0;
+              }
+            });
+          }
+        });
+      }
     });
 
-    // active menu button
+    // active menu button on small screen
     menuBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         menuBtns.forEach((item) => {
+          // remove active from all
           item.classList.remove("active-btn");
         });
+
+        // add active to current target
         e.currentTarget.classList.add("active-btn");
       });
 
-      menuBtnContainer.addEventListener("mouseleave", (e) => {
-        if (btn.classList.contains("active-btn")) {
-          const id = btn.dataset.id;
+      // on mouse leave, the banner is the last active item
+      if (!media.matches) {
+        menuBtnContainer.addEventListener("mouseleave", (e) => {
+          if (btn.classList.contains("active-btn")) {
+            const id = btn.dataset.id;
 
-          bgImages.forEach((item) => {
-            if (id === item.title) {
-              document.querySelector(
-                ".banner"
-              ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
-              bannerTitle.innerHTML = `${item.title}`;
-              bannerSpan.style.opacity = 0;
-            }
-          });
-        }
-      });
+            bgImages.forEach((item) => {
+              if (id === item.title) {
+                document.querySelector(
+                  ".banner"
+                ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
+                bannerTitle.innerHTML = `${item.title}`;
+                bannerSpan.style.opacity = 0;
+              }
+            });
+          }
+        });
+      }
     });
   }
 
@@ -320,6 +369,6 @@ document.addEventListener("DOMContentLoaded", () => {
   products
     .getBgImages()
     .then(products.getMenuItems())
-    .then((bgImages) => ui.createMenuBtns(bgImages));
+    .then((bgImages) => ui.createCategoryBtns(bgImages));
   // .then((bgImages) => ui.showActiveBtn(bgImages));
 });
