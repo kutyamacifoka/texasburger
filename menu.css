@@ -160,7 +160,7 @@ body {
 
   .banner {
     width: 100%;
-    height: 100vh;
+    height: 88vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -198,7 +198,8 @@ body {
     align-self: flex-end;
   }
 
-  .menu-btn {
+  .menu-btn,
+  .category-btn {
     background: bisque;
     color: black;
     font-family: var(--ff-primary-2);
@@ -208,8 +209,9 @@ body {
     padding: 0.5rem 0.25rem;
   }
 
-  .menu-btn:hover {
-    background: black;
+  .menu-btn:hover,
+  .category-btn:hover {
+    background: var(--clr-red-1);
     color: bisque;
   }
 
@@ -231,6 +233,7 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
+    transition: var(--transition);
   }
 
   .menu-btn-container {
@@ -239,15 +242,25 @@ body {
     justify-content: center;
     height: max-content;
     max-width: 500px;
-    gap: 0.25rem;
-    padding: 0.5rem;
-    transition: var(--transition);
+    clip-path: circle(0% at 0% 0%);
   }
 
   .active-btn {
-    background: goldenrod;
-    transform: translateY(-0.25rem);
+    background: var(--clr-red-2);
+    color: whitesmoke;
     transition: var(--transition);
+  }
+
+  .active-container {
+    clip-path: circle(100% at 50% 50%);
+    background: var(--clr-red-2);
+    transition: var(--transition);
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .active-category-btn {
+    transform: translateY(0.25rem);
   }
 
   /*

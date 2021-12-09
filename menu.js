@@ -105,24 +105,24 @@ class UI {
   // create menu btns
   createMenuBtns(bgImages) {
     // screen size is larger than 1069px
-    let menuBtns = ["összes", ...new Set(bgImages.map((item) => item.title))];
-
+    let categoryBtns = [
+      "összes",
+      ...new Set(bgImages.map((item) => item.title)),
+    ];
     if (media.matches) {
-      menuBtns = menuBtns
+      categoryBtns = categoryBtns
         .map((item) => {
-          return `<button class="btn menu-btn" data-id="${item}">${item}`;
+          return `<button class="btn category-btn" data-id="${item}">${item}`;
         })
         .join("");
 
-      btnContainer.innerHTML = menuBtns;
-
-      this.showActiveBtn(menuBtns);
+      btnContainer.innerHTML = categoryBtns;
     }
 
     // screen size is smaller than 1069px
     if (!media.matches) {
       // get buttons
-      let menuBtns = [
+      let categoryBtns = [
         "összes",
         ...new Set(
           bgImages.map((item) => {
@@ -137,13 +137,11 @@ class UI {
         ),
       ]
         .map((item) => {
-          return `<button class="btn menu-btn" data-id="${item}">${item}`;
+          return `<button class="btn category-btn" data-id="${item}">${item}`;
         })
         .join("");
 
-      btnContainer.innerHTML = menuBtns;
-
-      this.showActiveBtn(menuBtns);
+      btnContainer.innerHTML = categoryBtns;
     }
 
     // functions
@@ -157,10 +155,10 @@ class UI {
   displayMenuBtns(bgImages) {
     if (!media.matches) {
       // variables
-      let menuBtns = [...document.querySelectorAll(".menu-btn")];
+      let categoryBtns = [...document.querySelectorAll(".category-btn")];
 
       // button events
-      menuBtns.forEach((btn) => {
+      categoryBtns.forEach((btn) => {
         btn.addEventListener("click", (e) => {
           // get button ID
           const id = e.currentTarget.dataset.id;
@@ -184,7 +182,7 @@ class UI {
           menuBtnContainer.innerHTML = filtered;
 
           this.displayBG(bgImages);
-          this.showActiveBtn(menuBtns);
+          this.showActiveBtn(bgImages);
 
           // display all menu item
           if (id === "összes") {
@@ -197,12 +195,12 @@ class UI {
             menuBtnContainer.innerHTML = showAll;
 
             this.displayBG(bgImages);
-            this.showActiveBtn(menuBtns);
+            this.showActiveBtn(bgImages);
           }
         });
       });
     }
-    return bgImages;
+    this.showActiveBtn(bgImages);
   }
 
   // display background on hover
@@ -238,15 +236,46 @@ class UI {
   }
 
   // show active button
-  showActiveBtn() {
+  showActiveBtn(bgImages) {
+    // variables
     let menuBtns = [...document.querySelectorAll(".menu-btn")];
+    const categoryBtns = [...document.querySelectorAll(".category-btn")];
 
+    // active category button
+    categoryBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        categoryBtns.forEach((item) => {
+          item.classList.remove("active-btn");
+          item.classList.remove("active-category-btn");
+        });
+        e.currentTarget.classList.add("active-btn");
+        e.currentTarget.classList.add("active-category-btn");
+      });
+    });
+
+    // active menu button
     menuBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         menuBtns.forEach((item) => {
           item.classList.remove("active-btn");
         });
         e.currentTarget.classList.add("active-btn");
+      });
+
+      menuBtnContainer.addEventListener("mouseleave", (e) => {
+        if (btn.classList.contains("active-btn")) {
+          const id = btn.dataset.id;
+
+          bgImages.forEach((item) => {
+            if (id === item.title) {
+              document.querySelector(
+                ".banner"
+              ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
+              bannerTitle.innerHTML = `${item.title}`;
+              bannerSpan.style.opacity = 0;
+            }
+          });
+        }
       });
     });
   }
@@ -292,4 +321,5 @@ document.addEventListener("DOMContentLoaded", () => {
     .getBgImages()
     .then(products.getMenuItems())
     .then((bgImages) => ui.createMenuBtns(bgImages));
+  // .then((bgImages) => ui.showActiveBtn(bgImages));
 });
