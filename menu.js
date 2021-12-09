@@ -147,8 +147,6 @@ class UI {
     // functions
     this.displayMenuBtns(bgImages);
     this.displayBG(bgImages);
-
-    return bgImages;
   }
 
   // display on small screen menu buttons
@@ -224,6 +222,43 @@ class UI {
     this.showActiveBtn(bgImages);
   }
 
+  // show active button
+  showActiveBtn(bgImages) {
+    // variables
+    let menuBtns = [...document.querySelectorAll(".menu-btn")];
+    const categoryBtns = [...document.querySelectorAll(".category-btn")];
+
+    // active category button on large screen
+    categoryBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        categoryBtns.forEach((item) => {
+          // remove active from all
+          item.classList.remove("active-btn");
+          item.style.transform = "translateY(0)";
+        });
+
+        // add active to current target
+        e.currentTarget.classList.add("active-btn");
+        e.currentTarget.style.transform = "translateY(-0.15rem)";
+      });
+    });
+
+    // active menu button on small screen
+    menuBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        menuBtns.forEach((item) => {
+          // remove active from all
+          item.classList.remove("active-btn");
+        });
+
+        // add active to current target
+        e.currentTarget.classList.add("active-btn");
+      });
+    });
+
+    this.displayBG(bgImages);
+  }
+
   // display background on hover
   displayBG(bgImages) {
     // variables
@@ -253,32 +288,9 @@ class UI {
           }
         });
       });
-    });
-  }
 
-  // show active button
-  showActiveBtn(bgImages) {
-    // variables
-    let menuBtns = [...document.querySelectorAll(".menu-btn")];
-    const categoryBtns = [...document.querySelectorAll(".category-btn")];
-
-    // active category button on large screen
-    categoryBtns.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        categoryBtns.forEach((item) => {
-          // remove active from all
-          item.classList.remove("active-btn");
-          item.style.transform = "translateY(0)";
-        });
-
-        // add active to current target
-        e.currentTarget.classList.add("active-btn");
-        e.currentTarget.style.transform = "translateY(-0.15rem)";
-      });
-
-      // on mouse leave, the banner is the last active item
       if (media.matches) {
-        categoryBtnContainer.addEventListener("mouseleave", (e) => {
+        categoryBtnContainer.addEventListener("mouseleave", () => {
           if (btn.classList.contains("active-btn")) {
             const id = btn.dataset.id;
 
@@ -290,27 +302,21 @@ class UI {
                 bannerTitle.innerHTML = `${item.title}`;
                 bannerSpan.style.opacity = 0;
               }
+
+              if (id === "összes") {
+                document.querySelector(
+                  ".banner"
+                ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero2.png) center/cover no-repeat`;
+                bannerTitle.innerHTML = `Texas <span>Burger</span>`;
+                bannerSpan.style.opacity = 1;
+              }
             });
           }
         });
       }
-    });
 
-    // active menu button on small screen
-    menuBtns.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        menuBtns.forEach((item) => {
-          // remove active from all
-          item.classList.remove("active-btn");
-        });
-
-        // add active to current target
-        e.currentTarget.classList.add("active-btn");
-      });
-
-      // on mouse leave, the banner is the last active item
       if (!media.matches) {
-        menuBtnContainer.addEventListener("mouseleave", (e) => {
+        menuBtnContainer.addEventListener("mouseleave", () => {
           if (btn.classList.contains("active-btn")) {
             const id = btn.dataset.id;
 
