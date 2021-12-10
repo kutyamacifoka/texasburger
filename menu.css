@@ -31,7 +31,7 @@ VARIABLES
   /* main transition */
   --transition: all 0.3s ease-in-out;
   /* max width */
-  --max-width: 900px;
+  --max-width: 1500px;
 }
 
 /*
@@ -270,37 +270,56 @@ body {
   #menu-container {
     width: 100%;
     height: fit-content;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin: 2rem 0;
-    background: yellowgreen;
+    padding: 1rem;
   }
 
   .slider-container {
     display: grid;
-    grid-template-columns: repeat(autofit, minmax(650px, 1fr));
-    max-width: 1750px;
+    gap: 2rem;
+    margin: 0 auto;
+    max-width: var(--max-width);
   }
 
   .slider {
     display: flex;
+    flex-direction: column;
     position: relative;
-    padding: 1.5rem;
     gap: 1.5rem;
     border-radius: 25px;
-    background: red;
+    background: bisque;
   }
 
   .slider-img {
     position: relative;
     object-fit: cover;
-    height: 200px;
-    width: 200px;
+    height: 300px;
+    width: 100%;
     border-radius: 25px;
+    transform: translateY(-1px);
   }
 
-  .slider-name {
+  .slider-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .slider-name,
+  .slider-price {
+    text-align: center;
+    font-family: var(--ff-primary-2);
+    letter-spacing: 2.5px;
+    text-decoration: underline;
+  }
+
+  .slider-price {
+    font-size: 1.25rem;
+  }
+
+  .slider-description {
+    font-family: var(--ff-primary-3);
   }
 
   .star-container {
@@ -464,6 +483,12 @@ body {
   }
 }
 
+@media screen and (min-width: 700px) {
+  .slider-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
 @media screen and (min-width: 992px) {
   .navbar-nav {
     display: flex;
@@ -471,12 +496,12 @@ body {
   }
 
   .navbar-brand {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
   }
 
   .nav-link:link {
     font-size: 1.25rem;
-    padding: 1.25rem;
+    padding: 1.15rem;
   }
 
   .nav-link:hover {
@@ -491,5 +516,21 @@ body {
 
   .banner {
     height: 100vh;
+  }
+
+  .slider {
+    flex-direction: row;
+  }
+
+  .slider-img {
+    height: 100%;
+    width: 300px;
+  }
+
+  .slider-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
   }
 }

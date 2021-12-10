@@ -78,11 +78,12 @@ class Products {
         .map((item) => {
           const { title } = item.fields;
           const itemClass = item.fields.class;
+          const { price } = item.fields;
           const description =
             item.fields.description.content[0].content[0].value;
           const { id } = item.sys;
           const image = item.fields.image.fields.file.url;
-          return { title, itemClass, description, id, image };
+          return { title, itemClass, price, description, id, image };
         });
 
       return menuItems;
@@ -365,8 +366,13 @@ class UI {
                         <div class="star-container" id="${item.id}">
                             <i class="far fa-star favourite"></i>
                         </div>
+                        <div class="slider-header">
                             <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                            <p class="slider-name" data-id="${item.title}">${item.title}</p>
+                        </div>
+                        <div class="slider-footer">
+                            <h3 class="slider-name" data-id="${item.title}">${item.title}: ${item.price} Ft</h3>      
+                            <p class="slider-description">${item.description}</p>
+                        </div>
                      </div>`;
             })
             .join("");
