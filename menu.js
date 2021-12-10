@@ -15,8 +15,10 @@ let bannerTitle = document.querySelector(".banner-title");
 let bannerSpan = document.querySelector(".banner-span");
 // btn container
 let categoryBtnContainer = document.querySelector(".category-btn-container");
-// menu container
+// menu button container
 let menuBtnContainer = document.querySelector(".menu-btn-container");
+// menu item container
+const sliderContainer = document.querySelector(".slider-container");
 // date
 let date = document.querySelector("#date");
 // home btn
@@ -76,9 +78,11 @@ class Products {
         .map((item) => {
           const { title } = item.fields;
           const itemClass = item.fields.class;
+          const description =
+            item.fields.description.content[0].content[0].value;
           const { id } = item.sys;
           const image = item.fields.image.fields.file.url;
-          return { title, itemClass, id, image };
+          return { title, itemClass, description, id, image };
         });
 
       return menuItems;
@@ -335,6 +339,44 @@ class UI {
     });
   }
 
+  displayMenuItems(menuItems) {
+    document.addEventListener("click", (e) => {
+      if (
+        e.target.classList.contains("menu-btn") ||
+        e.target.classList.contains("category-btn")
+      ) {
+        // variables
+        const btns = [...document.querySelectorAll(".btn")];
+        const id = e.target.dataset.id;
+        // filter menu items
+        btns.forEach(() => {
+          let filtered = menuItems
+            .filter((item) => {
+              let itemClass = item.itemClass;
+              for (let i = 0; i < menuItems.length + 1; i++) {
+                if (itemClass[i] === id) {
+                  let items = itemClass[i];
+                  return items;
+                }
+              }
+            })
+            .map((item) => {
+              return `<div class="slider" id="${item.id}">
+                        <div class="star-container" id="${item.id}">
+                            <i class="far fa-star favourite"></i>
+                        </div>
+                            <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                            <p class="slider-name" data-id="${item.title}">${item.title}</p>
+                     </div>`;
+            })
+            .join("");
+
+          sliderContainer.innerHTML = filtered;
+        });
+      }
+    });
+  }
+
   // show home button
   displayHomeBtn() {
     window.addEventListener("scroll", () => {
@@ -376,5 +418,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .getBgImages()
     .then(products.getMenuItems())
     .then((bgImages) => ui.createCategoryBtns(bgImages));
-  // .then((bgImages) => ui.showActiveBtn(bgImages));
+
+  products.getMenuItems().then((menuItems) => ui.displayMenuItems(menuItems));
 });
