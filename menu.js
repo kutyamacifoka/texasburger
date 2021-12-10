@@ -370,14 +370,23 @@ class UI {
                             <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
                         </div>
                         <div class="slider-footer">
-                            <h3 class="slider-name" data-id="${item.title}">${item.title}: ${item.price} Ft</h3>      
-                            <p class="slider-description">${item.description}</p>
+                            <div class="slider-info">
+                                <h3 class="slider-name" data-id="${item.title}">${item.title}</h3>
+                                <p class="slider-price">${item.price} Ft</p>  
+                            </div>
+                                <p class="slider-description">${item.description}</p>
                         </div>
                      </div>`;
             })
             .join("");
 
           sliderContainer.innerHTML = filtered;
+
+          sliderContainer.classList.add("menu-animation");
+
+          sliderContainer.addEventListener("animationend", () => {
+            sliderContainer.classList.remove("menu-animation");
+          });
         });
       }
     });
