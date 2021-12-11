@@ -28,6 +28,7 @@ const homeBtn = document.querySelector(".home-btn");
 let favouriteArray;
 if (localStorage.getItem("favourite") === null) {
   favouriteArray = [];
+  localStorage.setItem("favourite", JSON.stringify(favouriteArray));
 } else {
   favouriteArray = JSON.parse(localStorage.getItem("favourite"));
 }
@@ -517,7 +518,7 @@ navbar.addEventListener("click", (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
-  console.log("asdasd");
+  console.log("hello");
   // get grid items
   products
     .getMenuGridItems()
