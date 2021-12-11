@@ -10,11 +10,13 @@ const navbar = document.getElementById("navbar-collapse");
 const navLink = [...document.querySelectorAll(".nav-link")];
 // menu grid
 let menuGrid = document.querySelector(".menu-grid-container");
-// menu slider
+// menu slider containers
 let menuSliderContainer = document.getElementById("menu-slider-container");
 let sliderContainer = document.querySelector(".slider-container");
+// menu slider tabs
 const popularBtn = document.querySelector("#popular");
 const favouriteBtn = document.querySelector("#favourite");
+// menu slider btns
 const prevBtn = document.querySelector(".fa-chevron-left");
 const nextBtn = document.querySelector(".fa-chevron-right");
 // date
