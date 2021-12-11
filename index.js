@@ -512,6 +512,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // create array in local storage
   Storage.saveFavourite();
+  console.log("hello");
   // get grid items
   products
     .getMenuGridItems()
