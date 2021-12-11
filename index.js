@@ -263,7 +263,7 @@ class UI {
       let id = { itemTitle, itemID, image };
 
       // get items from local storage
-      Storage.getFavourite();
+      favouriteArray = JSON.parse(localStorage.getItem("favourite"));
 
       // check if item ID is in the storage
       let inStorage = favouriteArray.find((item) => item.itemID === itemID);
@@ -512,6 +512,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
 
+  // create favourite in local storage
+  Storage.saveFavourite();
   // get grid items
   products
     .getMenuGridItems()
