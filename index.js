@@ -25,7 +25,7 @@ let date = document.querySelector("#date");
 const homeBtn = document.querySelector(".home-btn");
 
 // variables
-let favouriteArray = JSON.parse(localStorage.getItem("favourite"));
+let favouriteArray = [];
 let allItems = [];
 let media = matchMedia("(min-width: 1024px)");
 
