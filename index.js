@@ -23,7 +23,7 @@ let date = document.querySelector("#date");
 const homeBtn = document.querySelector(".home-btn");
 
 // variables
-let favouriteArray = JSON.parse(localStorage.getItem("favourite"));
+let favouriteArray = [];
 let allItems = [];
 let media = matchMedia("(min-width: 1024px)");
 
@@ -351,6 +351,7 @@ class UI {
 
       // functions
       this.addFilters(sliders);
+      this.carouselBtns(sliders);
 
       // unfavourite item & remove from local storage
       if (
@@ -512,7 +513,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // create array in local storage
   Storage.saveFavourite();
-  console.log("hello");
   // get grid items
   products
     .getMenuGridItems()
