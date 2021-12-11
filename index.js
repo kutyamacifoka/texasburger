@@ -25,7 +25,7 @@ let date = document.querySelector("#date");
 const homeBtn = document.querySelector(".home-btn");
 
 // variables
-let favouriteArray = [];
+let favouriteArray = JSON.parse(localStorage.getItem("favourite"));
 let allItems = [];
 let media = matchMedia("(min-width: 1024px)");
 
@@ -514,6 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // create favourite in local storage
   Storage.saveFavourite();
+  Storage.getFavourite();
   // get grid items
   products
     .getMenuGridItems()
