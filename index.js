@@ -518,7 +518,7 @@ navbar.addEventListener("click", (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
-  console.log("hello");
+
   // get grid items
   products
     .getMenuGridItems()
