@@ -23,7 +23,7 @@ let date = document.querySelector("#date");
 const homeBtn = document.querySelector(".home-btn");
 
 // variables
-let favouriteArray = [];
+let favouriteArray = JSON.parse(localStorage.getItem("favourite"));
 let allItems = [];
 let media = matchMedia("(min-width: 1024px)");
 
@@ -351,7 +351,6 @@ class UI {
 
       // functions
       this.addFilters(sliders);
-      this.carouselBtns(sliders);
 
       // unfavourite item & remove from local storage
       if (
