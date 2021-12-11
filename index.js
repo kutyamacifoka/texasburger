@@ -517,8 +517,7 @@ navbar.addEventListener("click", (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
-
-  // create favourite in local storage
+  console.log("asdasd");
   // get grid items
   products
     .getMenuGridItems()
