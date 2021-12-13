@@ -163,12 +163,16 @@ class UI {
 
   // display on small screen menu buttons
   displayMenuBtns(bgImages) {
-    if (!media.matches) {
-      // variables
-      let categoryBtns = [...document.querySelectorAll(".category-btn")];
+    // variables
+    let categoryBtns = [...document.querySelectorAll(".category-btn")];
 
-      // button events
-      categoryBtns.forEach((btn) => {
+    // button events
+    categoryBtns.forEach((btn) => {
+      if (!media.matches) {
+        console.log(btn);
+        if (btn.dataset.id === "összes") {
+          btn.classList.add("active-btn");
+        }
         btn.addEventListener("click", (e) => {
           // disable category btns
           categoryBtns.forEach((item) => {
@@ -228,8 +232,8 @@ class UI {
             this.showActiveBtn(bgImages);
           }
         });
-      });
-    }
+      }
+    });
 
     this.showActiveBtn(bgImages);
   }
@@ -242,6 +246,12 @@ class UI {
 
     // active category button on large screen
     categoryBtns.forEach((btn) => {
+      // active btn on load
+      if (btn.dataset.id === "összes") {
+        btn.classList.add("active-btn");
+        btn.style.transform = "translateY(-0.15rem)";
+      }
+
       btn.addEventListener("click", (e) => {
         categoryBtns.forEach((item) => {
           // remove active from all
@@ -348,13 +358,15 @@ class UI {
   }
 
   displayMenuItems(menuItems) {
+    // variables
+    const btns = [...document.querySelectorAll(".btn")];
+
     document.addEventListener("click", (e) => {
       if (
         e.target.classList.contains("menu-btn") ||
         e.target.classList.contains("category-btn")
       ) {
         // variables
-        const btns = [...document.querySelectorAll(".btn")];
         const id = e.target.dataset.id;
 
         // filter menu items
@@ -396,6 +408,58 @@ class UI {
             sliderContainer.classList.remove("menu-animation");
           });
         });
+
+        // show all items on click event
+        if (e.target.dataset.id === "összes") {
+          let showAll = menuItems
+            .map((item) => {
+              return `<div class="slider" id="${item.id}">
+                        <div class="star-container" id="${item.id}">
+                            <i class="far fa-star favourite"></i>
+                        </div>
+                        <div class="slider-header">
+                            <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                        </div>
+                        <div class="slider-footer">
+                            <div class="slider-info">
+                                <h3 class="slider-name" data-id="${item.title}">${item.title}</h3>
+                                <p class="slider-price">${item.price} Ft</p>  
+                            </div>
+                                <p class="slider-description">${item.description}</p>
+                        </div>
+                     </div>`;
+            })
+            .join("");
+
+          sliderContainer.innerHTML = showAll;
+        }
+      }
+    });
+
+    // show all items on document load
+    btns.forEach((btn) => {
+      if (btn.dataset.id === "összes") {
+        let showAll = menuItems
+          .map((item) => {
+            return `<div class="slider" id="${item.id}">
+                        <div class="star-container" id="${item.id}">
+                            <i class="far fa-star favourite"></i>
+                        </div>
+                        <div class="slider-header">
+                            <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                        </div>
+                        <div class="slider-footer">
+                            <div class="slider-info">
+                                <h3 class="slider-name" data-id="${item.title}">${item.title}</h3>
+                                <p class="slider-price">${item.price} Ft</p>  
+                            </div>
+                                <p class="slider-description">${item.description}</p>
+                        </div>
+                     </div>`;
+          })
+          .join("");
+
+        sliderContainer.innerHTML = showAll;
       }
     });
   }

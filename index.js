@@ -130,9 +130,8 @@ class UI {
             </div>`;
         }
         return `<div class="menu-grid-item">
-        <a href="./menu.html"></a>
                 <img src="${item.image}" class="menu-grid-img" id="${item.id}" alt="${item.title}" srcset="">
-                <a class="menu-grid-title" href="./menu.html" data-id="${item.title}">${item.title}</a>
+                <p class="menu-grid-title" data-id="${item.title}">${item.title}</p>
             </div>`;
       })
       .join("");
