@@ -124,7 +124,7 @@ class UI {
     if (media.matches) {
       categoryBtns = categoryBtns
         .map((item) => {
-          return `<button class="btn category-btn" data-id="${item}">${item}`;
+          return `<p class="btn category-btn" data-id="${item}">${item}</p>`;
         })
         .join("");
 
@@ -356,6 +356,7 @@ class UI {
         // variables
         const btns = [...document.querySelectorAll(".btn")];
         const id = e.target.dataset.id;
+
         // filter menu items
         btns.forEach(() => {
           let filtered = menuItems
@@ -412,14 +413,6 @@ class UI {
   displayDate() {
     date.innerHTML = new Date().getFullYear();
   }
-
-  static loadScript(url) {
-    var head = document.getElementsByTagName("html")[0];
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = url;
-    head.appendChild(script);
-  }
 }
 
 // save to local storage
@@ -443,9 +436,6 @@ navCollapse.addEventListener("click", (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
-
-  // UI.loadScript("./temp.js");
-  console.log(URL);
 
   products
     .getBgImages()
