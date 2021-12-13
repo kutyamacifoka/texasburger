@@ -412,6 +412,14 @@ class UI {
   displayDate() {
     date.innerHTML = new Date().getFullYear();
   }
+
+  static loadScript(url) {
+    var head = document.getElementsByTagName("html")[0];
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = url;
+    head.appendChild(script);
+  }
 }
 
 // save to local storage
@@ -435,6 +443,9 @@ navCollapse.addEventListener("click", (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   const ui = new UI();
   const products = new Products();
+
+  // UI.loadScript("./temp.js");
+  console.log(URL);
 
   products
     .getBgImages()
