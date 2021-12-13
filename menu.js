@@ -49,7 +49,7 @@ class Products {
       bgImages = bgImages
         .filter((item) => {
           for (let i = 0; i < bgImages.length; i++) {
-            if (item.fields.class[i] === "grid-item") {
+            if (item.fields.class[i] === "large-image") {
               return item;
             }
           }
@@ -140,7 +140,7 @@ class UI {
           bgImages.map((item) => {
             let itemClass = item.itemClass[0];
             for (let i = 0; i < bgImages.length; i++) {
-              if (itemClass[i] !== "grid-item") {
+              if (itemClass[i] !== "large-image") {
                 let buttons = itemClass[i];
                 return buttons;
               }
