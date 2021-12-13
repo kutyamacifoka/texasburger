@@ -49,7 +49,7 @@ class Products {
       bgImages = bgImages
         .filter((item) => {
           for (let i = 0; i < bgImages.length; i++) {
-            if (item.fields.class[i] === "large-image") {
+            if (item.fields.class[i] === "grid-item") {
               return item;
             }
           }
@@ -140,7 +140,7 @@ class UI {
           bgImages.map((item) => {
             let itemClass = item.itemClass[0];
             for (let i = 0; i < bgImages.length; i++) {
-              if (itemClass[i] !== "large-image") {
+              if (itemClass[i] !== "grid-item") {
                 let buttons = itemClass[i];
                 return buttons;
               }
@@ -439,7 +439,12 @@ document.addEventListener("DOMContentLoaded", () => {
   products
     .getBgImages()
     .then(products.getMenuItems())
-    .then((bgImages) => ui.createCategoryBtns(bgImages));
-
-  products.getMenuItems().then((menuItems) => ui.displayMenuItems(menuItems));
+    .then((bgImages) => ui.createCategoryBtns(bgImages))
+    .then(
+      products
+        .getMenuItems()
+        .then((menuItems) => ui.displayMenuItems(menuItems))
+    )
+    .then(ui.displayHomeBtn())
+    .then(ui.displayDate());
 });
