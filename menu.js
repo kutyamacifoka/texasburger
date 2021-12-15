@@ -130,16 +130,16 @@ class UI {
     categoryBtnContainer.innerHTML = categoryBtns;
 
     // functions
+    this.showActiveBtn();
     this.displayBG(bgImages);
   }
 
   // show active button
   showActiveBtn(bgImages) {
     // variables
-    let menuBtns = [...document.querySelectorAll(".menu-btn")];
     const categoryBtns = [...document.querySelectorAll(".category-btn")];
 
-    // active category button on large screen
+    // active category button
     categoryBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         categoryBtns.forEach((item) => {
@@ -153,21 +153,6 @@ class UI {
         e.currentTarget.style.transform = "translateY(-0.15rem)";
       });
     });
-
-    // active menu button on small screen
-    menuBtns.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        menuBtns.forEach((item) => {
-          // remove active from all
-          item.classList.remove("active-btn");
-        });
-
-        // add active to current target
-        e.currentTarget.classList.add("active-btn");
-      });
-    });
-
-    this.displayBG(bgImages);
   }
 
   // display background on hover
@@ -264,8 +249,8 @@ class UI {
         .replace(/é/g, "e");
 
       if (docReferrer && url === id) {
-        // btn.classList.add("active-btn");
-        // btn.style.transform = "translateY(-0.15rem)";
+        btn.classList.add("active-btn");
+        btn.style.transform = "translateY(-0.15rem)";
 
         let filtered = menuItems
           .filter((item) => {
@@ -300,8 +285,8 @@ class UI {
       }
 
       if (url === id && id === "osszes") {
-        // btn.classList.add("active-btn");
-        // btn.style.transform = "translateY(-0.15rem)";
+        btn.classList.add("active-btn");
+        btn.style.transform = "translateY(-0.15rem)";
 
         let showAll = menuItems
           .map((item) => {
@@ -416,6 +401,39 @@ class UI {
         }
       }
     });
+  }
+
+  filtered(menuItems) {
+    let filtered = menuItems
+      .filter((item) => {
+        let itemClass = item.itemClass;
+        for (let i = 0; i < menuItems.length + 1; i++) {
+          if (itemClass[i] === id) {
+            let items = itemClass[i];
+            return items;
+          }
+        }
+      })
+      .map((item) => {
+        return `<div class="slider" id="${item.id}">
+                        <div class="star-container" id="${item.id}">
+                            <i class="far fa-star favourite"></i>
+                        </div>
+                        <div class="slider-header">
+                            <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                        </div>
+                        <div class="slider-footer">
+                            <div class="slider-info">
+                                <h3 class="slider-name" data-id="${item.title}">${item.title}</h3>
+                                <p class="slider-price">${item.price} Ft</p>  
+                            </div>
+                                <p class="slider-description">${item.description}</p>
+                        </div>
+                     </div>`;
+      })
+      .join("");
+
+    sliderContainer.innerHTML = filtered;
   }
 
   // show home button
