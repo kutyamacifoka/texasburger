@@ -369,6 +369,8 @@ class UI {
         // variables
         const id = e.target.dataset.id;
 
+        console.log(`${location.href}/${id}`);
+        console.log(window.history.replaceState(null, `${id}`, [`/${id}`]));
         // filter menu items
         btns.forEach(() => {
           let filtered = menuItems
