@@ -188,11 +188,12 @@ body {
   }
 
   .category-btn-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 0.25rem;
-    padding: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     width: 100%;
+    gap: 0.25rem;
+    padding: 0.25rem;
     height: max-content;
     position: absolute;
     align-self: flex-end;
@@ -205,7 +206,7 @@ body {
     font-size: 1.25rem;
     transition: var(--transition);
     text-align: center;
-    padding: 0.5rem 0.25rem;
+    padding: 0.25rem;
   }
 
   .category-btn:hover {
@@ -230,11 +231,6 @@ body {
     background: var(--clr-red-1);
     color: black;
     transition: var(--transition);
-  }
-
-  .active-container {
-    gap: 0.5rem;
-    padding: 0.25rem 0.5rem;
   }
 
   .container-animation {
@@ -493,6 +489,11 @@ body {
   .home-btn {
     font-size: 1.75rem;
   }
+
+  .category-btn {
+    width: 125px;
+    font-size: 1.5rem;
+  }
 }
 
 @media screen and (min-width: 992px) {
@@ -512,6 +513,11 @@ body {
 
   .nav-link:hover {
     transform: none;
+  }
+
+  .category-btn {
+    width: 150px;
+    font-size: 1.5rem;
   }
 }
 

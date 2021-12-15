@@ -123,7 +123,7 @@ class UI {
 
     categoryBtns = categoryBtns
       .map((item) => {
-        return `<a id="${item}" role="button" class="btn category-btn" data-id="${item}">${item}</a>`;
+        return `<p class="btn category-btn" data-id="${item}">${item}</p>`;
       })
       .join("");
 
@@ -215,13 +215,10 @@ class UI {
     // variables
     const btns = [...document.querySelectorAll(".btn")];
 
-    // show all items on document load
+    // show menu items on document load
     btns.forEach((btn) => {
       // variables
       let id = btn.dataset.id;
-
-      // check where redirected is coming from
-      const docReferrer = document.referrer;
 
       // get url hash e.g "#pizza" etc.
       let url = window.location.hash;
@@ -248,7 +245,7 @@ class UI {
         .replace(/í/g, "i")
         .replace(/é/g, "e");
 
-      if (docReferrer && url === id) {
+      if (url === id) {
         btn.classList.add("active-btn");
         btn.style.transform = "translateY(-0.15rem)";
 
@@ -333,7 +330,7 @@ class UI {
           .replace(/í/g, "i")
           .replace(/é/g, "e");
 
-        window.history.replaceState(null, "asd", [`${url}`]);
+        window.history.replaceState(null, "Texas Burger", [`${url}`]);
 
         // filter menu items
         btns.forEach(() => {
@@ -403,39 +400,6 @@ class UI {
     });
   }
 
-  filtered(menuItems) {
-    let filtered = menuItems
-      .filter((item) => {
-        let itemClass = item.itemClass;
-        for (let i = 0; i < menuItems.length + 1; i++) {
-          if (itemClass[i] === id) {
-            let items = itemClass[i];
-            return items;
-          }
-        }
-      })
-      .map((item) => {
-        return `<div class="slider" id="${item.id}">
-                        <div class="star-container" id="${item.id}">
-                            <i class="far fa-star favourite"></i>
-                        </div>
-                        <div class="slider-header">
-                            <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                        </div>
-                        <div class="slider-footer">
-                            <div class="slider-info">
-                                <h3 class="slider-name" data-id="${item.title}">${item.title}</h3>
-                                <p class="slider-price">${item.price} Ft</p>  
-                            </div>
-                                <p class="slider-description">${item.description}</p>
-                        </div>
-                     </div>`;
-      })
-      .join("");
-
-    sliderContainer.innerHTML = filtered;
-  }
-
   // show home button
   displayHomeBtn() {
     window.addEventListener("scroll", () => {
@@ -476,12 +440,14 @@ document.addEventListener("DOMContentLoaded", () => {
   products
     .getBgImages()
     .then(products.getMenuItems())
-    .then((bgImages) => ui.createCategoryBtns(bgImages))
-    .then(
-      products
-        .getMenuItems()
-        .then((menuItems) => ui.displayMenuItems(menuItems))
-    )
+    .then((bgImages) => ui.createCategoryBtns(bgImages));
+
+  products
+    .getMenuItems()
+    .then((menuItems) => ui.displayMenuItems(menuItems))
     .then(ui.displayHomeBtn())
     .then(ui.displayDate());
+
+  // ui.displayHomeBtn();
+  // ui.displayDate();
 });

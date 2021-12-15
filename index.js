@@ -127,12 +127,12 @@ class UI {
         if (lgGrid) {
           return `<div class="menu-grid-item lg-menu-grid-item">
                 <img src="${item.image}" class="menu-grid-img lg-grid-img" data-id="${item.title}" id="${item.id}" alt="${item.title}" srcset="">
-                <p class="lg-menu-grid-title" data-id="${item.title}">${item.title}</p>
+                <p class="lg-menu-grid-title">${item.title}</p>
             </div>`;
         }
         return `<div class="menu-grid-item">
                 <img src="${item.image}" class="menu-grid-img" data-id="${item.title}" id="${item.id}" alt="${item.title}" role="button" srcset="">
-                <p class="menu-grid-title" data-id="${item.title}">${item.title}</p>
+                <p class="menu-grid-title">${item.title}</p>
             </div>`;
       })
       .join("");
@@ -164,7 +164,7 @@ class UI {
     etlap.addEventListener("click", (e) => {
       e.preventDefault();
       location.href = `menu.html#osszes`;
-      window.history.replaceState(null, "asd", [`menu.html#osszes`]);
+      // window.history.replaceState(null, "asd", [`menu.html#osszes`]);
     });
 
     // add filter
