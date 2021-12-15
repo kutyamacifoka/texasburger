@@ -34,7 +34,6 @@ if (localStorage.getItem("favourite") === null) {
 }
 
 let allItems = [];
-let media = matchMedia("(min-width: 1069px)");
 
 // CLASSES
 // get products
@@ -121,121 +120,17 @@ class UI {
       "összes",
       ...new Set(bgImages.map((item) => item.title)),
     ];
-    if (media.matches) {
-      categoryBtns = categoryBtns
-        .map((item) => {
-          return `<p class="btn category-btn" data-id="${item}">${item}</p>`;
-        })
-        .join("");
 
-      categoryBtnContainer.innerHTML = categoryBtns;
-    }
+    categoryBtns = categoryBtns
+      .map((item) => {
+        return `<a id="${item}" role="button" class="btn category-btn" data-id="${item}">${item}</a>`;
+      })
+      .join("");
 
-    // screen size is smaller than 1069px
-    if (!media.matches) {
-      // get buttons
-      let categoryBtns = [
-        "összes",
-        ...new Set(
-          bgImages.map((item) => {
-            let itemClass = item.itemClass[0];
-            for (let i = 0; i < bgImages.length; i++) {
-              if (itemClass[i] !== "large-image") {
-                let buttons = itemClass[i];
-                return buttons;
-              }
-            }
-          })
-        ),
-      ]
-        .map((item) => {
-          return `<button class="btn category-btn" data-id="${item}">${item}`;
-        })
-        .join("");
-
-      categoryBtnContainer.innerHTML = categoryBtns;
-    }
+    categoryBtnContainer.innerHTML = categoryBtns;
 
     // functions
-    this.displayMenuBtns(bgImages);
     this.displayBG(bgImages);
-  }
-
-  // display on small screen menu buttons
-  displayMenuBtns(bgImages) {
-    // variables
-    let categoryBtns = [...document.querySelectorAll(".category-btn")];
-
-    // button events
-    categoryBtns.forEach((btn) => {
-      if (!media.matches) {
-        console.log(btn);
-        if (btn.dataset.id === "összes") {
-          btn.classList.add("active-btn");
-        }
-        btn.addEventListener("click", (e) => {
-          // disable category btns
-          categoryBtns.forEach((item) => {
-            item.disabled = true;
-          });
-
-          // add animation
-          menuBtnContainer.classList.add("container-animation");
-          menuBtnContainer.classList.add("active-container");
-
-          // remove animation and enable buttons
-          menuBtnContainer.addEventListener("animationend", () => {
-            menuBtnContainer.classList.remove("container-animation");
-
-            categoryBtns.forEach((item) => {
-              item.disabled = false;
-            });
-          });
-
-          // get button ID
-          const id = e.currentTarget.dataset.id;
-
-          // display menu category
-          let filtered = bgImages
-            .filter((item) => {
-              let itemClass = item.itemClass[0];
-              for (let i = 0; i < bgImages.length; i++) {
-                if (id === itemClass[i]) {
-                  let items = itemClass[i];
-                  return items;
-                }
-              }
-            })
-            .map((item) => {
-              return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
-            })
-            .join("");
-
-          menuBtnContainer.innerHTML = filtered;
-
-          // functions
-          this.displayBG(bgImages);
-          this.showActiveBtn(bgImages);
-
-          // display all menu item
-          if (id === "összes") {
-            let showAll = bgImages
-              .map((item) => {
-                return `<button class="btn menu-btn" data-id="${item.title}">${item.title}`;
-              })
-              .join("");
-
-            menuBtnContainer.innerHTML = showAll;
-
-            // functions
-            this.displayBG(bgImages);
-            this.showActiveBtn(bgImages);
-          }
-        });
-      }
-    });
-
-    this.showActiveBtn(bgImages);
   }
 
   // show active button
@@ -246,12 +141,6 @@ class UI {
 
     // active category button on large screen
     categoryBtns.forEach((btn) => {
-      // active btn on load
-      if (btn.dataset.id === "összes") {
-        btn.classList.add("active-btn");
-        btn.style.transform = "translateY(-0.15rem)";
-      }
-
       btn.addEventListener("click", (e) => {
         categoryBtns.forEach((item) => {
           // remove active from all
@@ -311,55 +200,132 @@ class UI {
         });
       });
 
-      if (media.matches) {
-        categoryBtnContainer.addEventListener("mouseleave", () => {
-          if (btn.classList.contains("active-btn")) {
-            const id = btn.dataset.id;
+      categoryBtnContainer.addEventListener("mouseleave", () => {
+        if (btn.classList.contains("active-btn")) {
+          const id = btn.dataset.id;
 
-            bgImages.forEach((item) => {
-              if (id === item.title) {
-                document.querySelector(
-                  ".banner"
-                ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
-                bannerTitle.innerHTML = `${item.title}`;
-                bannerSpan.style.opacity = 0;
-              }
+          bgImages.forEach((item) => {
+            if (id === item.title) {
+              document.querySelector(
+                ".banner"
+              ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
+              bannerTitle.innerHTML = `${item.title}`;
+              bannerSpan.style.opacity = 0;
+            }
 
-              if (id === "összes") {
-                document.querySelector(
-                  ".banner"
-                ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero2.png) center/cover no-repeat`;
-                bannerTitle.innerHTML = `Texas <span>Burger</span>`;
-                bannerSpan.style.opacity = 1;
-              }
-            });
-          }
-        });
-      }
-
-      if (!media.matches) {
-        menuBtnContainer.addEventListener("mouseleave", () => {
-          if (btn.classList.contains("active-btn")) {
-            const id = btn.dataset.id;
-
-            bgImages.forEach((item) => {
-              if (id === item.title) {
-                document.querySelector(
-                  ".banner"
-                ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
-                bannerTitle.innerHTML = `${item.title}`;
-                bannerSpan.style.opacity = 0;
-              }
-            });
-          }
-        });
-      }
+            if (id === "összes") {
+              document.querySelector(
+                ".banner"
+              ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero2.png) center/cover no-repeat`;
+              bannerTitle.innerHTML = `Texas <span>Burger</span>`;
+              bannerSpan.style.opacity = 1;
+            }
+          });
+        }
+      });
     });
   }
 
   displayMenuItems(menuItems) {
     // variables
     const btns = [...document.querySelectorAll(".btn")];
+
+    // show all items on document load
+    btns.forEach((btn) => {
+      // variables
+      let id = btn.dataset.id;
+
+      // check where redirected is coming from
+      const docReferrer = document.referrer;
+
+      // get url hash e.g "#pizza" etc.
+      let url = window.location.hash;
+      url = url.slice(1, url.length);
+      url = url
+        .replace(/á/g, "a")
+        .replace(/ö/g, "o")
+        .replace(/ő/g, "o")
+        .replace(/ó/g, "o")
+        .replace(/ü/g, "u")
+        .replace(/ű/g, "u")
+        .replace(/ú/g, "u")
+        .replace(/í/g, "i")
+        .replace(/é/g, "e");
+
+      id = id
+        .replace(/á/g, "a")
+        .replace(/ö/g, "o")
+        .replace(/ő/g, "o")
+        .replace(/ó/g, "o")
+        .replace(/ü/g, "u")
+        .replace(/ű/g, "u")
+        .replace(/ú/g, "u")
+        .replace(/í/g, "i")
+        .replace(/é/g, "e");
+
+      if (docReferrer && url === id) {
+        // btn.classList.add("active-btn");
+        // btn.style.transform = "translateY(-0.15rem)";
+
+        let filtered = menuItems
+          .filter((item) => {
+            let itemClass = item.itemClass;
+            for (let i = 0; i < menuItems.length + 1; i++) {
+              if (itemClass[i] === id) {
+                let items = itemClass[i];
+                return items;
+              }
+            }
+          })
+          .map((item) => {
+            return `<div class="slider" id="${item.id}">
+                        <div class="star-container" id="${item.id}">
+                            <i class="far fa-star favourite"></i>
+                        </div>
+                        <div class="slider-header">
+                            <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                        </div>
+                        <div class="slider-footer">
+                            <div class="slider-info">
+                                <h3 class="slider-name" data-id="${item.title}">${item.title}</h3>
+                                <p class="slider-price">${item.price} Ft</p>  
+                            </div>
+                                <p class="slider-description">${item.description}</p>
+                        </div>
+                     </div>`;
+          })
+          .join("");
+
+        sliderContainer.innerHTML = filtered;
+      }
+
+      if (url === id && id === "osszes") {
+        // btn.classList.add("active-btn");
+        // btn.style.transform = "translateY(-0.15rem)";
+
+        let showAll = menuItems
+          .map((item) => {
+            return `<div class="slider" id="${item.id}">
+                          <div class="star-container" id="${item.id}">
+                              <i class="far fa-star favourite"></i>
+                          </div>
+                          <div class="slider-header">
+                              <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                          </div>
+                          <div class="slider-footer">
+                              <div class="slider-info">
+                                  <h3 class="slider-name" data-id="${item.title}">${item.title}</h3>
+                                  <p class="slider-price">${item.price} Ft</p>  
+                              </div>
+                                  <p class="slider-description">${item.description}</p>
+                          </div>
+                       </div>`;
+          })
+          .join("");
+
+        sliderContainer.innerHTML = showAll;
+      }
+    });
 
     document.addEventListener("click", (e) => {
       if (
@@ -368,9 +334,22 @@ class UI {
       ) {
         // variables
         const id = e.target.dataset.id;
+        // get url
+        let url = window.location.hash;
+        url = url.replace(url, `#${id}`);
+        url = url
+          .replace(/á/g, "a")
+          .replace(/ö/g, "o")
+          .replace(/ő/g, "o")
+          .replace(/ó/g, "o")
+          .replace(/ü/g, "u")
+          .replace(/ű/g, "u")
+          .replace(/ú/g, "u")
+          .replace(/í/g, "i")
+          .replace(/é/g, "e");
 
-        console.log(`${location.href}/${id}`);
-        console.log(window.history.replaceState(null, `${id}`, [`/${id}`]));
+        window.history.replaceState(null, "asd", [`${url}`]);
+
         // filter menu items
         btns.forEach(() => {
           let filtered = menuItems
@@ -435,33 +414,6 @@ class UI {
 
           sliderContainer.innerHTML = showAll;
         }
-      }
-    });
-
-    // show all items on document load
-    btns.forEach((btn) => {
-      if (btn.dataset.id === "összes") {
-        let showAll = menuItems
-          .map((item) => {
-            return `<div class="slider" id="${item.id}">
-                        <div class="star-container" id="${item.id}">
-                            <i class="far fa-star favourite"></i>
-                        </div>
-                        <div class="slider-header">
-                            <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                        </div>
-                        <div class="slider-footer">
-                            <div class="slider-info">
-                                <h3 class="slider-name" data-id="${item.title}">${item.title}</h3>
-                                <p class="slider-price">${item.price} Ft</p>  
-                            </div>
-                                <p class="slider-description">${item.description}</p>
-                        </div>
-                     </div>`;
-          })
-          .join("");
-
-        sliderContainer.innerHTML = showAll;
       }
     });
   }

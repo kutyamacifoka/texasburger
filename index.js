@@ -8,6 +8,7 @@ const client = contentful.createClient({
 // navbar
 const navbar = document.getElementById("navbar-collapse");
 const navLink = [...document.querySelectorAll(".nav-link")];
+const etlap = document.querySelector("#etlap");
 // menu grid
 let menuGrid = document.querySelector(".menu-grid-container");
 // menu slider containers
@@ -125,12 +126,12 @@ class UI {
         );
         if (lgGrid) {
           return `<div class="menu-grid-item lg-menu-grid-item">
-                <img src="${item.image}" class="menu-grid-img lg-grid-img" id="${item.id}" alt="${item.title}" srcset="">
+                <img src="${item.image}" class="menu-grid-img lg-grid-img" data-id="${item.title}" id="${item.id}" alt="${item.title}" srcset="">
                 <p class="lg-menu-grid-title" data-id="${item.title}">${item.title}</p>
             </div>`;
         }
         return `<div class="menu-grid-item">
-                <img src="${item.image}" class="menu-grid-img" id="${item.id}" alt="${item.title}" srcset="">
+                <img src="${item.image}" class="menu-grid-img" data-id="${item.title}" id="${item.id}" alt="${item.title}" role="button" srcset="">
                 <p class="menu-grid-title" data-id="${item.title}">${item.title}</p>
             </div>`;
       })
@@ -140,6 +141,31 @@ class UI {
 
     // variables
     let gridImg = [...document.querySelectorAll(".menu-grid-img")];
+
+    gridImg.forEach((img) => {
+      img.addEventListener("click", (e) => {
+        let id = e.currentTarget.dataset.id;
+        id = id
+          .replace(/á/g, "a")
+          .replace(/ö/g, "o")
+          .replace(/ő/g, "o")
+          .replace(/ó/g, "o")
+          .replace(/ü/g, "u")
+          .replace(/ű/g, "u")
+          .replace(/ú/g, "u")
+          .replace(/í/g, "i")
+          .replace(/é/g, "e");
+
+        location.href = `menu.html#${id}`;
+        // window.history.replaceState(null, "asd", [`menu.html#${id}`]);
+      });
+    });
+
+    etlap.addEventListener("click", (e) => {
+      e.preventDefault();
+      location.href = `menu.html#osszes`;
+      window.history.replaceState(null, "asd", [`menu.html#osszes`]);
+    });
 
     // add filter
     gridImg.forEach((item) => {
