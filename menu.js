@@ -34,6 +34,7 @@ if (localStorage.getItem("favourite") === null) {
 }
 
 let allItems = [];
+let images;
 
 // CLASSES
 // get products
@@ -131,11 +132,14 @@ class UI {
 
     // functions
     this.showActiveBtn();
-    this.displayBG(bgImages);
+    // this.displayBG(bgImages);
+    images = [...bgImages];
+
+    return images;
   }
 
   // show active button
-  showActiveBtn(bgImages) {
+  showActiveBtn() {
     // variables
     const categoryBtns = [...document.querySelectorAll(".category-btn")];
 
@@ -244,6 +248,16 @@ class UI {
         .replace(/ú/g, "u")
         .replace(/í/g, "i")
         .replace(/é/g, "e");
+
+      images.forEach((item) => {
+        if (item.title === url) {
+          document.querySelector(
+            ".banner"
+          ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
+          bannerTitle.innerHTML = `${item.title}`;
+          bannerSpan.style.opacity = 0;
+        }
+      });
 
       if (url === id) {
         btn.classList.add("active-btn");
@@ -440,14 +454,13 @@ document.addEventListener("DOMContentLoaded", () => {
   products
     .getBgImages()
     .then(products.getMenuItems())
-    .then((bgImages) => ui.createCategoryBtns(bgImages));
-
-  products
-    .getMenuItems()
-    .then((menuItems) => ui.displayMenuItems(menuItems))
+    .then((bgImages) => ui.createCategoryBtns(bgImages))
+    .then(
+      products
+        .getMenuItems()
+        .then((menuItems) => ui.displayMenuItems(menuItems))
+    )
+    .then((bgImages) => ui.displayBG(bgImages))
     .then(ui.displayHomeBtn())
     .then(ui.displayDate());
-
-  // ui.displayHomeBtn();
-  // ui.displayDate();
 });
