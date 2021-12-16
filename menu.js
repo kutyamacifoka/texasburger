@@ -613,7 +613,7 @@ document.addEventListener("DOMContentLoaded", () => {
   products
     .getMenuItems()
     .then((menuItems) => ui.productsOnLoad(menuItems))
-    // .then((menuItems) => ui.addFavourites(menuItems))
+    .then((menuItems) => ui.addFavourites(menuItems))
     // .then((menuItems) => ui.productsOnClick(menuItems))
     .then(ui.displayHomeBtn())
     .then(ui.displayDate());
