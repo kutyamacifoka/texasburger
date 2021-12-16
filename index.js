@@ -142,6 +142,7 @@ class UI {
     // variables
     let gridImg = [...document.querySelectorAll(".menu-grid-img")];
 
+    // redirect to menu on click
     gridImg.forEach((img) => {
       img.addEventListener("click", (e) => {
         let id = e.currentTarget.dataset.id;
@@ -157,14 +158,12 @@ class UI {
           .replace(/é/g, "e");
 
         location.href = `menu.html#${id}`;
-        // window.history.replaceState(null, "asd", [`menu.html#${id}`]);
       });
     });
 
     etlap.addEventListener("click", (e) => {
       e.preventDefault();
       location.href = `menu.html#osszes`;
-      // window.history.replaceState(null, "asd", [`menu.html#osszes`]);
     });
 
     // add filter
@@ -261,13 +260,16 @@ class UI {
                         <p class="slider-name" data-id="${item.title}">${item.title}</p>
                  </div>`;
             }
-            return `<div class="slider" id="${item.id}">
-                    <div class="star-container" id="${item.id}">
-                        <i class="far fa-star favourite"></i>
-                    </div>
-                        <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                        <p class="slider-name" data-id="${item.title}">${item.title}</p>
-                 </div>`;
+
+            if (itemID === undefined) {
+              return `<div class="slider" id="${item.id}">
+                      <div class="star-container" id="${item.id}">
+                          <i class="far fa-star favourite"></i>
+                      </div>
+                          <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                          <p class="slider-name" data-id="${item.title}">${item.title}</p>
+                   </div>`;
+            }
           })
           .join("");
 

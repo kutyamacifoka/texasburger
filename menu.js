@@ -15,8 +15,6 @@ let bannerTitle = document.querySelector(".banner-title");
 let bannerSpan = document.querySelector(".banner-span");
 // btn container
 let categoryBtnContainer = document.querySelector(".category-btn-container");
-// menu button container
-let menuBtnContainer = document.querySelector(".menu-btn-container");
 // menu item container
 const sliderContainer = document.querySelector(".slider-container");
 // date
@@ -24,7 +22,7 @@ let date = document.querySelector("#date");
 // home btn
 const homeBtn = document.querySelector(".home-btn");
 
-// variables
+// create or parse back array on doc load
 let favouriteArray;
 if (localStorage.getItem("favourite") === null) {
   favouriteArray = [];
@@ -33,6 +31,7 @@ if (localStorage.getItem("favourite") === null) {
   favouriteArray = JSON.parse(localStorage.getItem("favourite"));
 }
 
+// variables
 let allItems = [];
 let images;
 
@@ -49,7 +48,7 @@ class Products {
       bgImages = bgImages
         .filter((item) => {
           for (let i = 0; i < bgImages.length; i++) {
-            if (item.fields.class[i] === "large-image") {
+            if (item.fields.class[i] === "grid-item") {
               return item;
             }
           }
@@ -215,7 +214,7 @@ class UI {
     });
   }
 
-  displayMenuItems(menuItems) {
+  productsOnLoad(menuItems) {
     // variables
     const btns = [...document.querySelectorAll(".btn")];
 
@@ -266,29 +265,55 @@ class UI {
         let filtered = menuItems
           .filter((item) => {
             let itemClass = item.itemClass;
-            for (let i = 0; i < menuItems.length + 1; i++) {
-              if (itemClass[i] === id) {
-                let items = itemClass[i];
-                return items;
+            for (let i = 0; i < menuItems.length; i++) {
+              if (itemClass[i] == id && !undefined) {
+                let values = itemClass[i];
+                return values;
               }
             }
           })
-          .map((item) => {
-            return `<div class="slider" id="${item.id}">
-                        <div class="star-container" id="${item.id}">
-                            <i class="far fa-star favourite"></i>
-                        </div>
-                        <div class="slider-header">
-                            <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                        </div>
-                        <div class="slider-footer">
-                            <div class="slider-info">
-                                <h3 class="slider-name" data-id="${item.title}">${item.title}</h3>
-                                <p class="slider-price">${item.price} Ft</p>  
-                            </div>
-                                <p class="slider-description">${item.description}</p>
-                        </div>
-                     </div>`;
+          .map((product) => {
+            const inStorage = JSON.parse(localStorage.getItem("favourite"));
+
+            const itemID = inStorage.find((item) => {
+              if (item.itemID === product.id) {
+                return item;
+              }
+            });
+
+            if (itemID) {
+              return `<div class="slider" id="${product.id}">
+                              <div class="star-container" id="${product.id}">
+                                  <i class="fas fa-star unfavourite"></i>
+                              </div>
+                              <div class="slider-header">
+                                  <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
+                              </div>
+                              <div class="slider-footer">
+                                  <div class="slider-info">
+                                      <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
+                                      <p class="slider-price">${product.price} Ft</p>
+                                  </div>
+                                      <p class="slider-description">${product.description}</p>
+                              </div>
+                        </div>`;
+            } else {
+              return `<div class="slider" id="${product.id}">
+                                <div class="star-container" id="${product.id}">
+                                    <i class="far fa-star favourite"></i>
+                                </div>
+                                <div class="slider-header">
+                                    <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
+                                </div>
+                                <div class="slider-footer">
+                                    <div class="slider-info">
+                                        <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
+                                        <p class="slider-price">${product.price} Ft</p>
+                                    </div>
+                                        <p class="slider-description">${product.description}</p>
+                                </div>
+                             </div>`;
+            }
           })
           .join("");
 
@@ -300,22 +325,48 @@ class UI {
         btn.style.transform = "translateY(-0.15rem)";
 
         let showAll = menuItems
-          .map((item) => {
-            return `<div class="slider" id="${item.id}">
-                          <div class="star-container" id="${item.id}">
-                              <i class="far fa-star favourite"></i>
-                          </div>
-                          <div class="slider-header">
-                              <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                          </div>
-                          <div class="slider-footer">
-                              <div class="slider-info">
-                                  <h3 class="slider-name" data-id="${item.title}">${item.title}</h3>
-                                  <p class="slider-price">${item.price} Ft</p>  
+          .map((product) => {
+            const inStorage = JSON.parse(localStorage.getItem("favourite"));
+
+            const itemID = inStorage.find((item) => {
+              if (item.itemID === product.id) {
+                return item;
+              }
+            });
+
+            if (itemID) {
+              return `<div class="slider" id="${product.id}">
+                              <div class="star-container" id="${product.id}">
+                                  <i class="fas fa-star unfavourite"></i>
                               </div>
-                                  <p class="slider-description">${item.description}</p>
-                          </div>
-                       </div>`;
+                              <div class="slider-header">
+                                  <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
+                              </div>
+                              <div class="slider-footer">
+                                  <div class="slider-info">
+                                      <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
+                                      <p class="slider-price">${product.price} Ft</p>
+                                  </div>
+                                      <p class="slider-description">${product.description}</p>
+                              </div>
+                        </div>`;
+            } else {
+              return `<div class="slider" id="${product.id}">
+                                <div class="star-container" id="${product.id}">
+                                    <i class="far fa-star favourite"></i>
+                                </div>
+                                <div class="slider-header">
+                                    <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
+                                </div>
+                                <div class="slider-footer">
+                                    <div class="slider-info">
+                                        <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
+                                        <p class="slider-price">${product.price} Ft</p>
+                                    </div>
+                                        <p class="slider-description">${product.description}</p>
+                                </div>
+                             </div>`;
+            }
           })
           .join("");
 
@@ -323,10 +374,59 @@ class UI {
       }
     });
 
+    this.showActiveBtn();
+    return menuItems;
+  }
+
+  addFavourites(menuItems) {
+    const starContainer = [...document.querySelectorAll(".star-container")];
+
+    starContainer.forEach((container) => {
+      // variables
+      let itemID = container.id;
+      let itemTitle =
+        container.parentElement.children[2].children[0].children[0].dataset.id;
+      let image = container.parentElement.children[1].children[0].src;
+      let id = { itemTitle, itemID, image };
+
+      Storage.getFavourite();
+
+      container.addEventListener("click", (e) => {
+        if (e.target.classList.contains("unfavourite")) {
+          // change icon
+          container.innerHTML = `<i class="far fa-star favourite"></i>`;
+          // remove item from local storage
+          favouriteArray = favouriteArray.filter((item) => {
+            if (item.itemID !== itemID) {
+              return item;
+            }
+          });
+
+          // update storage
+          Storage.saveFavourite();
+        }
+
+        if (e.target.classList.contains("favourite")) {
+          // change icon
+          container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
+
+          // add to local storage
+          favouriteArray.push(id);
+
+          // update storage
+          Storage.saveFavourite();
+        }
+      });
+    });
+    this.productsOnClick(menuItems);
+    return menuItems;
+  }
+
+  productsOnClick(menuItems) {
     document.addEventListener("click", (e) => {
       if (
-        e.target.classList.contains("menu-btn") ||
-        e.target.classList.contains("category-btn")
+        e.target.classList.contains("category-btn") &&
+        e.target.dataset.id !== "összes"
       ) {
         // variables
         const id = e.target.dataset.id;
@@ -346,71 +446,124 @@ class UI {
 
         window.history.replaceState(null, "Texas Burger", [`${url}`]);
 
-        // filter menu items
-        btns.forEach(() => {
-          let filtered = menuItems
-            .filter((item) => {
-              let itemClass = item.itemClass;
-              for (let i = 0; i < menuItems.length + 1; i++) {
-                if (itemClass[i] === id) {
-                  let items = itemClass[i];
-                  return items;
-                }
+        let filtered = menuItems
+          .filter((item) => {
+            let itemClass = item.itemClass;
+            for (let i = 0; i < menuItems.length; i++) {
+              if (itemClass[i] == id && !undefined) {
+                let values = itemClass[i];
+                return values;
               }
-            })
-            .map((item) => {
-              return `<div class="slider" id="${item.id}">
-                        <div class="star-container" id="${item.id}">
-                            <i class="far fa-star favourite"></i>
-                        </div>
-                        <div class="slider-header">
-                            <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                        </div>
-                        <div class="slider-footer">
-                            <div class="slider-info">
-                                <h3 class="slider-name" data-id="${item.title}">${item.title}</h3>
-                                <p class="slider-price">${item.price} Ft</p>  
-                            </div>
-                                <p class="slider-description">${item.description}</p>
-                        </div>
-                     </div>`;
-            })
-            .join("");
+            }
+          })
+          .map((product) => {
+            const inStorage = JSON.parse(localStorage.getItem("favourite"));
 
-          sliderContainer.innerHTML = filtered;
+            const itemID = inStorage.find((item) => {
+              if (item.itemID === product.id) {
+                return item;
+              }
+            });
 
-          sliderContainer.classList.add("menu-animation");
+            if (itemID) {
+              return `<div class="slider" id="${product.id}">
+                              <div class="star-container" id="${product.id}">
+                                  <i class="fas fa-star unfavourite"></i>
+                              </div>
+                              <div class="slider-header">
+                                  <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
+                              </div>
+                              <div class="slider-footer">
+                                  <div class="slider-info">
+                                      <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
+                                      <p class="slider-price">${product.price} Ft</p>
+                                  </div>
+                                      <p class="slider-description">${product.description}</p>
+                              </div>
+                        </div>`;
+            } else {
+              return `<div class="slider" id="${product.id}">
+                                <div class="star-container" id="${product.id}">
+                                    <i class="far fa-star favourite"></i>
+                                </div>
+                                <div class="slider-header">
+                                    <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
+                                </div>
+                                <div class="slider-footer">
+                                    <div class="slider-info">
+                                        <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
+                                        <p class="slider-price">${product.price} Ft</p>
+                                    </div>
+                                        <p class="slider-description">${product.description}</p>
+                                </div>
+                             </div>`;
+            }
+          })
+          .join("");
 
-          sliderContainer.addEventListener("animationend", () => {
-            sliderContainer.classList.remove("menu-animation");
-          });
+        sliderContainer.innerHTML = filtered;
+
+        sliderContainer.classList.add("menu-animation");
+
+        sliderContainer.addEventListener("animationend", () => {
+          sliderContainer.classList.remove("menu-animation");
         });
 
-        // show all items on click event
-        if (e.target.dataset.id === "összes") {
-          let showAll = menuItems
-            .map((item) => {
-              return `<div class="slider" id="${item.id}">
-                        <div class="star-container" id="${item.id}">
-                            <i class="far fa-star favourite"></i>
-                        </div>
-                        <div class="slider-header">
-                            <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                        </div>
-                        <div class="slider-footer">
-                            <div class="slider-info">
-                                <h3 class="slider-name" data-id="${item.title}">${item.title}</h3>
-                                <p class="slider-price">${item.price} Ft</p>  
-                            </div>
-                                <p class="slider-description">${item.description}</p>
-                        </div>
-                     </div>`;
-            })
-            .join("");
-
-          sliderContainer.innerHTML = showAll;
-        }
+        this.addFavourites();
       }
+
+      if (e.target.dataset.id === "összes") {
+        let showAll = menuItems
+          .map((product) => {
+            const inStorage = JSON.parse(localStorage.getItem("favourite"));
+
+            const itemID = inStorage.find((item) => {
+              if (item.itemID === product.id) {
+                return item;
+              }
+            });
+
+            if (itemID) {
+              return `<div class="slider" id="${product.id}">
+                              <div class="star-container" id="${product.id}">
+                                  <i class="fas fa-star unfavourite"></i>
+                              </div>
+                              <div class="slider-header">
+                                  <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
+                              </div>
+                              <div class="slider-footer">
+                                  <div class="slider-info">
+                                      <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
+                                      <p class="slider-price">${product.price} Ft</p>
+                                  </div>
+                                      <p class="slider-description">${product.description}</p>
+                              </div>
+                        </div>`;
+            } else {
+              return `<div class="slider" id="${product.id}">
+                                <div class="star-container" id="${product.id}">
+                                    <i class="far fa-star favourite"></i>
+                                </div>
+                                <div class="slider-header">
+                                    <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
+                                </div>
+                                <div class="slider-footer">
+                                    <div class="slider-info">
+                                        <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
+                                        <p class="slider-price">${product.price} Ft</p>
+                                    </div>
+                                        <p class="slider-description">${product.description}</p>
+                                </div>
+                             </div>`;
+            }
+          })
+          .join("");
+
+        sliderContainer.innerHTML = showAll;
+
+        this.addFavourites();
+      }
+      this.showActiveBtn();
     });
   }
 
@@ -455,12 +608,13 @@ document.addEventListener("DOMContentLoaded", () => {
     .getBgImages()
     .then(products.getMenuItems())
     .then((bgImages) => ui.createCategoryBtns(bgImages))
-    .then(
-      products
-        .getMenuItems()
-        .then((menuItems) => ui.displayMenuItems(menuItems))
-    )
-    .then((bgImages) => ui.displayBG(bgImages))
+    .then((bgImages) => ui.displayBG(bgImages));
+
+  products
+    .getMenuItems()
+    .then((menuItems) => ui.productsOnLoad(menuItems))
+    // .then((menuItems) => ui.addFavourites(menuItems))
+    // .then((menuItems) => ui.productsOnClick(menuItems))
     .then(ui.displayHomeBtn())
     .then(ui.displayDate());
 });
