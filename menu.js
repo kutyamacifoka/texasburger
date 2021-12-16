@@ -214,15 +214,12 @@ class UI {
     });
   }
 
-  productsOnLoad(menuItems) {
+  displayMenuItems(menuItems) {
     // variables
     const btns = [...document.querySelectorAll(".btn")];
 
     // show menu items on document load
     btns.forEach((btn) => {
-      // variables
-      let id = btn.dataset.id;
-
       // get url hash e.g "#pizza" etc.
       let url = window.location.hash;
       url = url.slice(1, url.length);
@@ -236,6 +233,8 @@ class UI {
         .replace(/ú/g, "u")
         .replace(/í/g, "i")
         .replace(/é/g, "e");
+      // variables
+      let id = btn.dataset.id;
 
       id = id
         .replace(/á/g, "a")
@@ -273,16 +272,7 @@ class UI {
             }
           })
           .map((product) => {
-            const inStorage = JSON.parse(localStorage.getItem("favourite"));
-
-            const itemID = inStorage.find((item) => {
-              if (item.itemID === product.id) {
-                return item;
-              }
-            });
-
-            if (itemID) {
-              return `<div class="slider" id="${product.id}">
+            return `<div class="slider" id="${product.id}">
                               <div class="star-container" id="${product.id}">
                                   <i class="fas fa-star unfavourite"></i>
                               </div>
@@ -297,23 +287,6 @@ class UI {
                                       <p class="slider-description">${product.description}</p>
                               </div>
                         </div>`;
-            } else {
-              return `<div class="slider" id="${product.id}">
-                                <div class="star-container" id="${product.id}">
-                                    <i class="far fa-star favourite"></i>
-                                </div>
-                                <div class="slider-header">
-                                    <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
-                                </div>
-                                <div class="slider-footer">
-                                    <div class="slider-info">
-                                        <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
-                                        <p class="slider-price">${product.price} Ft</p>
-                                    </div>
-                                        <p class="slider-description">${product.description}</p>
-                                </div>
-                             </div>`;
-            }
           })
           .join("");
 
@@ -326,15 +299,60 @@ class UI {
 
         let showAll = menuItems
           .map((product) => {
-            const inStorage = JSON.parse(localStorage.getItem("favourite"));
+            return `<div class="slider" id="${product.id}">
+                              <div class="star-container" id="${product.id}">
+                              </div>
+                              <div class="slider-header">
+                                  <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
+                              </div>
+                              <div class="slider-footer">
+                                  <div class="slider-info">
+                                      <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
+                                      <p class="slider-price">${product.price} Ft</p>
+                                  </div>
+                                      <p class="slider-description">${product.description}</p>
+                              </div>
+                        </div>`;
+          })
+          .join("");
 
-            const itemID = inStorage.find((item) => {
-              if (item.itemID === product.id) {
-                return item;
+        sliderContainer.innerHTML = showAll;
+      }
+
+      btn.addEventListener("click", (e) => {
+        if (
+          e.target.classList.contains("category-btn") &&
+          e.target.dataset.id !== "összes"
+        ) {
+          // variables
+          const id = e.target.dataset.id;
+          // get url
+          let url = window.location.hash;
+          url = url.replace(url, `#${id}`);
+          url = url
+            .replace(/á/g, "a")
+            .replace(/ö/g, "o")
+            .replace(/ő/g, "o")
+            .replace(/ó/g, "o")
+            .replace(/ü/g, "u")
+            .replace(/ű/g, "u")
+            .replace(/ú/g, "u")
+            .replace(/í/g, "i")
+            .replace(/é/g, "e");
+
+          window.history.replaceState(null, "Texas Burger", [`${url}`]);
+
+          let filtered = menuItems
+            .filter((item) => {
+              let itemClass = item.itemClass;
+              for (let i = 0; i < menuItems.length; i++) {
+                if (itemClass[i] == id && !undefined) {
+                  let values = itemClass[i];
+                  return values;
+                }
               }
-            });
-
-            if (itemID) {
+            })
+            .map((product) => {
               return `<div class="slider" id="${product.id}">
                               <div class="star-container" id="${product.id}">
                                   <i class="fas fa-star unfavourite"></i>
@@ -350,28 +368,47 @@ class UI {
                                       <p class="slider-description">${product.description}</p>
                               </div>
                         </div>`;
-            } else {
-              return `<div class="slider" id="${product.id}">
-                                <div class="star-container" id="${product.id}">
-                                    <i class="far fa-star favourite"></i>
-                                </div>
-                                <div class="slider-header">
-                                    <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
-                                </div>
-                                <div class="slider-footer">
-                                    <div class="slider-info">
-                                        <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
-                                        <p class="slider-price">${product.price} Ft</p>
-                                    </div>
-                                        <p class="slider-description">${product.description}</p>
-                                </div>
-                             </div>`;
-            }
-          })
-          .join("");
+            })
+            .join("");
 
-        sliderContainer.innerHTML = showAll;
-      }
+          sliderContainer.innerHTML = filtered;
+
+          sliderContainer.classList.add("menu-animation");
+
+          sliderContainer.addEventListener("animationend", () => {
+            sliderContainer.classList.remove("menu-animation");
+          });
+
+          this.addFavourites();
+        }
+
+        if (e.target.dataset.id === "összes") {
+          let showAll = menuItems
+            .map((product) => {
+              return `<div class="slider" id="${product.id}">
+                              <div class="star-container" id="${product.id}">
+                                  <i class="fas fa-star unfavourite"></i>
+                              </div>
+                              <div class="slider-header">
+                                  <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
+                              </div>
+                              <div class="slider-footer">
+                                  <div class="slider-info">
+                                      <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
+                                      <p class="slider-price">${product.price} Ft</p>
+                                  </div>
+                                      <p class="slider-description">${product.description}</p>
+                              </div>
+                        </div>`;
+            })
+            .join("");
+
+          sliderContainer.innerHTML = showAll;
+
+          this.addFavourites();
+        }
+        this.showActiveBtn();
+      });
     });
 
     this.showActiveBtn();
@@ -389,7 +426,16 @@ class UI {
       let image = container.parentElement.children[1].children[0].src;
       let id = { itemTitle, itemID, image };
 
-      Storage.getFavourite();
+      // get items from local storage
+      favouriteArray = JSON.parse(localStorage.getItem("favourite"));
+
+      // check if item ID is in the storage
+      let inStorage = favouriteArray.find((item) => item.itemID === itemID);
+
+      // set icons on document load
+      inStorage
+        ? (container.innerHTML = `<i class="fas fa-star unfavourite"></i>`)
+        : (container.innerHTML = `<i class="far fa-star favourite"></i>`);
 
       container.addEventListener("click", (e) => {
         if (e.target.classList.contains("unfavourite")) {
@@ -418,153 +464,7 @@ class UI {
         }
       });
     });
-    this.productsOnClick(menuItems);
     return menuItems;
-  }
-
-  productsOnClick(menuItems) {
-    document.addEventListener("click", (e) => {
-      if (
-        e.target.classList.contains("category-btn") &&
-        e.target.dataset.id !== "összes"
-      ) {
-        // variables
-        const id = e.target.dataset.id;
-        // get url
-        let url = window.location.hash;
-        url = url.replace(url, `#${id}`);
-        url = url
-          .replace(/á/g, "a")
-          .replace(/ö/g, "o")
-          .replace(/ő/g, "o")
-          .replace(/ó/g, "o")
-          .replace(/ü/g, "u")
-          .replace(/ű/g, "u")
-          .replace(/ú/g, "u")
-          .replace(/í/g, "i")
-          .replace(/é/g, "e");
-
-        window.history.replaceState(null, "Texas Burger", [`${url}`]);
-
-        let filtered = menuItems
-          .filter((item) => {
-            let itemClass = item.itemClass;
-            for (let i = 0; i < menuItems.length; i++) {
-              if (itemClass[i] == id && !undefined) {
-                let values = itemClass[i];
-                return values;
-              }
-            }
-          })
-          .map((product) => {
-            const inStorage = JSON.parse(localStorage.getItem("favourite"));
-
-            const itemID = inStorage.find((item) => {
-              if (item.itemID === product.id) {
-                return item;
-              }
-            });
-
-            if (itemID) {
-              return `<div class="slider" id="${product.id}">
-                              <div class="star-container" id="${product.id}">
-                                  <i class="fas fa-star unfavourite"></i>
-                              </div>
-                              <div class="slider-header">
-                                  <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
-                              </div>
-                              <div class="slider-footer">
-                                  <div class="slider-info">
-                                      <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
-                                      <p class="slider-price">${product.price} Ft</p>
-                                  </div>
-                                      <p class="slider-description">${product.description}</p>
-                              </div>
-                        </div>`;
-            } else {
-              return `<div class="slider" id="${product.id}">
-                                <div class="star-container" id="${product.id}">
-                                    <i class="far fa-star favourite"></i>
-                                </div>
-                                <div class="slider-header">
-                                    <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
-                                </div>
-                                <div class="slider-footer">
-                                    <div class="slider-info">
-                                        <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
-                                        <p class="slider-price">${product.price} Ft</p>
-                                    </div>
-                                        <p class="slider-description">${product.description}</p>
-                                </div>
-                             </div>`;
-            }
-          })
-          .join("");
-
-        sliderContainer.innerHTML = filtered;
-
-        sliderContainer.classList.add("menu-animation");
-
-        sliderContainer.addEventListener("animationend", () => {
-          sliderContainer.classList.remove("menu-animation");
-        });
-
-        this.addFavourites();
-      }
-
-      if (e.target.dataset.id === "összes") {
-        let showAll = menuItems
-          .map((product) => {
-            const inStorage = JSON.parse(localStorage.getItem("favourite"));
-
-            const itemID = inStorage.find((item) => {
-              if (item.itemID === product.id) {
-                return item;
-              }
-            });
-
-            if (itemID) {
-              return `<div class="slider" id="${product.id}">
-                              <div class="star-container" id="${product.id}">
-                                  <i class="fas fa-star unfavourite"></i>
-                              </div>
-                              <div class="slider-header">
-                                  <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
-                              </div>
-                              <div class="slider-footer">
-                                  <div class="slider-info">
-                                      <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
-                                      <p class="slider-price">${product.price} Ft</p>
-                                  </div>
-                                      <p class="slider-description">${product.description}</p>
-                              </div>
-                        </div>`;
-            } else {
-              return `<div class="slider" id="${product.id}">
-                                <div class="star-container" id="${product.id}">
-                                    <i class="far fa-star favourite"></i>
-                                </div>
-                                <div class="slider-header">
-                                    <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
-                                </div>
-                                <div class="slider-footer">
-                                    <div class="slider-info">
-                                        <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
-                                        <p class="slider-price">${product.price} Ft</p>
-                                    </div>
-                                        <p class="slider-description">${product.description}</p>
-                                </div>
-                             </div>`;
-            }
-          })
-          .join("");
-
-        sliderContainer.innerHTML = showAll;
-
-        this.addFavourites();
-      }
-      this.showActiveBtn();
-    });
   }
 
   // show home button
@@ -612,7 +512,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   products
     .getMenuItems()
-    .then((menuItems) => ui.productsOnLoad(menuItems))
+    .then((menuItems) => ui.displayMenuItems(menuItems))
     .then((menuItems) => ui.addFavourites(menuItems))
     // .then((menuItems) => ui.productsOnClick(menuItems))
     .then(ui.displayHomeBtn())
