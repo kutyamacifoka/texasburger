@@ -187,6 +187,10 @@ class UI {
     // variables
     const btns = [...document.querySelectorAll(".btn")];
 
+    // get url hash e.g "#pizza" etc.
+    let url = window.location.hash;
+    this.getURL(url);
+
     // button events
     btns.forEach((btn) => {
       btn.addEventListener("mouseover", (e) => {
@@ -210,38 +214,21 @@ class UI {
   displayMenuItems(menuItems) {
     // variables
     const categoryBtns = [...document.querySelectorAll(".category-btn")];
+
     // get url hash e.g "#pizza" etc.
     let url = window.location.hash;
     url = url.slice(1, url.length);
-    url = url
-      .replace(/á/g, "a")
-      .replace(/ö/g, "o")
-      .replace(/ő/g, "o")
-      .replace(/ó/g, "o")
-      .replace(/ü/g, "u")
-      .replace(/ű/g, "u")
-      .replace(/ú/g, "u")
-      .replace(/í/g, "i")
-      .replace(/é/g, "e");
+    this.getURL(url);
 
+    const bgImages = [...images];
     // set bg image on doc load
-    this.filterBGs(images, url);
+    this.filterBGs(bgImages);
 
     // show menu items on document load
     categoryBtns.forEach((btn) => {
       // get id
       let id = btn.dataset.id;
-
-      id = id
-        .replace(/á/g, "a")
-        .replace(/ö/g, "o")
-        .replace(/ő/g, "o")
-        .replace(/ó/g, "o")
-        .replace(/ü/g, "u")
-        .replace(/ű/g, "u")
-        .replace(/ú/g, "u")
-        .replace(/í/g, "i")
-        .replace(/é/g, "e");
+      this.getURL(id);
 
       // filter & display products on doc load, show active btn
       if (url === id) {
@@ -264,17 +251,9 @@ class UI {
       btn.addEventListener("click", (e) => {
         // get url
         let url = window.location.hash;
+        this.getURL(url);
+
         url = url.replace(url, `#${id}`);
-        url = url
-          .replace(/á/g, "a")
-          .replace(/ö/g, "o")
-          .replace(/ő/g, "o")
-          .replace(/ó/g, "o")
-          .replace(/ü/g, "u")
-          .replace(/ű/g, "u")
-          .replace(/ú/g, "u")
-          .replace(/í/g, "i")
-          .replace(/é/g, "e");
 
         // change current url on click
         window.history.replaceState(null, "Texas Burger", [`${url}`]);
@@ -435,10 +414,31 @@ class UI {
     return menuItems;
   }
 
+  getURL(value) {
+    // get url
+    value = value
+      .replace(/á/g, "a")
+      .replace(/ö/g, "o")
+      .replace(/ő/g, "o")
+      .replace(/ó/g, "o")
+      .replace(/ü/g, "u")
+      .replace(/ű/g, "u")
+      .replace(/ú/g, "u")
+      .replace(/í/g, "i")
+      .replace(/é/g, "e");
+    return value;
+  }
+
   // change background based on product
-  filterBGs(bgImages, id, url) {
+  filterBGs(bgImages, id) {
+    // get url hash e.g "#pizza" etc.
+    let url = window.location.hash;
+    url = url.slice(1, url.length);
+    // this.getURL(url);
+
     bgImages.forEach((item) => {
       // change on doc load
+      this.getURL(item.title);
       if (item.title === url) {
         document.querySelector(
           ".banner"
@@ -449,6 +449,8 @@ class UI {
 
       // show individual product
       if (id === item.title) {
+        console.log(item.title);
+
         document.querySelector(
           ".banner"
         ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
