@@ -398,23 +398,6 @@ class UI {
         const sliderID = e.target.parentElement.parentElement.id;
         const currentSlider = e.target.parentElement.parentElement;
 
-        // globally find product
-        let product = allItems[0].sliderItems;
-        product = product.find((item) => {
-          if (item.id === sliderID) {
-            return item;
-          }
-        });
-
-        // globally remove favourite icon
-        if (product) {
-          starContainer.forEach((star) => {
-            if (star.id == product.id) {
-              star.innerHTML = `<i class="far fa-star favourite"></i>`;
-            }
-          });
-        }
-
         // find current target in local storage
         favouriteArray = favouriteArray.filter((item) => {
           if (item.itemID !== sliderID) {
