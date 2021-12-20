@@ -221,29 +221,11 @@ body {
     text-decoration: underline goldenrod;
   }
 
-  /*
-  ==========
-  MENU BUTTON CONTAINER
-  ========== 
-  */
-
   .active-btn {
     background: var(--clr-red-1);
     color: black;
+    transform: translateY(-0.15rem);
     transition: var(--transition);
-  }
-
-  .container-animation {
-    animation: show ease 0.4s;
-  }
-
-  @keyframes show {
-    from {
-      clip-path: circle(0% at 0% 0%);
-    }
-    to {
-      clip-path: circle(100% at 50% 50%);
-    }
   }
 
   /*

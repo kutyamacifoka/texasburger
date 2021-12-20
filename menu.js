@@ -76,7 +76,9 @@ class Products {
           const { title } = item.fields;
           const itemClass = [item.fields.class];
           const image = item.fields.image.fields.file.url;
-          return { title, itemClass, image };
+          let dataset = title;
+          dataset = UI.replaceLetters(dataset);
+          return { title, itemClass, image, dataset };
         });
 
       return bgImages;
@@ -103,6 +105,11 @@ class Products {
         .map((item) => {
           const { title } = item.fields;
           const itemClass = item.fields.class;
+          for (let i = 0; i < menuItems.length; i++) {
+            if (itemClass[i] !== undefined && itemClass[i] !== "menu-item") {
+              itemClass[i] = UI.replaceLetters(itemClass[i]);
+            }
+          }
           const { price } = item.fields;
           const description =
             item.fields.description.content[0].content[0].value;
@@ -143,16 +150,15 @@ class UI {
     let categoryBtns = [
       "összes",
       ...new Set(bgImages.map((item) => item.title)),
-    ];
-
-    categoryBtns = categoryBtns
+    ]
       .map((item) => {
-        const id = this.replaceLetters(item);
+        const id = UI.replaceLetters(item);
         return `<p class="btn category-btn" data-id="${id}">${item}</p>`;
       })
       .join("");
 
     categoryBtnContainer.innerHTML = categoryBtns;
+
     // functions
     this.showActiveBtn();
 
@@ -170,21 +176,20 @@ class UI {
     // active category button
     categoryBtns.forEach((btn) => {
       const id = btn.dataset.id;
+
+      // show active on doc load
       if (url === id) {
         btn.classList.add("active-btn");
-        btn.style.transform = "translateY(-0.15rem)";
       }
 
       btn.addEventListener("click", (e) => {
         categoryBtns.forEach((item) => {
           // remove active from all
           item.classList.remove("active-btn");
-          item.style.transform = "translateY(0)";
         });
 
         // add active to current target
         e.currentTarget.classList.add("active-btn");
-        e.currentTarget.style.transform = "translateY(-0.15rem)";
       });
     });
   }
@@ -239,24 +244,22 @@ class UI {
       }
 
       btn.addEventListener("click", (e) => {
-        // replace url
+        const id = e.target.dataset.id;
+        // change current url on click
         url = url.replace(url, `#${id}`);
 
-        // change current url on click
+        // replace url
         window.history.replaceState({ id }, "Texas Burger", [`${url}`]);
 
         // filter & display products on click
-        if (
-          e.target.classList.contains("category-btn") &&
-          e.target.dataset.id !== "osszes"
-        ) {
+        if (id !== "osszes") {
           // callback function
           this.filteredProducts(menuItems, btn);
           this.addFavourites();
         }
 
         // display all products on click
-        if (e.target.dataset.id === "osszes") {
+        if (id === "osszes") {
           // callback function
           this.allProducts(menuItems);
           this.addFavourites();
@@ -290,8 +293,8 @@ class UI {
       .filter((item) => {
         let itemClass = item.itemClass;
         const productID = btn.dataset.id;
-        for (let i = 0; i < menuItems.length; i++) {
-          if (itemClass[i] == productID && !undefined) {
+        for (let i = 0; i < 3; i++) {
+          if (itemClass[i] == productID) {
             let values = itemClass[i];
             return values;
           }
@@ -317,11 +320,11 @@ class UI {
 
     sliderContainer.innerHTML = filtered;
 
-    sliderContainer.classList.add("menu-animation");
+    // sliderContainer.classList.add("menu-animation");
 
-    sliderContainer.addEventListener("animationend", () => {
-      sliderContainer.classList.remove("menu-animation");
-    });
+    // sliderContainer.addEventListener("animationend", () => {
+    //   sliderContainer.classList.remove("menu-animation");
+    // });
   }
 
   allProducts(menuItems) {
@@ -345,10 +348,16 @@ class UI {
       .join("");
 
     sliderContainer.innerHTML = showAll;
+
+    // sliderContainer.classList.add("menu-animation");
+
+    // sliderContainer.addEventListener("animationend", () => {
+    //   sliderContainer.classList.remove("menu-animation");
+    // });
   }
 
   // add items to storage, delete from storage, set icons on document load
-  addFavourites(menuItems) {
+  addFavourites() {
     const starContainer = [...document.querySelectorAll(".star-container")];
 
     starContainer.forEach((container) => {
@@ -397,10 +406,9 @@ class UI {
         }
       });
     });
-    return menuItems;
   }
 
-  replaceLetters(value) {
+  static replaceLetters(value) {
     // get url
     value = value
       .replace(/á/g, "a")
@@ -412,6 +420,7 @@ class UI {
       .replace(/ú/g, "u")
       .replace(/í/g, "i")
       .replace(/é/g, "e");
+
     return value;
   }
 
@@ -419,7 +428,8 @@ class UI {
   filterBGs(bgImages, id) {
     bgImages.forEach((item) => {
       // change on doc load
-      const title = this.replaceLetters(item.title);
+      const title = item.dataset;
+
       if (title === url) {
         document.querySelector(
           ".banner"
