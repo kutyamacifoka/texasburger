@@ -146,7 +146,7 @@ class UI {
     gridImg.forEach((img) => {
       img.addEventListener("click", (e) => {
         let id = e.currentTarget.dataset.id;
-        id = this.getURL(id);
+        id = this.replaceLetters(id);
 
         location.href = `menu.html#${id}`;
       });
@@ -484,7 +484,7 @@ class UI {
     }
   }
 
-  getURL(value) {
+  replaceLetters(value) {
     // get url
     value = value
       .replace(/á/g, "a")
