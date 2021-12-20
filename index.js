@@ -146,16 +146,7 @@ class UI {
     gridImg.forEach((img) => {
       img.addEventListener("click", (e) => {
         let id = e.currentTarget.dataset.id;
-        id = id
-          .replace(/á/g, "a")
-          .replace(/ö/g, "o")
-          .replace(/ő/g, "o")
-          .replace(/ó/g, "o")
-          .replace(/ü/g, "u")
-          .replace(/ű/g, "u")
-          .replace(/ú/g, "u")
-          .replace(/í/g, "i")
-          .replace(/é/g, "e");
+        id = this.getURL(id);
 
         location.href = `menu.html#${id}`;
       });
@@ -491,6 +482,21 @@ class UI {
         });
       });
     }
+  }
+
+  getURL(value) {
+    // get url
+    value = value
+      .replace(/á/g, "a")
+      .replace(/ö/g, "o")
+      .replace(/ő/g, "o")
+      .replace(/ó/g, "o")
+      .replace(/ü/g, "u")
+      .replace(/ű/g, "u")
+      .replace(/ú/g, "u")
+      .replace(/í/g, "i")
+      .replace(/é/g, "e");
+    return value;
   }
 
   // show home button

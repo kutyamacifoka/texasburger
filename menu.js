@@ -48,6 +48,7 @@ GLOBAL VARIABLES
 */
 
 let allItems = [];
+let url = window.location.hash;
 let images;
 
 /*
@@ -147,12 +148,12 @@ class UI {
 
     categoryBtns = categoryBtns
       .map((item) => {
-        return `<p class="btn category-btn" data-id="${item}">${item}</p>`;
+        const id = this.replaceLetters(item);
+        return `<p class="btn category-btn" data-id="${id}">${item}</p>`;
       })
       .join("");
 
     categoryBtnContainer.innerHTML = categoryBtns;
-
     // functions
     this.showActiveBtn();
 
@@ -165,9 +166,16 @@ class UI {
   showActiveBtn() {
     // variables
     const categoryBtns = [...document.querySelectorAll(".category-btn")];
+    url = url.slice(1, url.length);
 
     // active category button
     categoryBtns.forEach((btn) => {
+      const id = btn.dataset.id;
+      if (url === id) {
+        btn.classList.add("active-btn");
+        btn.style.transform = "translateY(-0.15rem)";
+      }
+
       btn.addEventListener("click", (e) => {
         categoryBtns.forEach((item) => {
           // remove active from all
@@ -185,14 +193,10 @@ class UI {
   // display background on hover
   displayBG(bgImages) {
     // variables
-    const btns = [...document.querySelectorAll(".btn")];
-
-    // get url hash e.g "#pizza" etc.
-    let url = window.location.hash;
-    this.getURL(url);
+    const categoryBtns = [...document.querySelectorAll(".category-btn")];
 
     // button events
-    btns.forEach((btn) => {
+    categoryBtns.forEach((btn) => {
       btn.addEventListener("mouseover", (e) => {
         // get ID
         const id = e.target.dataset.id;
@@ -215,53 +219,37 @@ class UI {
     // variables
     const categoryBtns = [...document.querySelectorAll(".category-btn")];
 
-    // get url hash e.g "#pizza" etc.
-    let url = window.location.hash;
-    url = url.slice(1, url.length);
-    this.getURL(url);
-
-    const bgImages = [...images];
     // set bg image on doc load
-    this.filterBGs(bgImages);
+    this.filterBGs(images);
 
     // show menu items on document load
     categoryBtns.forEach((btn) => {
       // get id
       let id = btn.dataset.id;
-      this.getURL(id);
 
       // filter & display products on doc load, show active btn
       if (url === id) {
-        btn.classList.add("active-btn");
-        btn.style.transform = "translateY(-0.15rem)";
-
         // callback function
-        this.filteredProducts(menuItems, btn, url);
+        this.filteredProducts(menuItems, btn);
       }
 
       // display all products on doc load, show active btn
       if (url === id && id === "osszes") {
-        btn.classList.add("active-btn");
-        btn.style.transform = "translateY(-0.15rem)";
-
         // callback function
         this.allProducts(menuItems, btn);
       }
 
       btn.addEventListener("click", (e) => {
-        // get url
-        let url = window.location.hash;
-        this.getURL(url);
-
+        // replace url
         url = url.replace(url, `#${id}`);
 
         // change current url on click
-        window.history.replaceState(null, "Texas Burger", [`${url}`]);
+        window.history.replaceState({ id }, "Texas Burger", [`${url}`]);
 
         // filter & display products on click, show active btn
         if (
           e.target.classList.contains("category-btn") &&
-          e.target.dataset.id !== "összes"
+          e.target.dataset.id !== "osszes"
         ) {
           // callback function
           this.filteredProducts(menuItems, btn);
@@ -269,7 +257,7 @@ class UI {
         }
 
         // display all products on click, show active btn
-        if (e.target.dataset.id === "összes") {
+        if (e.target.dataset.id === "osszes") {
           // callback function
           this.allProducts(menuItems);
           this.addFavourites();
@@ -414,7 +402,7 @@ class UI {
     return menuItems;
   }
 
-  getURL(value) {
+  replaceLetters(value) {
     // get url
     value = value
       .replace(/á/g, "a")
@@ -431,15 +419,10 @@ class UI {
 
   // change background based on product
   filterBGs(bgImages, id) {
-    // get url hash e.g "#pizza" etc.
-    let url = window.location.hash;
-    url = url.slice(1, url.length);
-    // this.getURL(url);
-
     bgImages.forEach((item) => {
       // change on doc load
-      this.getURL(item.title);
-      if (item.title === url) {
+      const title = this.replaceLetters(item.title);
+      if (title === url) {
         document.querySelector(
           ".banner"
         ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
@@ -448,9 +431,7 @@ class UI {
       }
 
       // show individual product
-      if (id === item.title) {
-        console.log(item.title);
-
+      if (title === id) {
         document.querySelector(
           ".banner"
         ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
@@ -458,8 +439,8 @@ class UI {
         bannerSpan.style.opacity = 0;
       }
 
-      // show all product
-      if (id === "összes") {
+      // show all products
+      if (id === "osszes") {
         document.querySelector(
           ".banner"
         ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero2.png) center/cover no-repeat`;
@@ -501,12 +482,13 @@ document.addEventListener("DOMContentLoaded", () => {
     .getBgImages()
     .then(products.getMenuItems())
     .then((bgImages) => ui.createCategoryBtns(bgImages))
-    .then((bgImages) => ui.displayBG(bgImages));
-
-  products
-    .getMenuItems()
-    .then((menuItems) => ui.displayMenuItems(menuItems))
-    .then((menuItems) => ui.addFavourites(menuItems))
+    .then((bgImages) => ui.displayBG(bgImages))
+    .then(
+      products
+        .getMenuItems()
+        .then((menuItems) => ui.displayMenuItems(menuItems))
+        .then((menuItems) => ui.addFavourites(menuItems))
+    )
     .then(ui.displayHomeBtn())
     .then(ui.displayDate());
 });
