@@ -47,7 +47,6 @@ GLOBAL VARIABLES
 ========== 
 */
 
-let allItems = [];
 let url = window.location.hash;
 let images;
 
@@ -227,13 +226,13 @@ class UI {
       // get id
       let id = btn.dataset.id;
 
-      // filter & display products on doc load, show active btn
+      // filter & display products on doc load
       if (url === id) {
         // callback function
         this.filteredProducts(menuItems, btn);
       }
 
-      // display all products on doc load, show active btn
+      // display all products on doc load
       if (url === id && id === "osszes") {
         // callback function
         this.allProducts(menuItems, btn);
@@ -246,7 +245,7 @@ class UI {
         // change current url on click
         window.history.replaceState({ id }, "Texas Burger", [`${url}`]);
 
-        // filter & display products on click, show active btn
+        // filter & display products on click
         if (
           e.target.classList.contains("category-btn") &&
           e.target.dataset.id !== "osszes"
@@ -256,7 +255,7 @@ class UI {
           this.addFavourites();
         }
 
-        // display all products on click, show active btn
+        // display all products on click
         if (e.target.dataset.id === "osszes") {
           // callback function
           this.allProducts(menuItems);
@@ -264,7 +263,6 @@ class UI {
         }
       });
     });
-    return menuItems;
   }
 
   // show home button
