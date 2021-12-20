@@ -48,6 +48,7 @@ GLOBAL VARIABLES
 */
 
 let url = window.location.hash;
+let activeBtn;
 let images;
 
 /*
@@ -180,6 +181,7 @@ class UI {
       // show active on doc load
       if (url === id) {
         btn.classList.add("active-btn");
+        activeBtn = btn;
       }
 
       btn.addEventListener("click", (e) => {
@@ -223,28 +225,29 @@ class UI {
     // variables
     const categoryBtns = [...document.querySelectorAll(".category-btn")];
 
+    // get active button's id
+    let id = activeBtn.dataset.id;
+
     // set bg image on doc load
     this.filterBGs(images);
 
-    // show menu items on document load
+    // filter & display products on doc load
+    if (url === id) {
+      // callback function
+      this.filteredProducts(menuItems, activeBtn);
+    }
+
+    // display all products on doc load
+    if (url === id && id === "osszes") {
+      // callback function
+      this.allProducts(menuItems, activeBtn);
+    }
+
     categoryBtns.forEach((btn) => {
-      // get id
-      let id = btn.dataset.id;
-
-      // filter & display products on doc load
-      if (url === id) {
-        // callback function
-        this.filteredProducts(menuItems, btn);
-      }
-
-      // display all products on doc load
-      if (url === id && id === "osszes") {
-        // callback function
-        this.allProducts(menuItems, btn);
-      }
-
       btn.addEventListener("click", (e) => {
+        // get id
         const id = e.target.dataset.id;
+
         // change current url on click
         url = url.replace(url, `#${id}`);
 
@@ -427,9 +430,9 @@ class UI {
   // change background based on product
   filterBGs(bgImages, id) {
     bgImages.forEach((item) => {
-      // change on doc load
       const title = item.dataset;
 
+      // change on doc load
       if (title === url) {
         document.querySelector(
           ".banner"
