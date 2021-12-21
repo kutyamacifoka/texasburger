@@ -315,29 +315,46 @@ body {
     min-height: 95px;
     display: flex;
     align-items: center;
-
+    justify-content: center;
+    text-transform: lowercase;
     transition: var(--transition);
   }
 
   .slider:hover .slider-ingredients {
-    background: var(--clr-brown-2);
+    background: bisque;
     color: black;
   }
 
   .star-container {
     display: flex;
     position: absolute;
-    top: 0px;
-    right: 0px;
-    color: #fc3;
+    top: 15px;
+    right: 15px;
     font-size: 2rem;
     cursor: pointer;
     z-index: 2;
+    animation: color 4s ease-in-out infinite;
+  }
+
+  @keyframes color {
+    0% {
+      text-shadow: 2px 2px 1px purple;
+      color: #fc3;
+    }
+    50% {
+      text-shadow: 2px 2px 0px plum;
+      color: orangered;
+    }
+    100% {
+      text-shadow: 2px 2px 1px purple;
+      color: #fc3;
+    }
   }
 
   .favourite,
   .unfavourite {
-    padding: 1rem;
+    float: right;
+    padding: 0.75rem;
   }
 
   .menu-animation {

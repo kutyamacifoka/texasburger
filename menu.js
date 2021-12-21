@@ -353,6 +353,7 @@ class UI {
       .map((product) => {
         return `<div class="slider" id="${product.id}">
                               <div class="star-container" id="${product.id}">
+
                               </div>
                               <div class="slider-header">
                                   <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
