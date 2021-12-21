@@ -298,6 +298,7 @@ body {
     font-size: 1.15rem;
     text-align: center;
     font-family: var(--ff-primary-3);
+    text-transform: lowercase;
   }
 
   .slider-description {
@@ -316,7 +317,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    text-transform: lowercase;
     transition: var(--transition);
   }
 
