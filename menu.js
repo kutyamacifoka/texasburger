@@ -118,6 +118,7 @@ class Products {
           const image = item.fields.image.fields.file.url;
           return { title, itemClass, price, description, id, image };
         });
+      // console.log(menuItems);
 
       return menuItems;
     } catch (error) {
@@ -178,10 +179,17 @@ class UI {
     categoryBtns.forEach((btn) => {
       const id = btn.dataset.id;
 
-      // show active on doc load
+      // show active button on doc load
       if (url === id) {
         btn.classList.add("active-btn");
         activeBtn = btn;
+      }
+
+      // if there weren't any active button set "összes" as default
+      if (!btn.classList.contains("active-btn") && id === "osszes") {
+        btn.classList.add("active-btn");
+        activeBtn = btn;
+        location.href = `#${activeBtn.dataset.id}`;
       }
 
       btn.addEventListener("click", (e) => {
