@@ -251,8 +251,7 @@ body {
   }
 
   .slider {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     position: relative;
     border-radius: 30px;
     background: bisque;
@@ -264,12 +263,10 @@ body {
   }
 
   .slider-footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
     margin: 0 auto;
     gap: 0.5rem;
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
   }
 
   .slider-img {
@@ -292,9 +289,24 @@ body {
     font-size: 1.25rem;
   }
 
-  .slider-description {
+  .slider-description,
+  .slider-ingredients {
+    font-size: 1.15rem;
     text-align: center;
     font-family: var(--ff-primary-3);
+  }
+
+  .slider-ingredients {
+    background-color: #222;
+    border-radius: 25px;
+    padding: 0.5rem;
+    color: whitesmoke;
+    transition: var(--transition);
+  }
+
+  .slider:hover .slider-ingredients {
+    background: var(--clr-brown-2);
+    color: black;
   }
 
   .star-container {

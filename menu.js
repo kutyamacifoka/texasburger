@@ -114,11 +114,20 @@ class Products {
           const { price } = item.fields;
           const description =
             item.fields.description.content[0].content[0].value;
+          const ingredients =
+            item.fields.ingredients.content[0].content[0].value;
           const { id } = item.sys;
           const image = item.fields.image.fields.file.url;
-          return { title, itemClass, price, description, id, image };
+          return {
+            title,
+            itemClass,
+            price,
+            description,
+            ingredients,
+            id,
+            image,
+          };
         });
-      // console.log(menuItems);
 
       return menuItems;
     } catch (error) {
@@ -313,8 +322,10 @@ class UI {
         }
       })
       .map((product) => {
+        console.log(product);
         return `<div class="slider" id="${product.id}">
                               <div class="star-container" id="${product.id}">
+                              
                               </div>
                               <div class="slider-header">
                                   <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
@@ -325,6 +336,8 @@ class UI {
                                       <p class="slider-price">${product.price} Ft</p>
                                   </div>
                                       <p class="slider-description">${product.description}</p>
+                                  
+                                      <p class="slider-ingredients">${product.ingredients}</p>
                               </div>
                 </div>`;
       })
@@ -332,11 +345,11 @@ class UI {
 
     sliderContainer.innerHTML = filtered;
 
-    // sliderContainer.classList.add("menu-animation");
+    sliderContainer.classList.add("menu-animation");
 
-    // sliderContainer.addEventListener("animationend", () => {
-    //   sliderContainer.classList.remove("menu-animation");
-    // });
+    sliderContainer.addEventListener("animationend", () => {
+      sliderContainer.classList.remove("menu-animation");
+    });
   }
 
   allProducts(menuItems) {
@@ -354,6 +367,7 @@ class UI {
                                       <p class="slider-price">${product.price} Ft</p>
                                   </div>
                                       <p class="slider-description">${product.description}</p>
+                                      <p class="slider-ingredients">${product.ingredients}</p>
                               </div>
                         </div>`;
       })
@@ -361,11 +375,11 @@ class UI {
 
     sliderContainer.innerHTML = showAll;
 
-    // sliderContainer.classList.add("menu-animation");
+    sliderContainer.classList.add("menu-animation");
 
-    // sliderContainer.addEventListener("animationend", () => {
-    //   sliderContainer.classList.remove("menu-animation");
-    // });
+    sliderContainer.addEventListener("animationend", () => {
+      sliderContainer.classList.remove("menu-animation");
+    });
   }
 
   // add items to storage, delete from storage, set icons on document load
