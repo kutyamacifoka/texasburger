@@ -186,6 +186,7 @@ class UI {
       }
 
       // if there weren't any active button set "összes" as default
+      // set default url to #osszes
       if (url.length === 0 && id === "osszes") {
         btn.classList.add("active-btn");
         activeBtn = btn;
