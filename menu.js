@@ -322,7 +322,6 @@ class UI {
         }
       })
       .map((product) => {
-        console.log(product);
         return `<div class="slider" id="${product.id}">
                               <div class="star-container" id="${product.id}">
                               
@@ -331,12 +330,9 @@ class UI {
                                   <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
                               </div>
                               <div class="slider-footer">
-                                  <div class="slider-info">
                                       <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
                                       <p class="slider-price">${product.price} Ft</p>
-                                  </div>
                                       <p class="slider-description">${product.description}</p>
-                                  
                                       <p class="slider-ingredients">${product.ingredients}</p>
                               </div>
                 </div>`;
@@ -362,10 +358,8 @@ class UI {
                                   <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
                               </div>
                               <div class="slider-footer">
-                                  <div class="slider-info">
                                       <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
                                       <p class="slider-price">${product.price} Ft</p>
-                                  </div>
                                       <p class="slider-description">${product.description}</p>
                                       <p class="slider-ingredients">${product.ingredients}</p>
                               </div>
@@ -390,7 +384,7 @@ class UI {
       // variables
       let itemID = container.id;
       let itemTitle =
-        container.parentElement.children[2].children[0].children[0].dataset.id;
+        container.parentElement.children[2].children[0].dataset.id;
       let image = container.parentElement.children[1].children[0].src;
       let id = { itemTitle, itemID, image };
 
