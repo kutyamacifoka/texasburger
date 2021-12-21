@@ -256,7 +256,7 @@ class UI {
     }
 
     // display all products on doc load
-    if (url === id && id === "osszes") {
+    if (id === "osszes") {
       // callback function
       this.allProducts(menuItems, activeBtn);
     }
