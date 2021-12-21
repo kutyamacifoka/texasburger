@@ -166,7 +166,7 @@ body {
     justify-content: center;
     align-items: center;
     background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
-      url("./hero2.png") center/cover no-repeat;
+      url("./hero.jpg") center/cover no-repeat;
   }
 
   .banner-title {

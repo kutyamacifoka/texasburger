@@ -186,7 +186,7 @@ class UI {
       }
 
       // if there weren't any active button set "összes" as default
-      if (!btn.classList.contains("active-btn") && id === "osszes") {
+      if (url.length === 0 && id === "osszes") {
         btn.classList.add("active-btn");
         activeBtn = btn;
         location.href = `#${activeBtn.dataset.id}`;
@@ -462,7 +462,7 @@ class UI {
       if (id === "osszes") {
         document.querySelector(
           ".banner"
-        ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero2.png) center/cover no-repeat`;
+        ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero.jpg) center/cover no-repeat`;
         bannerTitle.innerHTML = `Texas <span>Burger</span>`;
         bannerSpan.style.opacity = 1;
       }
