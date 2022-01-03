@@ -29,7 +29,7 @@ let categoryBtnContainer = document.querySelector(".category-btn-container");
 const sliderContainer = document.querySelector(".slider-container");
 // side menu
 const sideMenu = document.querySelector("#side-menu");
-const sideMenuIcon = document.querySelector(".close-btn");
+const sideMenuIcon = [...document.querySelectorAll(".side-icon")];
 const sideMenuBtnContainer = document.querySelector(".side-menu-btn-container");
 // home btn
 const homeBtn = document.querySelector(".home-btn");
@@ -172,7 +172,7 @@ class UI {
     categoryBtns = categoryBtns
       .map((item) => {
         const id = UI.replaceLetters(item);
-        return `<p class="btn category-btn" data-id="${id}">${item}</p>`;
+        return `<p class="btn category-btn menu-btn" data-id="${id}">${item}</p>`;
       })
       .join("");
 
@@ -181,7 +181,7 @@ class UI {
     sideBtns = sideBtns
       .map((item) => {
         const id = UI.replaceLetters(item);
-        return `<p class="btn side-menu-btn" data-id="${id}">${item}</p>`;
+        return `<p class="btn side-menu-btn menu-btn" data-id="${id}">${item}</p>`;
       })
       .join("");
 
@@ -199,6 +199,8 @@ class UI {
   showActiveBtn() {
     // variables
     const categoryBtns = [...document.querySelectorAll(".category-btn")];
+    const sideMenuBtns = [...document.querySelectorAll(".side-menu-btn")];
+
     url = url.slice(1, url.length);
 
     // active category button
@@ -211,7 +213,6 @@ class UI {
         activeBtn = btn;
       }
 
-      // if there weren't any active button set "összes" as default
       // set default url to #osszes
       if (url.length === 0 && id === "osszes") {
         btn.classList.add("active-btn");
@@ -229,12 +230,40 @@ class UI {
         e.currentTarget.classList.add("active-btn");
       });
     });
+
+    // active side menu button
+    sideMenuBtns.forEach((btn) => {
+      const id = btn.dataset.id;
+
+      // show active button on doc load
+      if (url === id) {
+        btn.classList.add("active-btn");
+        activeBtn = btn;
+      }
+
+      // set default url to #osszes
+      if (url.length === 0 && id === "osszes") {
+        btn.classList.add("active-btn");
+        activeBtn = btn;
+        location.href = `#${activeBtn.dataset.id}`;
+      }
+
+      btn.addEventListener("click", (e) => {
+        sideMenuBtns.forEach((item) => {
+          // remove active from all
+          item.classList.remove("active-btn");
+        });
+
+        // add active to current target
+        e.currentTarget.classList.add("active-btn");
+      });
+    });
   }
 
   // display background on hover
   displayBG(bgImages) {
     // variables
-    const categoryBtns = [...document.querySelectorAll(".category-btn")];
+    const categoryBtns = [...document.querySelectorAll(".menu-btn")];
 
     // button events
     categoryBtns.forEach((btn) => {
@@ -258,7 +287,7 @@ class UI {
 
   displayMenuItems(menuItems) {
     // variables
-    const categoryBtns = [...document.querySelectorAll(".category-btn")];
+    const categoryBtns = [...document.querySelectorAll(".menu-btn")];
 
     // get active button's id
     let id = activeBtn.dataset.id;
@@ -315,6 +344,7 @@ class UI {
     });
   }
 
+  // display side menu / change how many products displayed at once
   displaySideMenu() {
     window.addEventListener("scroll", () => {
       if (scrollY > 850) {
@@ -322,6 +352,7 @@ class UI {
         sideMenu.classList.add("animation-show");
         sideMenu.classList.remove("animation-hide");
 
+        // on animation end stay grid
         sideMenu.addEventListener("animationend", () => {
           sideMenu.style.display = "grid";
         });
@@ -329,10 +360,23 @@ class UI {
         sideMenu.classList.add("animation-hide");
         sideMenu.classList.remove("animation-show");
 
+        // on animation end stay hidden
         sideMenu.addEventListener("animationend", () => {
           sideMenu.style.display = "none";
         });
       }
+    });
+
+    sideMenuIcon.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        if (e.target.classList.contains("fa-th")) {
+          sliderContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(250px, 350px))`;
+        }
+
+        if (e.target.classList.contains("fa-th-large")) {
+          sliderContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(250px, 550px))`;
+        }
+      });
     });
   }
 
