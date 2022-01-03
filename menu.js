@@ -27,10 +27,14 @@ let bannerSpan = document.querySelector(".banner-span");
 let categoryBtnContainer = document.querySelector(".category-btn-container");
 // menu item container
 const sliderContainer = document.querySelector(".slider-container");
-// date
-let date = document.querySelector("#date");
+// side menu
+const sideMenu = document.querySelector("#side-menu");
+const sideMenuIcon = document.querySelector(".close-btn");
+const sideMenuBtnContainer = document.querySelector(".side-menu-btn-container");
 // home btn
 const homeBtn = document.querySelector(".home-btn");
+// date
+let date = document.querySelector("#date");
 
 // create or parse back array on doc load
 let favouriteArray;
@@ -161,7 +165,11 @@ class UI {
     let categoryBtns = [
       "összes",
       ...new Set(bgImages.map((item) => item.title)),
-    ]
+    ];
+
+    let sideBtns = [...categoryBtns];
+
+    categoryBtns = categoryBtns
       .map((item) => {
         const id = UI.replaceLetters(item);
         return `<p class="btn category-btn" data-id="${id}">${item}</p>`;
@@ -169,6 +177,15 @@ class UI {
       .join("");
 
     categoryBtnContainer.innerHTML = categoryBtns;
+
+    sideBtns = sideBtns
+      .map((item) => {
+        const id = UI.replaceLetters(item);
+        return `<p class="btn side-menu-btn" data-id="${id}">${item}</p>`;
+      })
+      .join("");
+
+    sideMenuBtnContainer.innerHTML = sideBtns;
 
     // functions
     this.showActiveBtn();
@@ -295,6 +312,27 @@ class UI {
       scrollY > 50
         ? homeBtn.classList.add("show-home-btn")
         : homeBtn.classList.remove("show-home-btn");
+    });
+  }
+
+  displaySideMenu() {
+    window.addEventListener("scroll", () => {
+      if (scrollY > 850) {
+        sideMenu.style.display = "grid";
+        sideMenu.classList.add("animation-show");
+        sideMenu.classList.remove("animation-hide");
+
+        sideMenu.addEventListener("animationend", () => {
+          sideMenu.style.display = "grid";
+        });
+      } else {
+        sideMenu.classList.add("animation-hide");
+        sideMenu.classList.remove("animation-show");
+
+        sideMenu.addEventListener("animationend", () => {
+          sideMenu.style.display = "none";
+        });
+      }
     });
   }
 
@@ -519,5 +557,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((menuItems) => ui.addFavourites(menuItems))
     )
     .then(ui.displayHomeBtn())
+    .then(ui.displaySideMenu())
     .then(ui.displayDate());
 });

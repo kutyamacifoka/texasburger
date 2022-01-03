@@ -564,13 +564,24 @@ body {
   .star-container {
     display: flex;
     position: absolute;
-    top: 0px;
-    right: 0px;
-    color: #fc3;
+    top: 0;
+    right: 0;
     font-size: 2rem;
     cursor: pointer;
     z-index: 2;
-    transition: var(--transition);
+    animation: color 4s ease-in-out infinite;
+  }
+
+  @keyframes color {
+    0% {
+      color: hotpink;
+    }
+    50% {
+      color: purple;
+    }
+    100% {
+      color: hotpink;
+    }
   }
 
   .favourite,

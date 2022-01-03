@@ -239,6 +239,7 @@ body {
     height: fit-content;
     margin: 2rem 0;
     padding: 1rem;
+    position: relative;
   }
 
   .slider-container {
@@ -338,16 +339,13 @@ body {
 
   @keyframes color {
     0% {
-      text-shadow: 2px 2px 1px purple;
-      color: #fc3;
+      color: hotpink;
     }
     50% {
-      text-shadow: 2px 2px 0px plum;
-      color: orangered;
+      color: purple;
     }
     100% {
-      text-shadow: 2px 2px 1px purple;
-      color: #fc3;
+      color: hotpink;
     }
   }
 
@@ -495,7 +493,7 @@ body {
 
 @media screen and (min-width: 480px) {
   .slider-header {
-    height: 300px;
+    min-height: 300px;
   }
 
   .footer-aszf-link {
@@ -555,5 +553,81 @@ body {
 
   .banner {
     height: 100vh;
+  }
+
+  #side-menu {
+    position: fixed;
+    top: 66.78px;
+    width: 170px;
+    margin: 2rem 0rem;
+    transform: translateX(-40px);
+    text-align: center;
+    display: none;
+  }
+
+  .side-menu-icon-container {
+    background: #111;
+    padding: 0.5rem 1rem;
+    border-bottom: solid 3px var(--clr-red-1);
+  }
+
+  .side-icon {
+    padding: 0.5rem;
+    transform: translateX(10px);
+    color: goldenrod;
+    font-size: 1.75rem;
+    cursor: pointer;
+  }
+
+  .side-icon:hover {
+    transition: var(--transition);
+    color: var(--clr-red-1);
+  }
+
+  .side-menu-btn {
+    width: 100%;
+    transform: translateX(10px);
+    font-family: var(--ff-primary-2);
+    font-size: 1.25rem;
+    transition: var(--transition);
+  }
+
+  .side-menu-btn:hover {
+    border-radius: 0;
+    background: var(--clr-red-1);
+    color: bisque;
+  }
+
+  .animation-show {
+    background: var(--clr-brown-1);
+    animation: show-menu ease 2.5s;
+  }
+
+  @keyframes show-menu {
+    from {
+      background: initial;
+      clip-path: circle(0% at 0% 0%);
+    }
+
+    to {
+      background: var(--clr-brown-1);
+      clip-path: circle(100% at 50% 50%);
+    }
+  }
+
+  .animation-hide {
+    animation: hide-menu ease 2.5s;
+  }
+
+  @keyframes hide-menu {
+    from {
+      background: var(--clr-brown-1);
+      clip-path: circle(100% at 50% 50%);
+    }
+
+    to {
+      background: unset;
+      clip-path: circle(0% at 0% 0%);
+    }
   }
 }
