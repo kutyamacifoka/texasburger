@@ -405,6 +405,7 @@ class UI {
 
                               </div>
                               <div class="slider-header">
+                                  <p id="${product.id}" class="storage-text"></p>
                                   <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
                               </div>
                               <div class="slider-footer">
@@ -456,7 +457,7 @@ class UI {
       // variables
       let itemID = container.id;
       let itemTitle =
-        container.parentElement.children[2].children[0].dataset.id;
+        container.parentElement.children[2].children[0].children[0].dataset.id;
       let image = container.parentElement.children[1].children[1].src;
       let id = { itemTitle, itemID, image };
 
