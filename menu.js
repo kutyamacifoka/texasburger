@@ -411,7 +411,7 @@ class UI {
                               <div class="slider-footer">
                                   <div>
                                        <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
-                                       <p class="slider-price">${product.price} Ft</p>
+                                       <p class="slider-price">${product.price}</p>
                                   </div> 
                                   <p class="slider-description">${product.description}</p>
                                   <p class="slider-ingredients">${product.ingredients}</p>
@@ -437,7 +437,7 @@ class UI {
                               <div class="slider-footer">
                                   <div>
                                        <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
-                                       <p class="slider-price">${product.price} Ft</p>
+                                       <p class="slider-price">${product.price}</p>
                                   </div> 
                                   <p class="slider-description">${product.description}</p>
                                   <p class="slider-ingredients">${product.ingredients}</p>
@@ -452,6 +452,7 @@ class UI {
   // add items to storage, delete from storage, set icons on document load
   addFavourites() {
     const starContainer = [...document.querySelectorAll(".star-container")];
+    const storageText = [...document.querySelectorAll(".storage-text")];
 
     starContainer.forEach((container) => {
       // variables
@@ -473,7 +474,6 @@ class UI {
         : (container.innerHTML = `<i class="far fa-star favourite"></i>`);
 
       container.addEventListener("click", (e) => {
-        const containerID = e.currentTarget.parentElement.id;
         if (e.target.classList.contains("unfavourite")) {
           // change icon
           container.innerHTML = `<i class="far fa-star favourite"></i>`;
@@ -485,8 +485,7 @@ class UI {
             }
           });
 
-          const storageText = [...document.querySelectorAll(".storage-text")];
-
+          // change text on click + animations
           storageText.forEach((text) => {
             if (text.id === container.id) {
               text.textContent = `eltávoltítva a kedvencekből`;
@@ -508,8 +507,7 @@ class UI {
           // change icon
           container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
 
-          const storageText = [...document.querySelectorAll(".storage-text")];
-
+          // change text on click + animations
           storageText.forEach((text) => {
             if (text.id === container.id) {
               text.textContent = `hozzáadva a kedvencekhez`;

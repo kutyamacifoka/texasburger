@@ -265,7 +265,6 @@ body {
   .slider {
     display: flex;
     flex-direction: column;
-    height: min-content;
     position: relative;
     border-radius: 30px;
     background: bisque;
@@ -287,7 +286,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: space-between;
     margin: 0 auto;
     padding: 1.5rem 1.5rem 0.5rem 1.5rem;
   }
