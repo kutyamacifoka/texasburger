@@ -52,6 +52,7 @@ GLOBAL VARIABLES
 */
 
 let url = window.location.hash;
+const media = matchMedia("(min-width: 1900px)");
 let activeBtn;
 let images;
 
@@ -200,11 +201,12 @@ class UI {
     // variables
     const categoryBtns = [...document.querySelectorAll(".category-btn")];
     const sideMenuBtns = [...document.querySelectorAll(".side-menu-btn")];
+    const menuBtns = [...document.querySelectorAll(".menu-btn")];
 
     url = url.slice(1, url.length);
 
     // active category button
-    categoryBtns.forEach((btn) => {
+    menuBtns.forEach((btn) => {
       const id = btn.dataset.id;
 
       // show active button on doc load
@@ -220,39 +222,33 @@ class UI {
         location.href = `#${activeBtn.dataset.id}`;
       }
 
+      // display active btn on click
       btn.addEventListener("click", (e) => {
-        categoryBtns.forEach((item) => {
+        menuBtns.forEach((item) => {
           // remove active from all
           item.classList.remove("active-btn");
         });
 
-        // add active to current target
-        e.currentTarget.classList.add("active-btn");
-      });
-    });
+        // variables
+        const id = e.currentTarget.dataset.id;
 
-    // active side menu button
-    sideMenuBtns.forEach((btn) => {
-      const id = btn.dataset.id;
+        // add active to side menu btns
+        if (e.currentTarget.classList.contains("category-btn")) {
+          sideMenuBtns.forEach((sideBtn) => {
+            if (sideBtn.dataset.id === id) {
+              sideBtn.classList.add("active-btn");
+            }
+          });
+        }
 
-      // show active button on doc load
-      if (url === id) {
-        btn.classList.add("active-btn");
-        activeBtn = btn;
-      }
-
-      // set default url to #osszes
-      if (url.length === 0 && id === "osszes") {
-        btn.classList.add("active-btn");
-        activeBtn = btn;
-        location.href = `#${activeBtn.dataset.id}`;
-      }
-
-      btn.addEventListener("click", (e) => {
-        sideMenuBtns.forEach((item) => {
-          // remove active from all
-          item.classList.remove("active-btn");
-        });
+        // add active to category btns
+        if (e.currentTarget.classList.contains("side-menu-btn")) {
+          categoryBtns.forEach((categoryBtn) => {
+            if (categoryBtn.dataset.id === id) {
+              categoryBtn.classList.add("active-btn");
+            }
+          });
+        }
 
         // add active to current target
         e.currentTarget.classList.add("active-btn");
@@ -422,12 +418,6 @@ class UI {
       .join("");
 
     sliderContainer.innerHTML = filtered;
-
-    sliderContainer.classList.add("menu-animation");
-
-    sliderContainer.addEventListener("animationend", () => {
-      sliderContainer.classList.remove("menu-animation");
-    });
   }
 
   allProducts(menuItems) {
@@ -451,12 +441,6 @@ class UI {
       .join("");
 
     sliderContainer.innerHTML = showAll;
-
-    sliderContainer.classList.add("menu-animation");
-
-    sliderContainer.addEventListener("animationend", () => {
-      sliderContainer.classList.remove("menu-animation");
-    });
   }
 
   // add items to storage, delete from storage, set icons on document load
