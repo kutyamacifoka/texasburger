@@ -230,6 +230,17 @@ body {
 
   /*
   ==========
+  SIDE MENU CONTAINER
+  ========== 
+  */
+
+  #side-menu {
+    transform: translateX(-100%);
+    position: absolute;
+  }
+
+  /*
+  ==========
   MENU ITEM CONTAINER
   ========== 
   */
@@ -254,15 +265,20 @@ body {
   .slider {
     display: flex;
     flex-direction: column;
+    height: min-content;
     position: relative;
     border-radius: 30px;
     background: bisque;
   }
 
   .slider-header {
-    height: 200px;
+    height: 250px;
     width: 100%;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
   }
 
   .slider-footer {
@@ -270,9 +286,50 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: space-between;
     margin: 0 auto;
-    gap: 0.5rem;
     padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+  }
+
+  .storage-text {
+    position: absolute;
+    place-items: center;
+    background: whitesmoke;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 0.25rem 1rem;
+    border-radius: 25px;
+    margin-top: 15px;
+    cursor: default;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .show-text {
+    animation: show-text 1.35s ease-out;
+  }
+
+  @keyframes show-text {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .hide-text {
+    animation: hide-text 1.35s ease-in;
+  }
+
+  @keyframes hide-text {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
   }
 
   .slider-img {
@@ -288,6 +345,7 @@ body {
     text-align: center;
     font-family: var(--ff-primary-2);
     letter-spacing: 2.5px;
+
     text-decoration: underline;
   }
 
@@ -297,7 +355,7 @@ body {
 
   .slider-description,
   .slider-ingredients {
-    font-size: 1.15rem;
+    font-size: 1rem;
     text-align: center;
     font-family: var(--ff-primary-3);
     text-transform: lowercase;
@@ -332,16 +390,14 @@ body {
     background: var(--clr-red-2);
   }
 
-  .slider:hover .slider-img {
-    transform: scale(1.1);
-    transition: var(--transition);
-  }
-
   .star-container {
     display: flex;
     position: absolute;
-    top: 15px;
-    right: 15px;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    top: 5px;
+    right: 5px;
     font-size: 2rem;
     cursor: pointer;
     z-index: 2;
@@ -494,6 +550,11 @@ body {
     min-height: 300px;
   }
 
+  .slider-description,
+  .slider-ingredients {
+    font-size: 1.15rem;
+  }
+
   .footer-aszf-link {
     font-size: 1.25rem;
   }
@@ -553,9 +614,9 @@ body {
     height: 100vh;
   }
 
-  #side-menu {
-    transform: translateX(-100%);
-    position: absolute;
+  .slider:hover .slider-img {
+    transform: scale(1.1);
+    transition: var(--transition);
   }
 }
 

@@ -402,16 +402,18 @@ class UI {
       .map((product) => {
         return `<div class="slider" id="${product.id}">
                               <div class="star-container" id="${product.id}">
-                              
+
                               </div>
                               <div class="slider-header">
                                   <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
                               </div>
                               <div class="slider-footer">
-                                      <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
-                                      <p class="slider-price">${product.price} Ft</p>
-                                      <p class="slider-description">${product.description}</p>
-                                      <p class="slider-ingredients">${product.ingredients}</p>
+                                  <div>
+                                       <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
+                                       <p class="slider-price">${product.price} Ft</p>
+                                  </div> 
+                                  <p class="slider-description">${product.description}</p>
+                                  <p class="slider-ingredients">${product.ingredients}</p>
                               </div>
                 </div>`;
       })
@@ -428,13 +430,16 @@ class UI {
 
                               </div>
                               <div class="slider-header">
+                                  <p id="${product.id}" class="storage-text"></p>
                                   <img src="${product.image}" class="slider-img" alt="${product.title}" srcset="">
                               </div>
                               <div class="slider-footer">
-                                      <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
-                                      <p class="slider-price">${product.price} Ft</p>
-                                      <p class="slider-description">${product.description}</p>
-                                      <p class="slider-ingredients">${product.ingredients}</p>
+                                  <div>
+                                       <h3 class="slider-name" data-id="${product.title}">${product.title}</h3>
+                                       <p class="slider-price">${product.price} Ft</p>
+                                  </div> 
+                                  <p class="slider-description">${product.description}</p>
+                                  <p class="slider-ingredients">${product.ingredients}</p>
                               </div>
                         </div>`;
       })
@@ -452,7 +457,7 @@ class UI {
       let itemID = container.id;
       let itemTitle =
         container.parentElement.children[2].children[0].dataset.id;
-      let image = container.parentElement.children[1].children[0].src;
+      let image = container.parentElement.children[1].children[1].src;
       let id = { itemTitle, itemID, image };
 
       // get items from local storage
@@ -467,13 +472,30 @@ class UI {
         : (container.innerHTML = `<i class="far fa-star favourite"></i>`);
 
       container.addEventListener("click", (e) => {
+        const containerID = e.currentTarget.parentElement.id;
         if (e.target.classList.contains("unfavourite")) {
           // change icon
           container.innerHTML = `<i class="far fa-star favourite"></i>`;
+
           // remove item from local storage
           favouriteArray = favouriteArray.filter((item) => {
             if (item.itemID !== itemID) {
               return item;
+            }
+          });
+
+          const storageText = [...document.querySelectorAll(".storage-text")];
+
+          storageText.forEach((text) => {
+            if (text.id === container.id) {
+              text.textContent = `eltávoltítva a kedvencekből`;
+              text.classList.add("show-text");
+              text.classList.remove("hide-text");
+
+              text.addEventListener("animationend", () => {
+                text.classList.add("hide-text");
+                text.classList.remove("show-text");
+              });
             }
           });
 
@@ -484,6 +506,21 @@ class UI {
         if (e.target.classList.contains("favourite")) {
           // change icon
           container.innerHTML = `<i class="fas fa-star unfavourite"></i>`;
+
+          const storageText = [...document.querySelectorAll(".storage-text")];
+
+          storageText.forEach((text) => {
+            if (text.id === container.id) {
+              text.textContent = `hozzáadva a kedvencekhez`;
+              text.classList.add("show-text");
+              text.classList.remove("hide-text");
+
+              text.addEventListener("animationend", () => {
+                text.classList.add("hide-text");
+                text.classList.remove("show-text");
+              });
+            }
+          });
 
           // add to local storage
           favouriteArray.push(id);
