@@ -187,15 +187,22 @@ class UI {
     // iterate over items
     sliderItems = sliderItems
       .map((item) => {
-        return `<div class="slider" id="${item.id}">
-                  <div class="info-container">
-                      <i class="fas fa-info-circle slider-info"></i>
-                  </div>
-                  <div class="star-container" id="${item.id}">
-                    
-                  </div>
-                    <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                    <p class="slider-name" data-id="${item.title}">${item.title}</p>
+        return `<div class="scene">
+                    <div class="slider" id="${item.id}">
+                        <div class="slider-face slider-face-front">
+                            <div class="info-container">
+                                <i class="fas fa-info-circle slider-info"></i>
+                            </div>
+                            <div class="star-container" id="${item.id}">
+                                
+                            </div>
+                              <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                              <p class="slider-name" data-id="${item.title}">${item.title}</p>
+                            </div>
+                        <div class="slider-face slider-face-back">
+                              <p>${item.ingredients}</p>
+                        </div>    
+                     </div>
                 </div>`;
       })
       .join("");
@@ -205,9 +212,14 @@ class UI {
     // variables
     let sliders = [...document.querySelectorAll(".slider")];
 
+    sliders.forEach((item) => {
+      item.addEventListener("click", () => {
+        item.classList.toggle("test");
+      });
+    });
+
     // functions
     this.carouselBtns(sliders);
-    this.addFilters(sliders);
   }
 
   // display popular sliders on click
@@ -281,7 +293,6 @@ class UI {
         const sliders = [...document.querySelectorAll(".slider")];
 
         // functions
-        this.addFilters(sliders);
         this.addFavourites(starContainer);
       }
     });
@@ -390,9 +401,6 @@ class UI {
 
       // variables
       let sliders = [...document.querySelectorAll(".slider")];
-
-      // functions
-      this.addFilters(sliders);
 
       // unfavourite item & remove from local storage
       if (
