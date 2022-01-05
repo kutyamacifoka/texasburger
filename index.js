@@ -90,9 +90,11 @@ class Products {
         .map((item) => {
           const { title } = item.fields;
           const itemClass = item.fields.class;
+          const ingredients =
+            item.fields.ingredients.content[0].content[0].value;
           const { id } = item.sys;
           const image = item.fields.image.fields.file.url;
-          return { title, itemClass, id, image };
+          return { title, itemClass, ingredients, id, image };
         });
 
       return sliderItems;
@@ -186,6 +188,9 @@ class UI {
     sliderItems = sliderItems
       .map((item) => {
         return `<div class="slider" id="${item.id}">
+                  <div class="info-container">
+                      <i class="fas fa-info-circle slider-info"></i>
+                  </div>
                   <div class="star-container" id="${item.id}">
                     
                   </div>
@@ -244,6 +249,9 @@ class UI {
 
             if (itemID) {
               return `<div class="slider" id="${item.id}">
+                    <div class="info-container">
+                        <i class="fas fa-info-circle slider-info"></i>
+                    </div>
                     <div class="star-container" id="${item.id}">
                         <i class="fas fa-star unfavourite"></i>
                     </div>
@@ -254,6 +262,9 @@ class UI {
 
             if (itemID === undefined) {
               return `<div class="slider" id="${item.id}">
+                      <div class="info-container">
+                          <i class="fas fa-info-circle slider-info"></i>
+                      </div>
                       <div class="star-container" id="${item.id}">
                           <i class="far fa-star favourite"></i>
                       </div>
@@ -284,8 +295,8 @@ class UI {
     starContainer.forEach((container) => {
       // variables
       let itemID = container.id;
-      let itemTitle = container.parentElement.children[2].dataset.id;
-      let image = container.parentElement.children[1].src;
+      let itemTitle = container.parentElement.children[3].dataset.id;
+      let image = container.parentElement.children[2].src;
       let id = { itemTitle, itemID, image };
 
       // get items from local storage
@@ -332,7 +343,7 @@ class UI {
   }
 
   // display favourite sliders on click
-  displayFavouriteItems(starContainer) {
+  displayFavouriteItems() {
     menuSliderContainer.addEventListener("click", (e) => {
       if (e.target === favouriteBtn) {
         // copy favourite array
@@ -342,6 +353,9 @@ class UI {
         sliders = sliders
           .map((item) => {
             return `<div class="slider" id="${item.itemID}">
+                        <div class="info-container">
+                            <i class="fas fa-info-circle slider-info"></i>
+                        </div>
                         <div class="star-container" id="${item.itemID}">
                             <i class="fas fa-star unfavourite"></i>
                         </div>

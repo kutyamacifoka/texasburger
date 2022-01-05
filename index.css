@@ -572,6 +572,17 @@ body {
     animation: color 4s ease-in-out infinite;
   }
 
+  .info-container {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 2;
+    animation: color 4s ease-in-out infinite;
+  }
+
   @keyframes color {
     0% {
       color: hotpink;
@@ -584,6 +595,12 @@ body {
     }
   }
 
+  .ingredients {
+    font-family: var(--ff-primary-2);
+    color: goldenrod;
+  }
+
+  .slider-info,
   .favourite,
   .unfavourite {
     padding: 1rem;
@@ -636,7 +653,7 @@ body {
     transition: var(--transition);
   }
 
-  .fa-info-circle {
+  .write-us-icon {
     position: absolute;
     top: 7px;
     right: 7px;
@@ -916,7 +933,7 @@ body {
     clip-path: circle(20% at 100% 0%);
   }
 
-  .fa-info-circle {
+  .write-us-icon {
     font-size: 1.75rem;
   }
 

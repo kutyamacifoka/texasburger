@@ -460,7 +460,9 @@ class UI {
       let itemTitle =
         container.parentElement.children[2].children[0].children[0].dataset.id;
       let image = container.parentElement.children[1].children[1].src;
-      let id = { itemTitle, itemID, image };
+      let ingredients =
+        container.parentElement.children[2].children[2].textContent;
+      let id = { itemTitle, itemID, image, ingredients };
 
       // get items from local storage
       favouriteArray = JSON.parse(localStorage.getItem("favourite"));
