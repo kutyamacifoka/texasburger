@@ -469,25 +469,25 @@ class UI {
     prevBtn.addEventListener("click", () => {
       // popular btn
       if (popularBtn.classList.contains("menu-active")) {
-        // get sliders
+        // get scene
         scene = [...document.querySelectorAll(".scene")];
 
         // insert before
         sliderContainer.insertBefore(scene[scene.length - 1], scene[0]);
 
-        // update sliders
+        // update scene
         scene = [...document.querySelectorAll(".scene")];
       }
 
       // favourite btn
       if (favouriteBtn.classList.contains("menu-active")) {
-        // get sliders
+        // get scene
         scene = [...document.querySelectorAll(".scene")];
 
         // insert before
         sliderContainer.insertBefore(scene[scene.length - 1], scene[0]);
 
-        // update sliders
+        // update scene
         scene = [...document.querySelectorAll(".scene")];
       }
     });
@@ -495,26 +495,26 @@ class UI {
     nextBtn.addEventListener("click", () => {
       // popular btn
       if (popularBtn.classList.contains("menu-active")) {
-        // get sliders
-        sliders = [...document.querySelectorAll(".slider")];
+        // get scene
+        scene = [...document.querySelectorAll(".scene")];
 
         // insert after
-        sliderContainer.appendChild(sliders[0]);
+        sliderContainer.appendChild(scene[0]);
 
-        // update sliders
-        sliders = [...document.querySelectorAll(".slider")];
+        // update scene
+        scene = [...document.querySelectorAll(".scene")];
       }
 
       // favourite btn
       if (favouriteBtn.classList.contains("menu-active")) {
-        // get sliders
-        sliders = [...document.querySelectorAll(".slider")];
+        // get scene
+        scene = [...document.querySelectorAll(".scene")];
 
         // insert after
-        sliderContainer.appendChild(sliders[0]);
+        sliderContainer.appendChild(scene[0]);
 
-        // update sliders
-        sliders = [...document.querySelectorAll(".slider")];
+        // update scene
+        scene = [...document.querySelectorAll(".scene")];
       }
     });
   }
