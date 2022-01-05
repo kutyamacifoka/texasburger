@@ -200,7 +200,10 @@ class UI {
                               <p class="slider-name" data-id="${item.title}">${item.title}</p>
                             </div>
                         <div class="slider-face slider-face-back">
-                              <p>${item.ingredients}</p>
+                            <div class="back-btn-container">
+                                <i class="fas fa-undo-alt back-btn"></i>
+                            </div>
+                              <p class="ingredients">${item.ingredients}</p>
                         </div>    
                      </div>
                 </div>`;
@@ -212,9 +215,15 @@ class UI {
     // variables
     let sliders = [...document.querySelectorAll(".slider")];
 
-    sliders.forEach((item) => {
-      item.addEventListener("click", () => {
-        item.classList.toggle("test");
+    sliders.forEach((container) => {
+      container.addEventListener("click", (e) => {
+        if (e.target.classList.contains("slider-info")) {
+          container.classList.add("slider-flipped");
+        }
+
+        if (e.target.classList.contains("fa-undo-alt")) {
+          container.classList.remove("slider-flipped");
+        }
       });
     });
 
@@ -260,29 +269,49 @@ class UI {
             const itemID = inStorage.find((item) => item.itemID === item.id);
 
             if (itemID) {
-              return `<div class="slider" id="${item.id}">
-                    <div class="info-container">
-                        <i class="fas fa-info-circle slider-info"></i>
-                    </div>
-                    <div class="star-container" id="${item.id}">
-                        <i class="fas fa-star unfavourite"></i>
-                    </div>
-                        <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                        <p class="slider-name" data-id="${item.title}">${item.title}</p>
-                 </div>`;
+              return `<div class="scene">
+                    <div class="slider" id="${item.id}">
+                        <div class="slider-face slider-face-front">
+                            <div class="info-container">
+                                <i class="fas fa-info-circle slider-info"></i>
+                            </div>
+                            <div class="star-container" id="${item.id}">
+                                <i class="fas fa-star unfavourite"></i>
+                            </div>
+                              <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                              <p class="slider-name" data-id="${item.title}">${item.title}</p>
+                            </div>
+                        <div class="slider-face slider-face-back">
+                            <div class="back-btn-container">
+                                <i class="fas fa-undo-alt back-btn"></i>
+                            </div>
+                              <p class="ingredients">${item.ingredients}</p>
+                        </div>    
+                     </div>
+                </div>`;
             }
 
             if (itemID === undefined) {
-              return `<div class="slider" id="${item.id}">
-                      <div class="info-container">
-                          <i class="fas fa-info-circle slider-info"></i>
-                      </div>
-                      <div class="star-container" id="${item.id}">
-                          <i class="far fa-star favourite"></i>
-                      </div>
-                          <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
-                          <p class="slider-name" data-id="${item.title}">${item.title}</p>
-                   </div>`;
+              return `<div class="scene">
+                    <div class="slider" id="${item.id}">
+                        <div class="slider-face slider-face-front">
+                            <div class="info-container">
+                                <i class="fas fa-info-circle slider-info"></i>
+                            </div>
+                            <div class="star-container" id="${item.id}">
+                                <i class="far fa-star favourite"></i>
+                            </div>
+                              <img src="${item.image}" class="slider-img" alt="${item.title}" srcset="">
+                              <p class="slider-name" data-id="${item.title}">${item.title}</p>
+                            </div>
+                        <div class="slider-face slider-face-back">
+                            <div class="back-btn-container">
+                                <i class="fas fa-undo-alt back-btn"></i>
+                            </div>
+                              <p class="ingredients">${item.ingredients}</p>
+                        </div>    
+                     </div>
+                </div>`;
             }
           })
           .join("");
@@ -307,6 +336,7 @@ class UI {
       // variables
       let itemID = container.id;
       let itemTitle = container.parentElement.children[3].dataset.id;
+      // console.log(container.parentElement.children[3].dataset.id);
       let image = container.parentElement.children[2].src;
       let id = { itemTitle, itemID, image };
 
@@ -363,16 +393,26 @@ class UI {
         // iterate over array
         sliders = sliders
           .map((item) => {
-            return `<div class="slider" id="${item.itemID}">
-                        <div class="info-container">
-                            <i class="fas fa-info-circle slider-info"></i>
-                        </div>
-                        <div class="star-container" id="${item.itemID}">
-                            <i class="fas fa-star unfavourite"></i>
-                        </div>
-                            <img src="${item.image}" class="slider-img" alt="${item.itemTitle}" srcset="">
-                            <p class="slider-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
-                     </div>`;
+            return `<div class="scene">
+                    <div class="slider" id="${item.itemID}">
+                        <div class="slider-face slider-face-front">
+                            <div class="info-container">
+                                <i class="fas fa-info-circle slider-info"></i>
+                            </div>
+                            <div class="star-container" id="${item.itemID}">
+                                <i class="fas fa-star unfavourite"></i>
+                            </div>
+                              <img src="${item.image}" class="slider-img" alt="${item.itemTitle}" srcset="">
+                              <p class="slider-name" data-id="${item.itemTitle}">${item.itemTitle}</p>
+                            </div>
+                        <div class="slider-face slider-face-back">
+                            <div class="back-btn-container">
+                                <i class="fas fa-undo-alt back-btn"></i>
+                            </div>
+                              <p class="ingredients">${item.ingredients}</p>
+                        </div>    
+                     </div>
+                </div>`;
           })
           .join("");
 
@@ -408,8 +448,9 @@ class UI {
         favouriteBtn.classList.contains("menu-active")
       ) {
         // variables
-        const sliderID = e.target.parentElement.parentElement.id;
-        const currentSlider = e.target.parentElement.parentElement;
+        const sliderID = e.target.parentElement.parentElement.parentElement.id;
+        const currentSlider =
+          e.target.parentElement.parentElement.parentElement;
 
         // find current target in local storage
         favouriteArray = favouriteArray.filter((item) => {
@@ -420,11 +461,6 @@ class UI {
 
         // remove current slider
         currentSlider.remove();
-
-        // remove filter effect from remaining items
-        sliders.forEach((item) => {
-          item.classList.remove("filter-effect");
-        });
 
         // update local storage
         localStorage.setItem("favourite", JSON.stringify(favouriteArray));
