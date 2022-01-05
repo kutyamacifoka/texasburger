@@ -405,13 +405,13 @@ body {
 
   @keyframes color {
     0% {
-      color: hotpink;
+      color: violet;
     }
     50% {
-      color: purple;
+      color: orchid;
     }
     100% {
-      color: hotpink;
+      color: violet;
     }
   }
 

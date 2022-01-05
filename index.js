@@ -214,21 +214,11 @@ class UI {
 
     // variables
     let sliders = [...document.querySelectorAll(".slider")];
-
-    sliders.forEach((container) => {
-      container.addEventListener("click", (e) => {
-        if (e.target.classList.contains("slider-info")) {
-          container.classList.add("slider-flipped");
-        }
-
-        if (e.target.classList.contains("fa-undo-alt")) {
-          container.classList.remove("slider-flipped");
-        }
-      });
-    });
+    let scene = [...document.querySelectorAll(".scene")];
 
     // functions
-    this.carouselBtns(sliders);
+    this.carouselBtns(scene);
+    this.flipProducts(sliders);
   }
 
   // display popular sliders on click
@@ -322,6 +312,7 @@ class UI {
         const sliders = [...document.querySelectorAll(".slider")];
 
         // functions
+        this.flipProducts(sliders);
         this.addFavourites(starContainer);
       }
     });
@@ -336,9 +327,11 @@ class UI {
       // variables
       let itemID = container.id;
       let itemTitle = container.parentElement.children[3].dataset.id;
-      // console.log(container.parentElement.children[3].dataset.id);
+      let ingredients =
+        container.parentElement.parentElement.children[1].children[1]
+          .textContent;
       let image = container.parentElement.children[2].src;
-      let id = { itemTitle, itemID, image };
+      let id = { itemTitle, itemID, image, ingredients };
 
       // get items from local storage
       favouriteArray = JSON.parse(localStorage.getItem("favourite"));
@@ -442,6 +435,9 @@ class UI {
       // variables
       let sliders = [...document.querySelectorAll(".slider")];
 
+      // functions
+      this.flipProducts(sliders);
+
       // unfavourite item & remove from local storage
       if (
         e.target.classList.contains("unfavourite") &&
@@ -450,7 +446,7 @@ class UI {
         // variables
         const sliderID = e.target.parentElement.parentElement.parentElement.id;
         const currentSlider =
-          e.target.parentElement.parentElement.parentElement;
+          e.target.parentElement.parentElement.parentElement.parentElement;
 
         // find current target in local storage
         favouriteArray = favouriteArray.filter((item) => {
@@ -469,30 +465,30 @@ class UI {
   }
 
   // carousel buttons
-  carouselBtns(sliders) {
+  carouselBtns(scene) {
     prevBtn.addEventListener("click", () => {
       // popular btn
       if (popularBtn.classList.contains("menu-active")) {
         // get sliders
-        sliders = [...document.querySelectorAll(".slider")];
+        scene = [...document.querySelectorAll(".scene")];
 
         // insert before
-        sliderContainer.insertBefore(sliders[sliders.length - 1], sliders[0]);
+        sliderContainer.insertBefore(scene[scene.length - 1], scene[0]);
 
         // update sliders
-        sliders = [...document.querySelectorAll(".slider")];
+        scene = [...document.querySelectorAll(".scene")];
       }
 
       // favourite btn
       if (favouriteBtn.classList.contains("menu-active")) {
         // get sliders
-        sliders = [...document.querySelectorAll(".slider")];
+        scene = [...document.querySelectorAll(".scene")];
 
         // insert before
-        sliderContainer.insertBefore(sliders[sliders.length - 1], sliders[0]);
+        sliderContainer.insertBefore(scene[scene.length - 1], scene[0]);
 
         // update sliders
-        sliders = [...document.querySelectorAll(".slider")];
+        scene = [...document.querySelectorAll(".scene")];
       }
     });
 
@@ -555,6 +551,21 @@ class UI {
       .replace(/í/g, "i")
       .replace(/é/g, "e");
     return value;
+  }
+
+  // flip slider items
+  flipProducts(sliders) {
+    sliders.forEach((container) => {
+      container.addEventListener("click", (e) => {
+        if (e.target.classList.contains("slider-info")) {
+          container.classList.add("slider-flipped");
+        }
+
+        if (e.target.classList.contains("fa-undo-alt")) {
+          container.classList.remove("slider-flipped");
+        }
+      });
+    });
   }
 
   // show home button

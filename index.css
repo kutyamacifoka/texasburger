@@ -551,8 +551,8 @@ body {
   .slider-face-back {
     flex-wrap: wrap;
     overflow: hidden;
-    background: rgb(85, 85, 85);
-    border: solid 2px black;
+    background: #121212;
+    border: dashed 3px rebeccapurple;
     transform: rotateY(180deg);
   }
 
@@ -561,9 +561,13 @@ body {
   }
 
   .ingredients {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
     color: plum;
-    padding: 2.2rem;
-    font-size: 1.7rem;
+    padding: 1.5rem;
+    font-size: 1.5rem;
     text-align: center;
     font-family: var(--ff-primary-2);
     text-shadow: -2px 2px 0 #000, 2px 2px 0 #000, 2px -2px 0 #000,
@@ -574,8 +578,6 @@ body {
     position: relative;
     object-fit: cover;
     opacity: 0.85;
-    height: 250px;
-    width: 200px;
     border-radius: 25px;
   }
 
@@ -631,13 +633,13 @@ body {
 
   @keyframes color {
     0% {
-      color: hotpink;
+      color: violet;
     }
     50% {
-      color: purple;
+      color: orchid;
     }
     100% {
-      color: hotpink;
+      color: violet;
     }
   }
 
