@@ -31,6 +31,9 @@ const sliderContainer = document.querySelector(".slider-container");
 const sideMenu = document.querySelector("#side-menu");
 const sideMenuIcon = [...document.querySelectorAll(".side-icon")];
 const sideMenuBtnContainer = document.querySelector(".side-menu-btn-container");
+const sideMenuArrowContainer = document.querySelector(
+  ".side-menu-arrow-container"
+);
 // home btn
 const homeBtn = document.querySelector(".home-btn");
 // date
@@ -342,34 +345,66 @@ class UI {
 
   // display side menu / change how many products displayed at once
   displaySideMenu() {
+    // display side menu on scroll & no button press
     window.addEventListener("scroll", () => {
-      if (
-        scrollY > 850 &&
-        !sideMenuArrowContainer.classList.contains("active")
-      ) {
+      const scrollHeight = scrollY > 850;
+      // if scrollHeight true && and side menu NOT locked with button
+      if (scrollHeight && !sideMenu.classList.contains("locked")) {
+        // set container's display
         sideMenu.style.display = "grid";
-        sideMenuArrowContainer.style.display = "flex";
+        sideMenuArrowContainer.style.display = "grid";
+
+        // remove hide animation from containers
         sideMenu.classList.remove("animation-hide");
-        sideMenu.classList.add("animation-show");
         sideMenuArrowContainer.classList.remove("animation-hide");
+
+        // add show animation to containers
+        sideMenu.classList.add("animation-show");
         sideMenuArrowContainer.classList.add("animation-show");
 
-        // on animation end stay grid
+        // on animation end display remains
         sideMenu.addEventListener("animationend", () => {
           sideMenu.style.display = "grid";
-          sideMenuArrowContainer.style.display = "flex";
+          sideMenuArrowContainer.style.display = "grid";
         });
-      } else {
-        sideMenu.classList.remove("animation-show");
-        sideMenu.classList.add("animation-hide");
+      }
 
-        // on animation end stay hidden
+      // if scrollHeight true && and side menu LOCKED with button
+      if (scrollHeight && sideMenu.classList.contains("locked")) {
+        // set container's display
+        sideMenuArrowContainer.style.display = "grid";
+
+        // remove animation
+        sideMenuArrowContainer.classList.remove("animation-hide");
+
+        // add animation
+        sideMenuArrowContainer.classList.add("animation-show");
+
+        // on animation end display remains
+        sideMenu.addEventListener("animationend", () => {
+          sideMenuArrowContainer.style.display = "grid";
+        });
+      }
+
+      // if scrollHeight false (less than 850)
+      if (!scrollHeight) {
+        // remove animation
+        sideMenu.classList.remove("animation-show");
+        sideMenuArrowContainer.classList.remove("animation-show");
+
+        // add animation
+        sideMenu.classList.add("animation-hide");
+        sideMenuArrowContainer.classList.add("animation-hide");
+
+        // on animation end display remains
         sideMenu.addEventListener("animationend", () => {
           sideMenu.style.display = "none";
+          sideMenuArrowContainer.style.display = "none";
         });
       }
     });
 
+    // change how many products are displayed
     sideMenuIcon.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         if (e.target.classList.contains("fa-th")) {
@@ -382,35 +417,44 @@ class UI {
       });
     });
 
-    const sideMenuArrowContainer = document.querySelector(
-      ".side-menu-arrow-container"
-    );
-
+    // display or hide side menu on click
     sideMenuArrowContainer.addEventListener("click", (e) => {
-      if (e.target.classList.contains("fa-angle-double-right")) {
-        sideMenu.style.display = "grid";
-        sideMenu.classList.remove("animation-hide");
-        sideMenu.classList.add("animation-show");
+      if (e.target.classList.contains("side-arrow")) {
+        // toggle locked class
+        sideMenu.classList.toggle("locked");
 
-        sideMenuArrowContainer.innerHTML = `<i class="fas fa-angle-double-left side-arrow"></i>`;
-        sideMenuArrowContainer.classList.remove("active");
+        // if side menu is locked, change button HTML
+        sideMenu.classList.contains("locked")
+          ? (sideMenuArrowContainer.innerHTML = `<i class="fas fa-angle-double-right side-arrow"></i>`)
+          : (sideMenuArrowContainer.innerHTML = `<i class="fas fa-angle-double-left side-arrow"></i>`);
+      }
 
-        // on animation end stay grid
+      if (sideMenu.classList.contains("locked")) {
+        // remove animation
+        sideMenu.classList.remove("animation-show");
+
+        // add animation
+        sideMenu.classList.add("animation-hide");
+
+        // on animation end change display
         sideMenu.addEventListener("animationend", () => {
-          sideMenu.style.display = "grid";
+          sideMenu.style.display = "none";
         });
       }
 
-      if (e.target.classList.contains("fa-angle-double-left")) {
-        sideMenu.classList.remove("animation-show");
-        sideMenu.classList.add("animation-hide");
+      if (!sideMenu.classList.contains("locked")) {
+        // set container's display
+        sideMenu.style.display = "grid";
 
-        sideMenuArrowContainer.innerHTML = `<i class="fas fa-angle-double-right side-arrow"></i>`;
-        sideMenuArrowContainer.classList.add("active");
+        // remove animation
+        sideMenu.classList.remove("animation-hide");
 
-        // on animation end stay hidden
+        // add animation
+        sideMenu.classList.add("animation-show");
+
+        // on animation end change display
         sideMenu.addEventListener("animationend", () => {
-          sideMenu.style.display = "none";
+          sideMenu.style.display = "grid";
         });
       }
     });
