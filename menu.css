@@ -627,26 +627,57 @@ body {
 @media screen and (min-width: 1900px) {
   #side-menu {
     position: fixed;
-    top: 66.78px;
+    top: 98px;
     width: 170px;
     margin: 2rem 0rem;
     transform: translateX(-40px);
     text-align: center;
+    display: none;
+    background: burlywood;
+  }
+
+  .side-menu-arrow-container {
+    width: max-content;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    top: 66.78px;
+    width: 170px;
+    transform: translateX(-40px);
+    text-align: center;
+    background: #111;
+    border-bottom: solid 3px hotpink;
+    padding: 0.5rem 1rem;
     display: none;
   }
 
   .side-menu-icon-container {
     background: #111;
     padding: 0.5rem 1rem;
-    border-bottom: solid 3px var(--clr-red-2);
+    border-bottom: solid 3px goldenrod;
   }
 
-  .side-icon {
+  .side-icon,
+  .side-arrow {
     padding: 0.5rem;
     transform: translateX(10px);
     color: goldenrod;
     font-size: 1.75rem;
     cursor: pointer;
+  }
+
+  .side-arrow {
+    font-size: 1.75rem;
+    color: violet;
+  }
+
+  .show-arrow {
+    display: flex;
+  }
+
+  .side-arrow:hover {
+    color: hotpink;
+    transition: var(--transition);
   }
 
   .side-icon:hover {
@@ -669,18 +700,17 @@ body {
   }
 
   .animation-show {
-    background: var(--clr-brown-1);
     animation: show-menu ease 2.5s;
   }
 
   @keyframes show-menu {
     from {
-      background: initial;
+      opacity: 0;
       clip-path: circle(0% at 0% 0%);
     }
 
     to {
-      background: var(--clr-brown-1);
+      opacity: 1;
       clip-path: circle(100% at 50% 50%);
     }
   }
@@ -691,12 +721,12 @@ body {
 
   @keyframes hide-menu {
     from {
-      background: var(--clr-brown-1);
+      opacity: 1;
       clip-path: circle(100% at 50% 50%);
     }
 
     to {
-      background: unset;
+      opacity: 0;
       clip-path: circle(0% at 0% 0%);
     }
   }

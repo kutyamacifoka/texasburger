@@ -218,6 +218,7 @@ class UI {
 
     // functions
     this.carouselBtns(scene);
+    this.addFilters(scene);
     this.flipProducts(sliders);
   }
 
@@ -310,10 +311,12 @@ class UI {
 
         // variables
         const sliders = [...document.querySelectorAll(".slider")];
+        let scene = [...document.querySelectorAll(".scene")];
 
         // functions
         this.flipProducts(sliders);
         this.addFavourites(starContainer);
+        this.addFilters(scene);
       }
     });
   }
@@ -434,9 +437,11 @@ class UI {
 
       // variables
       let sliders = [...document.querySelectorAll(".slider")];
+      let scene = [...document.querySelectorAll(".scene")];
 
       // functions
       this.flipProducts(sliders);
+      this.addFilters(scene);
 
       // unfavourite item & remove from local storage
       if (

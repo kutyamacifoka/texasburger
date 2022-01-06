@@ -343,18 +343,25 @@ class UI {
   // display side menu / change how many products displayed at once
   displaySideMenu() {
     window.addEventListener("scroll", () => {
-      if (scrollY > 850) {
+      if (
+        scrollY > 850 &&
+        !sideMenuArrowContainer.classList.contains("active")
+      ) {
         sideMenu.style.display = "grid";
-        sideMenu.classList.add("animation-show");
+        sideMenuArrowContainer.style.display = "flex";
         sideMenu.classList.remove("animation-hide");
+        sideMenu.classList.add("animation-show");
+        sideMenuArrowContainer.classList.remove("animation-hide");
+        sideMenuArrowContainer.classList.add("animation-show");
 
         // on animation end stay grid
         sideMenu.addEventListener("animationend", () => {
           sideMenu.style.display = "grid";
+          sideMenuArrowContainer.style.display = "flex";
         });
       } else {
-        sideMenu.classList.add("animation-hide");
         sideMenu.classList.remove("animation-show");
+        sideMenu.classList.add("animation-hide");
 
         // on animation end stay hidden
         sideMenu.addEventListener("animationend", () => {
@@ -373,6 +380,39 @@ class UI {
           sliderContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(250px, 550px))`;
         }
       });
+    });
+
+    const sideMenuArrowContainer = document.querySelector(
+      ".side-menu-arrow-container"
+    );
+
+    sideMenuArrowContainer.addEventListener("click", (e) => {
+      if (e.target.classList.contains("fa-angle-double-right")) {
+        sideMenu.style.display = "grid";
+        sideMenu.classList.remove("animation-hide");
+        sideMenu.classList.add("animation-show");
+
+        sideMenuArrowContainer.innerHTML = `<i class="fas fa-angle-double-left side-arrow"></i>`;
+        sideMenuArrowContainer.classList.remove("active");
+
+        // on animation end stay grid
+        sideMenu.addEventListener("animationend", () => {
+          sideMenu.style.display = "grid";
+        });
+      }
+
+      if (e.target.classList.contains("fa-angle-double-left")) {
+        sideMenu.classList.remove("animation-show");
+        sideMenu.classList.add("animation-hide");
+
+        sideMenuArrowContainer.innerHTML = `<i class="fas fa-angle-double-right side-arrow"></i>`;
+        sideMenuArrowContainer.classList.add("active");
+
+        // on animation end stay hidden
+        sideMenu.addEventListener("animationend", () => {
+          sideMenu.style.display = "none";
+        });
+      }
     });
   }
 
