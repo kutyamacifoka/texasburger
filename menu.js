@@ -20,6 +20,7 @@ const navbar = document.querySelector(".navbar");
 const navCollapse = document.getElementById("navbar-collapse");
 const navLink = [...document.querySelectorAll(".nav-link")];
 // banner container
+const bannerContainer = document.getElementById("banner-container");
 let banner = document.querySelector(".banner");
 let bannerTitle = document.querySelector(".banner-title");
 let bannerSpan = document.querySelector(".banner-span");
@@ -347,7 +348,9 @@ class UI {
   displaySideMenu() {
     // display side menu on scroll & no button press
     window.addEventListener("scroll", () => {
-      const scrollHeight = scrollY > 850;
+      const bannerContainerHeight =
+        bannerContainer.getBoundingClientRect().height;
+      const scrollHeight = scrollY > bannerContainerHeight - 50;
       // if scrollHeight true && and side menu NOT locked with button
       if (scrollHeight && !sideMenu.classList.contains("locked")) {
         // set container's display

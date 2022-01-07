@@ -544,87 +544,7 @@ body {
   }
 }
 
-@media screen and (min-width: 480px) {
-  .slider-header {
-    min-height: 300px;
-  }
-
-  .slider-description,
-  .slider-ingredients {
-    font-size: 1.15rem;
-  }
-
-  .storage-text {
-    font-size: 2rem;
-    padding: 1rem 2.5rem;
-  }
-
-  .footer-aszf-link {
-    font-size: 1.25rem;
-  }
-
-  #creator-container {
-    font-size: 1.25rem;
-  }
-
-  .creator,
-  #date {
-    font-size: 1.5rem;
-  }
-}
-
-@media screen and (min-width: 600px) {
-  .home-btn {
-    font-size: 1.75rem;
-  }
-
-  .category-btn {
-    width: 125px;
-    font-size: 1.5rem;
-  }
-}
-
-@media screen and (min-width: 992px) {
-  .navbar-nav {
-    display: flex;
-    justify-content: center;
-  }
-
-  .navbar-brand {
-    font-size: 1.15rem;
-  }
-
-  .nav-link:link {
-    font-size: 1.25rem;
-    padding: 1.15rem;
-  }
-
-  .nav-link:hover {
-    transform: none;
-  }
-
-  .category-btn {
-    width: 150px;
-    font-size: 1.5rem;
-  }
-}
-
-@media screen and (min-width: 1056px) {
-  .navbar-brand {
-    font-size: 2rem;
-  }
-
-  .banner {
-    height: 100vh;
-  }
-
-  .slider:hover .slider-img {
-    transform: scale(1.1);
-    transition: var(--transition);
-  }
-}
-
-@media screen and (min-width: 1900px) {
+@media screen and (min-width: 375px) {
   #side-menu {
     position: fixed;
     top: 98px;
@@ -634,6 +554,7 @@ body {
     text-align: center;
     display: none;
     background: burlywood;
+    z-index: 2;
   }
 
   .side-menu-arrow-container {
@@ -649,6 +570,7 @@ body {
     border-bottom: solid 3px hotpink;
     padding: 0.5rem 1rem;
     display: none;
+    z-index: 2;
   }
 
   .side-menu-icon-container {
@@ -729,5 +651,85 @@ body {
       opacity: 0;
       clip-path: circle(0% at 0% 0%);
     }
+  }
+}
+
+@media screen and (min-width: 480px) {
+  .slider-header {
+    min-height: 300px;
+  }
+
+  .slider-description,
+  .slider-ingredients {
+    font-size: 1.15rem;
+  }
+
+  .storage-text {
+    font-size: 2rem;
+    padding: 1rem 2.5rem;
+  }
+
+  .footer-aszf-link {
+    font-size: 1.25rem;
+  }
+
+  #creator-container {
+    font-size: 1.25rem;
+  }
+
+  .creator,
+  #date {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .home-btn {
+    font-size: 1.75rem;
+  }
+
+  .category-btn {
+    width: 125px;
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .navbar-nav {
+    display: flex;
+    justify-content: center;
+  }
+
+  .navbar-brand {
+    font-size: 1.15rem;
+  }
+
+  .nav-link:link {
+    font-size: 1.25rem;
+    padding: 1.15rem;
+  }
+
+  .nav-link:hover {
+    transform: none;
+  }
+
+  .category-btn {
+    width: 150px;
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 1056px) {
+  .navbar-brand {
+    font-size: 2rem;
+  }
+
+  .banner {
+    height: 100vh;
+  }
+
+  .slider:hover .slider-img {
+    transform: scale(1.1);
+    transition: var(--transition);
   }
 }
