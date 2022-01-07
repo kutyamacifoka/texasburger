@@ -54,7 +54,6 @@ if (localStorage.getItem("favourite") === null) {
 GLOBAL VARIABLES
 ========== 
 */
-
 let url = window.location.hash;
 const media = matchMedia("(min-width: 1900px)");
 let activeBtn;
@@ -213,17 +212,10 @@ class UI {
     menuBtns.forEach((btn) => {
       const id = btn.dataset.id;
 
-      // show active button on doc load
-      if (url === id) {
+      // add active class to button
+      if (id === url) {
         btn.classList.add("active-btn");
         activeBtn = btn;
-      }
-
-      // set default url to #osszes
-      if (url.length === 0 && id === "osszes") {
-        btn.classList.add("active-btn");
-        activeBtn = btn;
-        location.href = `#${activeBtn.dataset.id}`;
       }
 
       // display active btn on click
@@ -263,10 +255,13 @@ class UI {
   // display background on hover
   displayBG(bgImages) {
     // variables
-    const categoryBtns = [...document.querySelectorAll(".menu-btn")];
+    const menuBtns = [...document.querySelectorAll(".menu-btn")];
+    const categoryBtnContainer = document.querySelector(
+      ".category-btn-container"
+    );
 
     // button events
-    categoryBtns.forEach((btn) => {
+    menuBtns.forEach((btn) => {
       btn.addEventListener("mouseover", (e) => {
         // get ID
         const id = e.target.dataset.id;
@@ -274,10 +269,11 @@ class UI {
         this.filterBGs(bgImages, id);
       });
 
-      categoryBtnContainer.addEventListener("mouseleave", () => {
+      categoryBtnContainer.addEventListener("mouseleave", (e) => {
         if (btn.classList.contains("active-btn")) {
           // get ID
           const id = btn.dataset.id;
+
           // callback function
           this.filterBGs(bgImages, id);
         }
@@ -287,10 +283,21 @@ class UI {
 
   displayMenuItems(menuItems) {
     // variables
-    const categoryBtns = [...document.querySelectorAll(".menu-btn")];
+    const menuBtns = [...document.querySelectorAll(".menu-btn")];
+    const categoryBtn = document.querySelector(".category-btn");
+    const sideMenuBtn = document.querySelector(".side-menu-btn");
+    let id;
 
-    // get active button's id
-    let id = activeBtn.dataset.id;
+    // set default button if url !== btn id
+    if (activeBtn == undefined || null) {
+      id = `osszes`;
+      location.href = `#${id}`;
+
+      categoryBtn.classList.add("active-btn");
+      sideMenuBtn.classList.add("active-btn");
+    } else {
+      id = activeBtn.dataset.id;
+    }
 
     // set bg image on doc load
     this.filterBGs(images);
@@ -307,7 +314,7 @@ class UI {
       this.allProducts(menuItems, activeBtn);
     }
 
-    categoryBtns.forEach((btn) => {
+    menuBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         // get id
         const id = e.target.dataset.id;
@@ -410,12 +417,18 @@ class UI {
     // change how many products are displayed
     sideMenuIcon.forEach((btn) => {
       btn.addEventListener("click", (e) => {
+        const slider = [...document.querySelectorAll(".slider")];
+
         if (e.target.classList.contains("fa-th")) {
-          sliderContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(250px, 350px))`;
+          this.changeProductLayout(sliderContainer, slider, 250, 350, "column");
         }
 
         if (e.target.classList.contains("fa-th-large")) {
-          sliderContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(250px, 550px))`;
+          this.changeProductLayout(sliderContainer, slider, 250, 550, "column");
+        }
+
+        if (e.target.classList.contains("fa-th-list")) {
+          this.changeProductLayout(sliderContainer, slider, 250, 725, "row");
         }
       });
     });
@@ -460,6 +473,13 @@ class UI {
           sideMenu.style.display = "grid";
         });
       }
+    });
+  }
+
+  changeProductLayout(sliderContainer, slider, min, max, direction) {
+    sliderContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(${min}px, ${max}px))`;
+    slider.forEach((slide) => {
+      slide.style.flexDirection = `${direction}`;
     });
   }
 
@@ -709,7 +729,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((menuItems) => ui.displayMenuItems(menuItems))
         .then((menuItems) => ui.addFavourites(menuItems))
     )
-    .then(ui.displayHomeBtn())
     .then(ui.displaySideMenu())
+    .then(ui.displayHomeBtn())
     .then(ui.displayDate());
 });
