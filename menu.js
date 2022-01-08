@@ -357,7 +357,8 @@ class UI {
     window.addEventListener("scroll", () => {
       const bannerContainerHeight =
         bannerContainer.getBoundingClientRect().height;
-      const scrollHeight = scrollY > bannerContainerHeight - 50;
+      const scrollHeight = scrollY > bannerContainerHeight - 100;
+
       // if scrollHeight true && and side menu NOT locked with button
       if (scrollHeight && !sideMenu.classList.contains("locked")) {
         // set container's display
@@ -420,15 +421,36 @@ class UI {
         const slider = [...document.querySelectorAll(".slider")];
 
         if (e.target.classList.contains("fa-th")) {
-          this.changeProductLayout(sliderContainer, slider, 250, 350, "column");
+          this.changeProductLayout(
+            sliderContainer,
+            slider,
+            250,
+            350,
+            "grid",
+            "column"
+          );
         }
 
         if (e.target.classList.contains("fa-th-large")) {
-          this.changeProductLayout(sliderContainer, slider, 250, 550, "column");
+          this.changeProductLayout(
+            sliderContainer,
+            slider,
+            250,
+            550,
+            "grid",
+            "column"
+          );
         }
 
         if (e.target.classList.contains("fa-th-list")) {
-          this.changeProductLayout(sliderContainer, slider, 250, 725, "row");
+          this.changeProductLayout(
+            sliderContainer,
+            slider,
+            250,
+            725,
+            "flex",
+            "row"
+          );
         }
       });
     });
@@ -438,6 +460,7 @@ class UI {
       if (e.target.classList.contains("side-arrow")) {
         // toggle locked class
         sideMenu.classList.toggle("locked");
+        e.currentTarget.classList.toggle("hide-arrow");
 
         // if side menu is locked, change button HTML
         sideMenu.classList.contains("locked")
@@ -476,9 +499,10 @@ class UI {
     });
   }
 
-  changeProductLayout(sliderContainer, slider, min, max, direction) {
+  changeProductLayout(sliderContainer, slider, min, max, display, direction) {
     sliderContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(${min}px, ${max}px))`;
     slider.forEach((slide) => {
+      slide.style.display = `${display}`;
       slide.style.flexDirection = `${direction}`;
     });
   }
