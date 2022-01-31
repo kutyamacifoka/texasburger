@@ -548,14 +548,13 @@ body {
   .side-menu-arrow-container {
     position: fixed;
     top: 148px;
-    width: 170px;
+    width: 270px;
     margin: 2rem 0rem;
     transform: translateX(-40px);
     text-align: center;
     display: none;
     background: burlywood;
     z-index: 2;
-    overflow: scroll;
   }
 
   .side-menu-arrow-container {
@@ -607,6 +606,11 @@ body {
   .side-icon:hover {
     transition: var(--transition);
     color: var(--clr-red-1);
+  }
+
+  .side-menu-btn-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .side-menu-btn {
