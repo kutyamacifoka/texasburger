@@ -376,6 +376,9 @@ class UI {
         // on animation end display remains
         sideMenu.addEventListener("animationend", () => {
           sideMenu.style.display = "grid";
+        });
+
+        sideMenuArrowContainer.addEventListener("animationend", () => {
           sideMenuArrowContainer.style.display = "grid";
         });
       }
@@ -385,14 +388,14 @@ class UI {
         // set container's display
         sideMenuArrowContainer.style.display = "grid";
 
-        // remove animation
+        // remove hide animation from container
         sideMenuArrowContainer.classList.remove("animation-hide");
 
-        // add animation
+        // add show animation to container
         sideMenuArrowContainer.classList.add("animation-show");
 
         // on animation end display remains
-        sideMenu.addEventListener("animationend", () => {
+        sideMenuArrowContainer.addEventListener("animationend", () => {
           sideMenuArrowContainer.style.display = "grid";
         });
       }
@@ -410,6 +413,9 @@ class UI {
         // on animation end display remains
         sideMenu.addEventListener("animationend", () => {
           sideMenu.style.display = "none";
+        });
+
+        sideMenuArrowContainer.addEventListener("animationend", () => {
           sideMenuArrowContainer.style.display = "none";
         });
       }
@@ -428,6 +434,7 @@ class UI {
             350,
             "grid",
             "column",
+            "auto",
             "385px"
           );
         }
@@ -440,6 +447,7 @@ class UI {
             550,
             "grid",
             "column",
+            "auto",
             "385px"
           );
         }
@@ -452,6 +460,7 @@ class UI {
             725,
             "flex",
             "row",
+            "500px",
             "100%"
           );
         }
@@ -463,7 +472,7 @@ class UI {
       if (e.target.classList.contains("side-arrow")) {
         // toggle locked class
         sideMenu.classList.toggle("locked");
-        e.currentTarget.classList.toggle("hide-arrow");
+        e.currentTarget.classList.toggle("show-arrow");
 
         // if side menu is locked, change button HTML
         sideMenu.classList.contains("locked")
@@ -472,29 +481,20 @@ class UI {
       }
 
       if (sideMenu.classList.contains("locked")) {
-        // remove animation
         sideMenu.classList.remove("animation-show");
-
-        // add animation
         sideMenu.classList.add("animation-hide");
 
-        // on animation end change display
         sideMenu.addEventListener("animationend", () => {
           sideMenu.style.display = "none";
         });
       }
 
       if (!sideMenu.classList.contains("locked")) {
-        // set container's display
         sideMenu.style.display = "grid";
 
-        // remove animation
         sideMenu.classList.remove("animation-hide");
-
-        // add animation
         sideMenu.classList.add("animation-show");
 
-        // on animation end change display
         sideMenu.addEventListener("animationend", () => {
           sideMenu.style.display = "grid";
         });
@@ -509,17 +509,25 @@ class UI {
     max,
     display,
     direction,
-    height
+    slideHeight,
+    imgHeight
   ) {
+    // variable
     const sliderHeader = [...document.querySelectorAll(".slider-header")];
+
+    // change max-width of slider container
     sliderContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(${min}px, ${max}px))`;
+
+    // change height, display & flexdirection of every slider
     slider.forEach((slide) => {
+      slide.style.height = `${slideHeight}`;
       slide.style.display = `${display}`;
       slide.style.flexDirection = `${direction}`;
     });
 
+    // change the height of the images
     sliderHeader.forEach((header) => {
-      header.style.height = `${height}`;
+      header.style.height = `${imgHeight}`;
     });
   }
 
