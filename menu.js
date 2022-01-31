@@ -520,9 +520,9 @@ class UI {
 
     // change height, display & flexdirection of every slider
     slider.forEach((slide) => {
-      slide.style.height = `${slideHeight}`;
       slide.style.display = `${display}`;
       slide.style.flexDirection = `${direction}`;
+      slide.style.height = `${slideHeight}`;
     });
 
     // change the height of the images

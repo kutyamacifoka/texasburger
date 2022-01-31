@@ -512,6 +512,8 @@ body {
   .slider-container {
     display: grid;
     grid-auto-flow: column;
+    place-items: center;
+    background: plum;
     overflow: hidden;
     width: 200px;
     gap: 0.5rem;
@@ -1085,7 +1087,7 @@ body {
   }
 
   .slider-container {
-    width: calc((2 * 300px) + (0.5rem));
+    width: calc(2 * 300px + 0.5rem);
   }
 }
 
@@ -1162,7 +1164,7 @@ body {
   }
 
   .slider-container {
-    width: calc((3 * 300px) + (3 * 0.5rem));
+    width: calc(3 * 300px + 0.5rem);
   }
 }
 
@@ -1172,13 +1174,6 @@ body {
   }
 
   .slider-container {
-    width: calc((4 * 300px) + (4 * 0.5rem));
-  }
-}
-
-@media screen and (min-width: 1700px) {
-  .slider-container {
-    width: calc((5 * 300px) + (5 * 0.5rem));
-    max-width: fit-content;
+    width: calc(4 * 300px + 0.5rem);
   }
 }
