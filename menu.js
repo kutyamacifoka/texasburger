@@ -357,7 +357,7 @@ class UI {
     window.addEventListener("scroll", () => {
       const bannerContainerHeight =
         bannerContainer.getBoundingClientRect().height;
-      const scrollHeight = scrollY > bannerContainerHeight - 100;
+      const scrollHeight = scrollY > bannerContainerHeight - 200;
 
       // if scrollHeight true && and side menu NOT locked with button
       if (scrollHeight && !sideMenu.classList.contains("locked")) {
