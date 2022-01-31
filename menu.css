@@ -556,6 +556,7 @@ body {
     display: none;
     background: burlywood;
     z-index: 2;
+    overflow: scroll;
   }
 
   .side-menu-arrow-container {
