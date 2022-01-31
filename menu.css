@@ -556,7 +556,6 @@ body {
     display: none;
     background: burlywood;
     z-index: 2;
-    overflow: scroll;
   }
 
   .side-menu-arrow-container {
@@ -701,7 +700,7 @@ body {
   }
 }
 
-@media screen and (min-width: 764px) {
+@media screen and (min-width: 820px) {
   .side-menu-icon-container {
     display: block;
   }
