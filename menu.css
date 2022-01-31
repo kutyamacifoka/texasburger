@@ -547,7 +547,7 @@ body {
   #side-menu,
   .side-menu-arrow-container {
     position: fixed;
-    top: 25px;
+    top: 45px;
     width: 270px;
     margin: 2rem 0rem;
     transform: translateX(-40px);
@@ -559,7 +559,7 @@ body {
 
   .side-menu-arrow-container {
     width: max-content;
-    top: -30px;
+    top: -10px;
     width: 130px;
     background: #111;
     border-bottom: solid 3px hotpink;
