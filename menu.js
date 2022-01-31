@@ -427,7 +427,8 @@ class UI {
             250,
             350,
             "grid",
-            "column"
+            "column",
+            "385px"
           );
         }
 
@@ -438,7 +439,8 @@ class UI {
             250,
             550,
             "grid",
-            "column"
+            "column",
+            "385px"
           );
         }
 
@@ -449,7 +451,8 @@ class UI {
             250,
             725,
             "flex",
-            "row"
+            "row",
+            "100%"
           );
         }
       });
@@ -499,11 +502,24 @@ class UI {
     });
   }
 
-  changeProductLayout(sliderContainer, slider, min, max, display, direction) {
+  changeProductLayout(
+    sliderContainer,
+    slider,
+    min,
+    max,
+    display,
+    direction,
+    height
+  ) {
+    const sliderHeader = [...document.querySelectorAll(".slider-header")];
     sliderContainer.style.gridTemplateColumns = `repeat(auto-fit, minmax(${min}px, ${max}px))`;
     slider.forEach((slide) => {
       slide.style.display = `${display}`;
       slide.style.flexDirection = `${direction}`;
+    });
+
+    sliderHeader.forEach((header) => {
+      header.style.height = `${height}`;
     });
   }
 
