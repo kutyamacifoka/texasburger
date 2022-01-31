@@ -512,11 +512,9 @@ body {
   .slider-container {
     display: grid;
     grid-auto-flow: column;
-    place-items: center;
-    background: plum;
     overflow: hidden;
-    width: 200px;
-    gap: 0.5rem;
+    max-width: 200px;
+    gap: 0.25rem;
   }
 
   .scene {
@@ -928,7 +926,7 @@ body {
   }
 
   .slider-container {
-    width: 240px;
+    max-width: 240px;
   }
 }
 
@@ -1036,7 +1034,7 @@ body {
   }
 
   .slider-container {
-    width: 300px;
+    max-width: 300px;
   }
 
   .slider-img {
@@ -1087,7 +1085,7 @@ body {
   }
 
   .slider-container {
-    width: calc(2 * 300px + 0.5rem);
+    max-width: calc(2 * 300px + 0.5rem);
   }
 }
 
@@ -1164,7 +1162,7 @@ body {
   }
 
   .slider-container {
-    width: calc(3 * 300px + 0.5rem);
+    max-width: calc(3 * 300px + 0.5rem);
   }
 }
 
@@ -1174,6 +1172,6 @@ body {
   }
 
   .slider-container {
-    width: calc(4 * 300px + 0.5rem);
+    max-width: calc(4 * 300px + 0.5rem);
   }
 }
