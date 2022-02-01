@@ -8,7 +8,7 @@ const client = contentful.createClient({
 // navbar
 const navbar = document.getElementById("navbar-collapse");
 const navLink = [...document.querySelectorAll(".nav-link")];
-const etlap = document.querySelector("#etlap");
+const menuBtns = [...document.querySelectorAll(".menu-btn")];
 // menu grid
 let menuGrid = document.querySelector(".menu-grid-container");
 // menu slider containers
@@ -154,9 +154,11 @@ class UI {
       });
     });
 
-    etlap.addEventListener("click", (e) => {
-      e.preventDefault();
-      location.href = `menu.html#osszes`;
+    menuBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        location.href = `menu.html#osszes`;
+      });
     });
 
     // add filter
