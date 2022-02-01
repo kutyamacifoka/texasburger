@@ -259,6 +259,7 @@ class UI {
     const categoryBtnContainer = document.querySelector(
       ".category-btn-container"
     );
+    const sideBtnContainer = document.querySelector(".side-menu-btn-container");
 
     bgImages.forEach((item) => {
       const title = item.dataset;
@@ -275,15 +276,13 @@ class UI {
           }
 
           if (id === "osszes") {
-            document.querySelector(
-              ".banner"
-            ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero.jpg) center/cover no-repeat`;
+            banner.style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero.jpg) center/cover no-repeat`;
             bannerTitle.innerHTML = `Texas <span>Burger</span>`;
             bannerSpan.style.opacity = 1;
           }
         });
 
-        categoryBtnContainer.addEventListener("mouseleave", (e) => {
+        categoryBtnContainer.addEventListener("mouseleave", () => {
           // get ID
           const id = btn.dataset.id;
 
@@ -294,9 +293,24 @@ class UI {
           }
 
           if (btn.classList.contains("active-btn") && id === "osszes") {
-            document.querySelector(
-              ".banner"
-            ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero.jpg) center/cover no-repeat`;
+            banner.style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero.jpg) center/cover no-repeat`;
+            bannerTitle.innerHTML = `Texas <span>Burger</span>`;
+            bannerSpan.style.opacity = 1;
+          }
+        });
+
+        sideBtnContainer.addEventListener("mouseleave", () => {
+          // get ID
+          const id = btn.dataset.id;
+
+          if (btn.classList.contains("active-btn") && title === id) {
+            banner.style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
+            bannerTitle.innerHTML = `${item.title}`;
+            bannerSpan.style.opacity = 0;
+          }
+
+          if (btn.classList.contains("active-btn") && id === "osszes") {
+            banner.style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero.jpg) center/cover no-repeat`;
             bannerTitle.innerHTML = `Texas <span>Burger</span>`;
             bannerSpan.style.opacity = 1;
           }
@@ -329,7 +343,6 @@ class UI {
 
       // change on doc load
       if (title === url) {
-        const banner = document.querySelector(".banner");
         banner.style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
         bannerTitle.innerHTML = `${item.title}`;
         bannerSpan.style.opacity = 0;
@@ -391,7 +404,7 @@ class UI {
     window.addEventListener("scroll", () => {
       const bannerContainerHeight =
         bannerContainer.getBoundingClientRect().height;
-      const scrollHeight = scrollY > bannerContainerHeight;
+      const scrollHeight = scrollY > bannerContainerHeight - 5000;
 
       // if scrollHeight true && and side menu NOT locked with button
       if (scrollHeight && !sideMenu.classList.contains("locked")) {
