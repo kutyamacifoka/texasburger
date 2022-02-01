@@ -260,23 +260,47 @@ class UI {
       ".category-btn-container"
     );
 
-    // button events
-    menuBtns.forEach((btn) => {
-      btn.addEventListener("mouseover", (e) => {
-        // get ID
-        const id = e.target.dataset.id;
-        // callback function
-        this.filterBGs(bgImages, id);
-      });
+    bgImages.forEach((item) => {
+      const title = item.dataset;
 
-      categoryBtnContainer.addEventListener("mouseleave", (e) => {
-        if (btn.classList.contains("active-btn")) {
+      menuBtns.forEach((btn) => {
+        btn.addEventListener("mouseover", (e) => {
+          // get ID
+          const id = e.target.dataset.id;
+
+          if (title === id) {
+            banner.style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
+            bannerTitle.innerHTML = `${item.title}`;
+            bannerSpan.style.opacity = 0;
+          }
+
+          if (id === "osszes") {
+            document.querySelector(
+              ".banner"
+            ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero.jpg) center/cover no-repeat`;
+            bannerTitle.innerHTML = `Texas <span>Burger</span>`;
+            bannerSpan.style.opacity = 1;
+          }
+        });
+
+        categoryBtnContainer.addEventListener("mouseleave", (e) => {
           // get ID
           const id = btn.dataset.id;
 
-          // callback function
-          this.filterBGs(bgImages, id);
-        }
+          if (btn.classList.contains("active-btn") && title === id) {
+            banner.style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
+            bannerTitle.innerHTML = `${item.title}`;
+            bannerSpan.style.opacity = 0;
+          }
+
+          if (btn.classList.contains("active-btn") && id === "osszes") {
+            document.querySelector(
+              ".banner"
+            ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero.jpg) center/cover no-repeat`;
+            bannerTitle.innerHTML = `Texas <span>Burger</span>`;
+            bannerSpan.style.opacity = 1;
+          }
+        });
       });
     });
   }
@@ -300,7 +324,17 @@ class UI {
     }
 
     // set bg image on doc load
-    this.filterBGs(images);
+    images.forEach((item) => {
+      const title = item.dataset;
+
+      // change on doc load
+      if (title === url) {
+        const banner = document.querySelector(".banner");
+        banner.style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
+        bannerTitle.innerHTML = `${item.title}`;
+        bannerSpan.style.opacity = 0;
+      }
+    });
 
     // filter & display products on doc load
     if (url === id) {
@@ -702,39 +736,6 @@ class UI {
       .replace(/é/g, "e");
 
     return value;
-  }
-
-  // change background based on product
-  filterBGs(bgImages, id) {
-    bgImages.forEach((item) => {
-      const title = item.dataset;
-
-      // change on doc load
-      if (title === url) {
-        const banner = document.querySelector(".banner");
-        banner.style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
-        bannerTitle.innerHTML = `${item.title}`;
-        bannerSpan.style.opacity = 0;
-      }
-
-      // show individual product
-      if (title === id) {
-        // console.log(title);
-        const banner = document.querySelector(".banner");
-        banner.style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
-        bannerTitle.innerHTML = `${item.title}`;
-        bannerSpan.style.opacity = 0;
-      }
-
-      // show all products
-      if (id === "osszes") {
-        document.querySelector(
-          ".banner"
-        ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(./hero.jpg) center/cover no-repeat`;
-        bannerTitle.innerHTML = `Texas <span>Burger</span>`;
-        bannerSpan.style.opacity = 1;
-      }
-    });
   }
 }
 
