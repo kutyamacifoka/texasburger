@@ -711,18 +711,17 @@ class UI {
 
       // change on doc load
       if (title === url) {
-        document.querySelector(
-          ".banner"
-        ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
+        const banner = document.querySelector(".banner");
+        banner.style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
         bannerTitle.innerHTML = `${item.title}`;
         bannerSpan.style.opacity = 0;
       }
 
       // show individual product
       if (title === id) {
-        document.querySelector(
-          ".banner"
-        ).style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
+        // console.log(title);
+        const banner = document.querySelector(".banner");
+        banner.style.background = `linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(${item.image}) center/cover no-repeat`;
         bannerTitle.innerHTML = `${item.title}`;
         bannerSpan.style.opacity = 0;
       }

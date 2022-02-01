@@ -548,10 +548,11 @@ body {
   #side-menu,
   .side-menu-arrow-container {
     position: fixed;
-    top: 45px;
-    width: 270px;
+    top: 17px;
+    width: max-content;
     margin: 2rem 0rem;
-    transform: translateX(-40px);
+    padding: 0 0.5rem;
+    transform: translateX(-35px);
     text-align: center;
     display: none;
     background: burlywood;
@@ -560,7 +561,7 @@ body {
 
   .side-menu-arrow-container {
     width: max-content;
-    top: -10px;
+    top: -30px;
     width: 130px;
     background: #111;
     border-bottom: solid 3px hotpink;
@@ -577,6 +578,7 @@ body {
   }
 
   .side-menu-icon-container {
+    transform: translateX(10px);
     display: none;
     background: #111;
     padding: 0.5rem 1rem;
@@ -593,7 +595,7 @@ body {
   }
 
   .side-arrow {
-    font-size: 1.75rem;
+    font-size: 1.25rem;
     color: violet;
   }
 
@@ -609,14 +611,14 @@ body {
 
   .side-menu-btn-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .side-menu-btn {
     width: 100%;
     transform: translateX(10px);
     font-family: var(--ff-primary-2);
-    font-size: 1rem;
+    font-size: 1.35rem;
     transition: var(--transition);
   }
 
