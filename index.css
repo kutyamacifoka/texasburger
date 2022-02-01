@@ -533,6 +533,7 @@ body {
     transition: transform 1s;
     transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
     display: flex;
     justify-content: center;
     align-items: center;
