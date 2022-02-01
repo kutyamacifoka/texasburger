@@ -519,8 +519,6 @@ body {
 
   .scene {
     perspective: 600px;
-    -webkit-perspective: 600px;
-    -moz-perspective: 600px;
     width: 200px;
     height: 200px;
     position: relative;
@@ -551,6 +549,7 @@ body {
   }
 
   .slider-face-front {
+    transform: rotateY(0deg);
     z-index: 2;
   }
 
@@ -560,14 +559,10 @@ body {
     background: #121212;
     border: dashed 3px rebeccapurple;
     transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
   }
 
   .slider-flipped {
     transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
   }
 
   .ingredients {
