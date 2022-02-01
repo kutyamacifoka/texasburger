@@ -556,10 +556,12 @@ body {
     background: #121212;
     border: dashed 3px rebeccapurple;
     transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
   }
 
   .slider-flipped {
     transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
   }
 
   .ingredients {
